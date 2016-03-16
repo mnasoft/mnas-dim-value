@@ -40,3 +40,19 @@
 
 
 (spl_/ (cl-ppcre:split "(/)" str)))
+
+(defun foo-split/ (str)
+  (cl-ppcre:split "/" str))
+
+(defun foo-split-bracket (str)
+  (cl-ppcre:split "(/\\()|(\\()|(\\))" str))
+
+(defparameter *str* "kg*m^2/(A*s^3)")
+
+(defparameter *str* "(A*s^3)")
+
+(foo-split/ *str*)
+
+(foo-split-bracket *str*)
+
+(read-sequence  *str*)

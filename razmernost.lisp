@@ -148,7 +148,31 @@
 
 ;;;;(mapcar #'(lambda(el) (string= (fourth el)(sixth el))) *si-derive*)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defparameter *s* "kg^2*m*s/(H^2*m^3)")
 
+(defparameter *op* '((#\+ 1) (#\- 1) (#\* 2) (#\/ 2) (#\^ 3) (#\( 4) (#\) 4)))
 
+(defun foo-operatorp (op)
+  (assoc op *op*))
+
+(defun foo-split(str)
+  "Пример использования (foo-split *s*)
+"
+  (do 
+   ((str *s*)
+    (start 0)
+    (sub nil)
+    (len nil)
+    (rez nil ))
+   ((equal len 0) (reverse rez))
+    (setf sub (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)" *s* :start start)
+	  len (length sub)
+	  start (+ start len)
+	  )
+    (if (>= len 1) 
+	(setf rez (cons sub rez)))
+;;;;  (format t "~A ~A~%" sub start))
+    ))
 
