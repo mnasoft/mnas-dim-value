@@ -1,6 +1,6 @@
 ;;;; razmernost.lisp
 
-(in-package #:dims)
+(in-package #:mnas-dim-value)
 
 (defparameter *mult-prefix*
   '(
