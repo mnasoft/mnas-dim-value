@@ -1,5 +1,7 @@
 ;;;; constants.lisp
 
+(in-package #:mnas-dim-value)
+
 (defparameter *g*     9.8065d0   "Ускорение свободного падения, м/с^2")
 (defparameter *Gr*    6.672d-11  "Гравитационная постоянная, м^3/кг*с^2")
 (defparameter *C-0*   273.15d0   "Ноль шкалы температур Цельсия, К")
@@ -18,41 +20,4 @@
 (defparameter *с*     2.997925d8 "Скорость света в вакууме, м/с")
 
 
-;;;;cl-ppcre
-(cl-ppcre:split "(\\()|(\\))|(\\*)|(/)|\\*" "(kg*m^3)/s^3" )
 
-
-(let* 
-    ((str   "(kg*m^3)/(s^3)")
-     (spl_/ (cl-ppcre:split "(/)" str)))
-  (cond
-    ((= (length spl_/) 0)
-     (values spl_/ 0 str ))
-    ((= (length spl_/) 1)
-     (values spl_/ 1 str ))
-    ((= (length spl_/) 2)
-     (values spl_/ 2 str )
-     (let ((chisl (cl-ppcre:split "(\\*)" (first  spl_/) :omit-unmatched-p t))
-	   (znam  (cl-ppcre:split "(\\*)" (second spl_/) :omit-unmatched-p t)))
-       (values chisl znam)))))
-
-(cl-ppcre:do-matches-as-strings "\\." "(kg*m^3)" )
-
-
-(spl_/ (cl-ppcre:split "(/)" str)))
-
-(defun foo-split/ (str)
-  (cl-ppcre:split "/" str))
-
-(defun foo-split-bracket (str)
-  (cl-ppcre:split "(/\\()|(\\()|(\\))" str))
-
-(defparameter *str* "kg*m^2/(A*s^3)")
-
-(defparameter *str* "(A*s^3)")
-
-(foo-split/ *str*)
-
-(foo-split-bracket *str*)
-
-(read-sequence  *str*)
