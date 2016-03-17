@@ -152,10 +152,14 @@
 
 (defparameter *s* "kg^2*m*s/(H^2*m^3)")
 
-(defparameter *op* '((#\+ 1) (#\- 1) (#\* 2) (#\/ 2) (#\^ 3) (#\( 4) (#\) 4)))
+(defparameter *op* '(("+" 1) ("-" 1) ("*" 2) ("/" 2) ("^" 3) ("(" 4) (")" 4)))
 
 (defun foo-operatorp (op)
   (assoc op *op*))
+
+(defun foo-open-parenthesisp(str) (equal str "("))
+
+(defun foo-close-parenthesisp(str) (equal str ")"))
 
 (defun foo-split(str)
   "Пример использования (foo-split *s*)
@@ -165,7 +169,7 @@
     (start 0)
     (sub nil)
     (len nil)
-    (rez nil ))
+    (rez nil))
    ((equal len 0) (reverse rez))
     (setf sub (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)" *s* :start start)
 	  len (length sub)
@@ -176,3 +180,26 @@
 ;;;;  (format t "~A ~A~%" sub start))
     ))
 
+
+(defun foo-lexem-tree(lexem-lst)
+  (do* ((done nil)
+	(rez nil)
+	(a (car lexem-lst) (car lexem-lst)))
+       (done (reverse rez))
+    (break "lexem-lst = ~S~%rez = ~S~%a = ~S~%done = ~S~%" lexem-lst rez a done)
+    (cond
+      ((foo-open-parenthesisp a)
+       (setf lexem-lst (cdr lexem-lst))
+       (foo-lexem-tree lexem-lst))
+      ((foo-close-parenthesisp a)
+       (setf done t))
+      (t
+       (setf lexem-lst (cdr lexem-lst))
+       (setf rez (cons a rez))))))
+
+
+(cl-ppcre:parse-string "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)")
+
+
+
+(foo-lexem-tree (foo-split *s*))
