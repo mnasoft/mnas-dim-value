@@ -150,12 +150,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *s* "kg^2*m*s/(H^2*m^3)")
+(defparameter *op* '(("+" 1) ("-" 1) ("*" 2) ("/" 2) ("^" 3)))
 
-(defparameter *op* '(("+" 1) ("-" 1) ("*" 2) ("/" 2) ("^" 3) ("(" 4) (")" 4)))
-
-(defun foo-operatorp (op)
-  (assoc op *op*))
+(defun foo-operatorp (op) (assoc op *op* :test #'equal))
 
 (defun foo-open-parenthesisp(str) (equal str "("))
 
@@ -171,35 +168,81 @@
     (len nil)
     (rez nil))
    ((equal len 0) (reverse rez))
-    (setf sub (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)" *s* :start start)
+    (setf sub
+	  ;;;;(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)" *s* :start start)
+          ;;;;(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([0-9]+)" *s* :start start)
+  	  (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([+-]*[0-9]+)" *s* :start start)
 	  len (length sub)
 	  start (+ start len)
 	  )
     (if (>= len 1) 
-	(setf rez (cons sub rez)))
-;;;;  (format t "~A ~A~%" sub start))
+	(setf rez (cons sub rez)))))
+
+(defun foo-lexem-tree (ll)
+  "Пример использования
+(foo-rev(foo-lexem-tree (foo-split *s*)))"
+  (do ((i 0 (1+ i)) (len (length ll)) (tree nil) (st  nil) (obj nil))
+      ((>= i len) tree)
+    (setf obj (nth i ll))    
+    (cond
+      ((foo-open-parenthesisp obj) (push tree st) (setf tree nil))
+      ((foo-close-parenthesisp obj) (setf tree (cons tree (pop st))))
+      (t (push obj tree)))))
+
+(defun foo-rev (l)
+  "Выполняет глубокое реверсирование списков"
+  (cond ((null l) nil)
+        ((listp (car l))
+	 (append (foo-rev (cdr l)) 
+		 (list (foo-rev (car l)))))
+        (t
+	 (append (foo-rev (cdr l)) 
+		 (list (car l))))))
+
+(defun foo-max-operand-level()
+  "Возвращает максимальный уровень операда, примененного в выражении"
+  )
+
+(defun foo-is-digit (str)
+  (let
+      ((rez (cl-ppcre:scan-to-strings "(^[+-]*[0-9]+)$" str)))
+    (if (and rez (> (length rez) 0) (= (length rez) (length str)))
+	t
+	nil)))
+
+(defun foo-convert-str-to-atom(str)
+  (cond
+    ((foo-is-digit str) (parse-integer str))
+    ((foo-operatorp str) (read-from-string str))
     ))
 
 
-(defun foo-lexem-tree(lexem-lst)
-  (do* ((done nil)
-	(rez nil)
-	(a (car lexem-lst) (car lexem-lst)))
-       (done (reverse rez))
-    (break "lexem-lst = ~S~%rez = ~S~%a = ~S~%done = ~S~%" lexem-lst rez a done)
-    (cond
-      ((foo-open-parenthesisp a)
-       (setf lexem-lst (cdr lexem-lst))
-       (foo-lexem-tree lexem-lst))
-      ((foo-close-parenthesisp a)
-       (setf done t))
-      (t
-       (setf lexem-lst (cdr lexem-lst))
-       (setf rez (cons a rez))))))
+(defun foo-is-dimension(str)
+  )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(declaim (optimize (debug 3)))
+
+(defparameter *s* "(kg^-2)*(m*s^3)/(H^2*m^3)")
+
+(defparameter *s* "kg^2*(m*s)")
+
+;;;;(foo-rev(foo-lexem-tree (foo-split *s*)))
+
+(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([+-]*[0-9]+)" *s* :start 3)
 
 
-(cl-ppcre:parse-string "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)")
+(foo-convert-str-to-atom "")
+
+(foo-operatorp "*")
+
+(parse-integer "asd")
+
+(foo-is-digit "+45"
+ )
+
+()
+
+(foo-rev '((1 2 3) (4 5 6)))
 
 
-
-(foo-lexem-tree (foo-split *s*))
