@@ -150,7 +150,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *op* '(("+" 1) ("-" 1) ("*" 2) ("/" 2) ("^" 3)))
+(defparameter *op* '(("+" . 1) ("-" . 1) ("*" . 2) ("/" . 2) ("^" . 3)))
 
 (defun foo-operatorp (op) (assoc op *op* :test #'equal))
 
@@ -196,9 +196,16 @@
 	 (append (foo-rev (cdr l)) 
 		 (list (car l))))))
 
-(defun foo-max-operand-level()
+(defun foo-max-operand-level(ll)
   "Возвращает максимальный уровень операда, примененного в выражении"
-  )
+  (do* ((op-level 0) (len (length ll)) (i 0 (1+ i)) (tmp 0) (i-num 0))
+       ((>= i len) (values op-level i-num))
+    (break "1")
+    (setf tmp (nth i ll))
+    (break "~A" tmp)
+    (if (and (foo-operatorp tmp) (>= (cdr (foo-operatorp tmp)) op-level))
+	(setf op-level (cdr tmp)
+	      i-num i))))
 
 (defun foo-is-digit (str)
   (let
@@ -220,10 +227,15 @@
 
 (declaim (optimize (debug 3)))
 
-(defparameter *ss* "kg^2*(m*s*m*f*h*f)")
+(defparameter *ss* "kg^2*m*s*")
 
 (defparameter *tt* "(kg^-2)*(m*s^3)/(H^2*m^3)")
 
 (defparameter *uu* "kg^2*m*s")
 
 ;;;;(foo-rev(foo-lexem-tree (foo-split *uu*)))
+
+;;;;(foo-convert-str-to-atom "/")
+
+;;;;(foo-max-operand-level (foo-rev(foo-lexem-tree (foo-split *ss*))))
+
