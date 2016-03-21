@@ -162,16 +162,13 @@
   "Пример использования (foo-split *s*)
 "
   (do 
-   ((str *s*)
-    (start 0)
+   ((start 0)
     (sub nil)
     (len nil)
     (rez nil))
    ((equal len 0) (reverse rez))
     (setf sub
-	  ;;;;(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z0-9]*)" *s* :start start)
-          ;;;;(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([0-9]+)" *s* :start start)
-  	  (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([+-]*[0-9]+)" *s* :start start)
+  	  (cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([+-]*[0-9]+)" str :start start)
 	  len (length sub)
 	  start (+ start len)
 	  )
@@ -223,26 +220,10 @@
 
 (declaim (optimize (debug 3)))
 
-(defparameter *s* "(kg^-2)*(m*s^3)/(H^2*m^3)")
+(defparameter *ss* "kg^2*(m*s*m*f*h*f)")
 
-(defparameter *s* "kg^2*(m*s)")
+(defparameter *tt* "(kg^-2)*(m*s^3)/(H^2*m^3)")
 
-;;;;(foo-rev(foo-lexem-tree (foo-split *s*)))
+(defparameter *uu* "kg^2*m*s")
 
-(cl-ppcre:scan-to-strings "(\\()|(\\))|(\\*)|(\\/)|(\\^)|([A-Za-z]+)|([+-]*[0-9]+)" *s* :start 3)
-
-
-(foo-convert-str-to-atom "")
-
-(foo-operatorp "*")
-
-(parse-integer "asd")
-
-(foo-is-digit "+45"
- )
-
-()
-
-(foo-rev '((1 2 3) (4 5 6)))
-
-
+;;;;(foo-rev(foo-lexem-tree (foo-split *uu*)))
