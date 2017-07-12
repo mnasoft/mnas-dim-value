@@ -7,10 +7,10 @@
   :serial t
   :depends-on (#:cl-ppcre)
   :components ((:file "package")
+	       (:file "constants")
                (:file "mnas-dim-value")
 	       (:file "razmernost")
-	       (:file "values")
-               (:file "constants")
+;;;;	       (:file "values")
 	       ))
 
 
