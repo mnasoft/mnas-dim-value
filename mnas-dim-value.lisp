@@ -24,167 +24,13 @@
 	'("m" "kg" "s" "A" "K" "cd" "mol" "rad" "sr"))
   (format s "])"))
 
-(defvar |*vd-m*| (make-instance 'vd :val 1 :d-lst  '(1 0 0 0 0 0 0 0 0)) "Возвращает число равное 1[m]. Пример использования: *vd-m*")
-
-(defvar |*vd-mm*| (make-instance 'vd :val 1/1000 :d-lst  '(1 0 0 0 0 0 0 0 0)) "Возвращает число равное 1[mm]. Пример использования: *vd-mm*")
-
-(defvar |*vd-km*| (make-instance 'vd :val 1000 :d-lst  '(1 0 0 0 0 0 0 0 0)) "Возвращает число равное 1[km]. Пример использования: *vd-km*")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar |*vd-kg*|  (make-instance 'vd :val 1 :d-lst  '( 0  1  0  0  0  0  0  0  0 ))  "Возвращает число равное 1[kg]. Пример использования: |*vd-kg*|")
+(defmethod mult ((x number) (y vd) )
+  (make-instance 'vd :d-lst (d-lst y) :val (* x (vd-val y))))
 
-(defvar |*vd-g*| (make-instance 'vd :val 1/1000 :d-lst  '( 0  1  0  0  0  0  0  0  0 ))  "Возвращает число равное 1[g]. Пример использования: |*vd-g*|")
-
-(defvar |*vd-t*| (make-instance 'vd :val 1000 :d-lst  '( 0  1  0  0  0  0  0  0  0 ))  "Возвращает число равное 1[t]. Пример использования: |*vd-t*|")
- 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-s*| (make-instance 'vd :val 1 :d-lst  '( 0  0  1  0  0  0  0  0  0 ))  "Возвращает число равное 1[s]. Пример использования: |*vd-s*|")
-
-(defvar |*vd-min*| (make-instance 'vd :val 60 :d-lst  '( 0  0  1  0  0  0  0  0  0 ))  "Возвращает число равное 1[s]. Пример использования: |*vd-min*|")
-
-(defvar |*vd-hour*| (make-instance 'vd :val 3600 :d-lst  '( 0  0  1  0  0  0  0  0  0 ))  "Возвращает число равное 1[s]. Пример использования: |*vd-hour*|")
-
-(defvar |*vd-day*| (make-instance 'vd :val (* 60 60 24) :d-lst  '( 0  0  1  0  0  0  0  0  0 ))  "Возвращает число равное 1[s]. Пример использования: |*vd-day*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-A*|  (make-instance 'vd :val 1         :d-lst  '( 0  0  0  1  0  0  0  0  0 )) "Возвращает число равное 1[A]. Пример использования: |*vd-A*|")
-
-(defvar |*vd-mA*| (make-instance 'vd :val 1/1000    :d-lst  '( 0  0  0  1  0  0  0  0  0 )) "Возвращает число равное 1[mA]. Пример использования: |*vd-mA*|")
-
-(defvar |*vd-μA*| (make-instance 'vd :val 1/1000000 :d-lst  '( 0  0  0  1  0  0  0  0  0 )) "Возвращает число равное 1[mA]. Пример использования: |*vd-μA*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-K*|  (make-instance 'vd :val 1 :d-lst  '( 0  0  0  0  1  0  0  0  0 )) "Возвращает число равное 1[K]. Пример использования: |*vd-K*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-cd*|  (make-instance 'vd :val 1 :d-lst  '( 0  0  0  0  1  0  0  0  0 ))   "Возвращает число равное 1[cd]. Пример использования: |*vd-cd*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-mol*|  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  0  0  0  0  1  0  0 )) "Возвращает число равное 1[mol]. Пример использования: |*vd-mol*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-rad*|  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  0  0  0  0  0  1  0 )) "Возвращает число равное 1[rad]. Пример использования: |*vd-rad*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-sr*|  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  0  0  0  0  0  0  1 )) "Возвращает число равное 1[rad]. Пример использования: |*vd-sr*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-Hz*|  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  -1  0  0  0  0  0  0 )) "Возвращает число равное 1[Hz]. Пример использования: |*vd-Hz*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-N*|  (make-instance 'vd :val 1.0 :d-lst  '( 1  1  -2  0  0  0  0  0  0 )) "Возвращает число равное 1[N]. Пример использования: |*vd-N*|")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar |*vd-Pa*| (make-instance 'vd :val 1.0 :d-lst  '( -1  1  -2  0  0  0  0  0  0 )) "Возвращает число равное 1[N]. Пример использования: |*vd-Pa*|")
-
-(defvar |*vd-Pa*| (make-instance 'vd :val 1.0 :d-lst  '( -1  1  -2  0  0  0  0  0  0 )) "Возвращает число равное 1[N]. Пример использования: |*vd-Pa*|")
-
-
-
-(defun |get_J| ()
-  "Возвращает число равное 1[J].
-Пример использования:
-(|get_J|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -2  0  0  0  0  0  0 )))
-
-(defun |get_W| ()
-  "Возвращает число равное 1[W].
-Пример использования:
-(|get_W|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -3  0  0  0  0  0  0 )))
-
-(defun |get_C| ()
-  "Возвращает число равное 1[C].
-Пример использования:
-(|get_C|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  1  1  0  0  0  0  0 )))
-
-
-(defun |get_V| ()
-  "Возвращает число равное 1[V].
-Пример использования:
-(|get_V|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -3  -1  0  0  0  0  0 )))
-
-(defun |get_Om| ()
-  "Возвращает число равное 1[Om].
-Пример использования:
-(|get_Om|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -3  -2  0  0  0  0  0 )))
-
-(defun |get_S| ()
-  "Возвращает число равное 1[S].
-Пример использования:
-(|get_S|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( -2  -1  3  2  0  0  0  0  0 )))
-
-(defun |get_F| ()
-  "Возвращает число равное 1[F].
-Пример использования:
-(|get_F|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( -2  -1  4  2  0  0  0  0  0 )))
-
-(defun |get_Wb| ()
-  "Возвращает число равное 1[Wb].
-Пример использования:
-(|get_Wb|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -2  -1  0  0  0  0  0 )))
-
-(defun |get_H| ()
-  "Возвращает число равное 1[H].
-Пример использования:
-(|get_H|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  1  -2  0  -2  0  0  0  0 )))
-
-(defun |get_T| ()
-  "Возвращает число равное 1[T].
-Пример использования:
-(|get_T|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 0  1  -2  -1  0  0  0  0  0 )))
-
-(defun |get_lm| ()
-  "Возвращает число равное 1[lm].
-Пример использования:
-(|get_lm|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  0  0  0  1  0  0  1 )))
-
-(defun |get_lx| ()
-  "Возвращает число равное 1[lx].
-Пример использования:
-(|get_lx|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( -2  0  0  0  0  1  0  0  1 )))
-
-(defun |get_Bq| ()
-  "Возвращает число равное 1[Bq].
-Пример использования:
-(|get_Bq|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 0  0  -1  0  0  0  0  0  0 )))
-
-(defun |get_Gy| ()
-  "Возвращает число равное 1[Gy].
-Пример использования:
-(|get_Gy|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  0  -2  0  0  0  0  0  0 )))
-
-(defun |get_Sv| ()
-  "Возвращает число равное 1[Sv].
-Пример использования:
-(|get_Sv|)"
-  (make-instance 'vd :val 1.0 :d-lst  '( 2  0  -2  0  0  0  0  0  0 )))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(defmethod mult ( (y vd) (x number) )
+  (make-instance 'vd :d-lst (d-lst y) :val (* x (vd-val y))))
 
 (defmethod mult ((x vd) (y vd) )
   (let
@@ -215,6 +61,118 @@
       (setf rez (div rez y))
       )
     rez))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defparameter *nm-vl* (make-hash-table :test #'equal)
+  "Задает соответствие сроки, обозначающей размерность значению."
+  )
+
+(mapcar
+ #'(lambda (el)
+     (setf (gethash (first el) *nm-vl*) (eval (second el))))
+ '(
+   ("m"   (make-instance 'vd :d-lst '( 1  0  0  0  0  0  0  0  0 ) :val 1))
+   ("g"   (make-instance 'vd :d-lst '( 0  1  0  0  0  0  0  0  0 ) :val 1/1000))
+   ("s"   (make-instance 'vd :d-lst '( 0  0  1  0  0  0  0  0  0 ) :val 1))
+   ("A"   (make-instance 'vd :d-lst '( 0  0  0  1  0  0  0  0  0 ) :val 1))
+   ("K"   (make-instance 'vd :d-lst '( 0  0  0  0  1  0  0  0  0 ) :val 1))
+   ("cd"  (make-instance 'vd :d-lst '( 0  0  0  0  1  0  0  0  0 ) :val 1))
+   ("mol" (make-instance 'vd :d-lst '( 0  0  0  0  0  0  1  0  0 ) :val 1))
+   ("rad" (make-instance 'vd :d-lst '( 0  0  0  0  0  0  0  1  0 ) :val 1))
+   ("sr"  (make-instance 'vd :d-lst '( 0  0  0  0  0  0  0  0  1 ) :val 1))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   ("Hz"  (make-instance 'vd :d-lst '( 0  0 -1  0  0  0  0  0  0 ) :val 1))
+   ("N"   (make-instance 'vd :d-lst '( 1  1 -2  0  0  0  0  0  0 ) :val 1))
+   ("Pa"  (make-instance 'vd :d-lst '(-1  1 -2  0  0  0  0  0  0 ) :val 1))
+   ("J"   (make-instance 'vd :d-lst '( 2  1 -2  0  0  0  0  0  0 ) :val 1))
+   ("W"   (make-instance 'vd :d-lst '( 2  1 -3  0  0  0  0  0  0 ) :val 1))
+   ("C"   (make-instance 'vd :d-lst '( 0  0  1  1  0  0  0  0  0 ) :val 1))
+   ("V"   (make-instance 'vd :d-lst '( 2  1 -3 -1  0  0  0  0  0 ) :val 1))
+   ("Ω"   (make-instance 'vd :d-lst '( 2  1 -3 -2  0  0  0  0  0 ) :val 1))
+   ("S"   (make-instance 'vd :d-lst '(-2 -1  3  2  0  0  0  0  0 ) :val 1))
+   ("F"   (make-instance 'vd :d-lst '(-2 -1  4  2  0  0  0  0  0 ) :val 1))
+   ("Wb"  (make-instance 'vd :d-lst '( 2  1 -2 -1  0  0  0  0  0 ) :val 1))
+   ("H"   (make-instance 'vd :d-lst '( 2  1 -2  0 -2  0  0  0  0 ) :val 1))
+   ("T"   (make-instance 'vd :d-lst '( 0  1 -2 -1  0  0  0  0  0 ) :val 1))
+   ("lm"  (make-instance 'vd :d-lst '( 0  0  0  0  0  1  0  0  1 ) :val 1))
+   ("lx"  (make-instance 'vd :d-lst '(-2  0  0  0  0  1  0  0  1 ) :val 1))
+   ("Bq"  (make-instance 'vd :d-lst '( 0  0 -1  0  0  0  0  0  0 ) :val 1))
+   ("Gy"  (make-instance 'vd :d-lst '( 2  0 -2  0  0  0  0  0  0 ) :val 1))
+   ("Sv"  (make-instance 'vd :d-lst '( 2  0 -2  0  0  0  0  0  0 ) :val 1))
+
+   ))
+
+(defparameter *nm-vl-ru* (make-hash-table :test #'equal)
+  "Задает соответствие сроки, обозначающей размерность значению."
+  )
+
+(mapcar
+ #'(lambda (el)
+     (setf (gethash (first el) *nm-vl-ru*) (gethash (second el) *nm-vl*) ))
+ '(("м" "m")
+   ("г" "g")
+   ("с" "s")
+   ("А" "A")
+   ("К" "K")
+   ("кд" "cd")
+   ("моль" "mol")
+   ("рад" "rad")
+   ("ср" "sr")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   
+   ("Гц" "Hz")
+   ("Н"  "N")
+   ("Па" "Pa")
+   ("Дж" "J")
+   ("Вт" "W")
+   ("Кл" "C")
+   ("В"  "V")
+   ("Ом" "Ω")
+   ("См" "S")
+   ("Ф"  "F")
+   ("Вб" "Wb")
+   ("Гн" "H")
+   ("Тл" "T")
+   ("лм" "lm")
+   ("лк" "lx")
+   ("Бк" "Bq")
+   ("Гр" "Gy")
+   ("Зв" "Sv")
+   ))
+
+
+
+'(("tf"    (mult 9806.65 (gethash "N" *nm-vl*)))
+  ("gf"    (mult 9.80665e-3 (gethash "N" *nm-vl*)))
+  ("cal"   (mult 4.1868 (gethash "J" *nm-vl*)))
+  ("St"    (make-instance 'vd :val 1.0e-4 :d-lst ( 2  0  -1  0  0  0  0  0  0 )))
+
+  ("m_Hg"  (mult 133322.0 (gethash "Pa" *nm-vl*)))
+  ("m_H2O" (mult 9806.65 (gethash "Pa" *nm-vl*)))
+  ("bar"  (mult 100000 (gethash "Pa" *nm-vl*)))
+  ("atm"  (mult 101325 (gethash "Pa" *nm-vl*)))
+  ("Torr" (mult 101325/760 (gethash "Pa" *nm-vl*)))
+
+  ("ua"    (mult 1.49597870e11 (gethash "m" *nm-vl*)))
+  ("Å"     (mult 1.0e-10 (gethash "m" *nm-vl*)))
+  ("t"     (mult (* 1000 1000) (gethash "g" *nm-vl*)))
+  ("u"     (mult (* 1000 1.6605402e-27) (gethash "g" *nm-vl*)))
+  ("eV"    (mult 1.60217733e-19 (gethash "J" *nm-vl*)))
+  ("min"   (mult 60    (gethash "s" *nm-vl*)))
+  ("h"     (mult 3600  (gethash "s" *nm-vl*)))
+  ("d"     (mult 86400 (gethash "s" *nm-vl*)))
+  ("a"     (mult 100   (m-mult (gethash "m" *nm-vl*)(gethash "m" *nm-vl*))))
+  ("b"     (mult 1e-28 (m-mult (gethash "m" *nm-vl*)(gethash "m" *nm-vl*))))
+
+  ("knot" (mult 1852/3600 (make-instance 'vd :val 1 :d-lst '(1 0 -1 0 0 0 0 0 0))))
+  ("Gal"  (mult 1.0e-2    (make-instance 'vd :val 1 :d-lst '(1 0 -2 0 0 0 0 0 0))))
+
+  ("kat" (make-instance 'vd :val 1 :d-lst '(0 0 -1 0 0 0 1 0 0))))
+
+
+
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (defparameter v1 (make-instance 'vd :val 5.0 :d-lst (list 1 0 0 0 0 0 0 0 0) ))
 (defparameter v2 (make-instance 'vd :val 6.0 :d-lst (list 0 0 1 0 0 0 0 0 0) ))
