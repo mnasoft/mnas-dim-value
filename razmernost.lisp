@@ -42,7 +42,7 @@
 		(expt 10 (first el))))
       *mult-prefix*)
 
-;;;;(gethash "μ" *muti-prefix*)
+;;;;(gethash "μ" *international-mut-prefix*)
 
 (defun prefix-from->to(x str-prefix-from str-prefix-to)
   "Перевод значения числа х, предваряемого приставкой str-prefix-from,
