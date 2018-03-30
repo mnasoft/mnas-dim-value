@@ -152,7 +152,7 @@
   (defparameter |S|   (vd/ |Ω|)               "сименс")
 
   (defparameter |Wb|  (vd* |V| |s|)           "вебер")
-  (defparameter |Τ|   (vd/ |Wb| |m| |m|)      "тесла")
+  (defparameter |Τ|   (vd/ |Wb| |m| |m|)      "тесла") ;;;; τ
   (defparameter |H|   (vd/ |Wb| |A|)          "генри")
 
   (defparameter |lm|  (vd* |cd| |sr|)         "люмен")

@@ -2,17 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-;;; "mnas-dim-value" goes here. Hacks and glory await!
-
-;;;;m kg s A K cd mol rad sr
-
-
-(vd*  |kg| 2.34)
-
-(vd/ |N| |m| |m| )
-
-|Gy| 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(vd/ (vd* 2.56054  |kg| |m| |m| ) |s| |s| |s|)
 
 

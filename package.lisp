@@ -8,10 +8,15 @@
   (:export M->k) ;; Перевод значения с приставкой мега в число с приставкой кило
   (:export kgs/cm2->Pa)			;
   (:export Pa->kgs/cm2)			;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
   (:export *g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)
   (:export |m| |kg| |s| |A| |K| |cd| |mol| |rad| |sr| )
   (:export |Hz| |N| |Pa| |J| |W| |C| |V| |Ω| |S| |F| |Wb| |H| |Τ| |lm| |lx| |Bq| |Gy| |Sv| )
-  (:export vd vd* vd/ vd- vd+) 
+  (:export vd vd* vd/ vd- vd+)
+  (:export *si-main-units* *si-derived-units-tbl-02* *si-derived-units-tbl-03* *si-derived-units-tbl-04*)
+  (:export *dimension->string* *string->dimension*)
+  (:export *dimension->string-ru* *string->dimension-ru*)
+  (:export *dimension->name* *name->dimension*)
+  (:export *dimension->name-ru* *name->dimension-ru*)
   )
 
-;;;;(declaim (optimize (space 0) (compilation-speed 0)  (speed 0) (safety 3) (debug 3)))

@@ -8,6 +8,7 @@
   :depends-on (#:cl-ppcre)
   :components ((:file "package")
 	       (:file "classes")
+	       (:file "si-units")
        	       (:file "methods")
 ;;;;           (:file "mnas-dim-value")
 	       (:file "constants")	       
