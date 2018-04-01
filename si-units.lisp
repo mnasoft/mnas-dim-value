@@ -7,7 +7,8 @@
 (defparameter *si-main-units*
   (list
    (list "length"              "длина"	                       "L" "meter"    "метр"      "m"   "м"    |m|   )
-   (list "mass"                "масса"                         "M" "kilogram" "килограмм" "kg"  "кг"   |kg|  )
+;;;(list "mass"                "масса"                         "M" "kilogram" "килограмм" "kg"  "кг"   |kg|  )
+   (list "mass"                "масса"                         "M" "kilogram" "килограмм" "g"   "г"    (vd* 1/1000 |kg|))
    (list "time"                "время"                         "T" "second"   "секунда"   "s"   "с"    |s|   )
    (list "electric current"    "сила тока электрического"      "I" "ampere"   "ампер"     "A"   "А"    |A|   )
    (list "temperature"         "температура термодинамическая" "Θ" "kelvin"   "кельвин"   "K"   "К"    |K|   )
@@ -97,7 +98,7 @@
       "personal dose equivalent"
       "organ equivalent dose")      '("эквивалентная доза ионизирующего излучения"
                                      "эффективная доза ионизирующего излучения")      nil "sievert" "зиверт"  "Sv"  "Зв"  "J/kg"   "m^2*s^-2"                          |Sv|)
-    (list "catalytic activity"           "активность катализатора"                    nil       "katal"        "катал"       "kat" "кат" nil      "s^-1*mol"           |kat|))
+    (list "catalytic activity"           "активность катализатора"                    nil "katal"   "катал"   "kat" "кат"  nil     "s^-1*mol"           |kat|))
   
   "si-derived-units-with-special-names-and-symbols
 Задает производные единицы СИ, имефщие специальные наименование и обозначения
@@ -161,3 +162,38 @@
 5 - единицы, вараженная через основные и производные единицы СИ
 см. ГОСТ 8.417-2002, таблица 4")
 
+
+(defparameter *not-si-units-tbl-05*
+  (list
+   
+   (list "mass" "масса" "ton" "тонна" "t" "т" (vd* 1000 |kg|))
+   (list "mass" "масса" "ton" "атомная единица массы" "u" "а.е.м." (vd 1.660540210d-27 :kg 1))
+
+   (list "time" "время" "minute" "минута" "min" "мин"  (vd* 60             |s|))
+   (list "time" "время" "hour"   "час"    "h"   "ч"    (vd* 3600           |s|))
+   (list "time" "время" "day"    "сутки"  "d"   "сут"  (vd* 86400          |s|))
+
+   (list "plane angle" "плоский угол" "degree" "градус"  "°" "°"   (vd* (/ pi 180) |rad|))
+   (list "plane angle" "плоский угол" "minute" "минута"  "'" "'"   (vd* (/ pi 180 60) |rad|))
+   (list "plane angle" "плоский угол" "second" "секунда" "\"" "\"" (vd* (/ pi 180 60 60) |rad|))
+   (list "plane angle" "плоский угол" "gon"    "град"    "gon" "град" (vd* (/ pi 200) |rad|))
+   
+   (list "volume" "объём" "liter" "литр" "l" "л" (vd* 1/1000 |m| |m| |m|))
+   
+   (list "length" "длина" "astronomical unit" "астрономическая единица" "ua" "а.е."   (vd* 1.495978706916d11  |m|))
+
+   (list "length" "длина" "light year" "световой год" "ly" "св.год"   (vd* 9.460730472580800d15 |m|))
+   (list "length" "длина" "parsec"     "парсек"       "pc" "пк"       (vd* 3.0856776d16  |m|))
+
+   (list "optical force" "оптическая сила" nil  "диоптрия" nil "дптр" (vd/ |m|))
+
+   (list "area" "площадь" "hectare" "гектар"  "ha" "га" (vd* 100 100 |m| |m|))
+   (list "area" "площадь" "are"     "aр"      "a"  "а"  (vd* 100     |m| |m|))
+
+   (list "energy" "энергия" "electron-volt" "электрон-вольт" "eV" "эВ"    (vd* 1.60217733e-19 |J|))
+   (list "energy" "энергия" "kilowatt-hour" "киловатт-час" "kW*h" "кВт*ч" (vd* 3.6 1000 1000 |J|))
+   
+   (list "full power" "полная мощность" "volt-ampere" "вольт-ампер" "V*A" "В*А" (vd* |W|))
+   (list "reactive power" "рекативная мощность" "var" "вар"         "var" "вар" (vd* |W|))
+   (list "electric charge" "электрический заряд" "ampere hour" "ампер-час" "A*h" "А*ч"  (vd* 3.6 1000 |C|))
+   ))

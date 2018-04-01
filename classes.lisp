@@ -7,18 +7,18 @@
 ;;;;m kg s A K cd mol rad sr
 
 (defclass vd ()
-  ((val   :accessor vd-val :initarg :val :initform 0.0)
-   (d-lst :accessor d-lst :initarg :d-lst :initform (list 0 0 0  0 0 0  0 0 0) )
-   ))
+  ((val   :accessor vd-val  :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
+   (dims  :accessor vd-dims :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
+  (:documentation "Число с размерностью."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
-  (make-instance 'vd :val x :d-lst (list m kg s A K cd mol rad sr) ))
+  (make-instance 'vd :val x :dims (list m kg s A K cd mol rad sr) ))
 
 (defmethod same-dimension ((x vd) (y vd))
   "Проверяет два числа с размерностью на совпадение"
-  (equal (d-lst x) (d-lst y)))
+  (equal (vd-dims x) (vd-dims y)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -30,7 +30,7 @@
   (let
       ((rez (make-instance 'vd)))
     (setf (vd-val rez) (* (vd-val x) (vd-val y))
-	  (d-lst rez) (mapcar #'+ (d-lst x) (d-lst y)))
+	  (vd-dims rez) (mapcar #'+ (vd-dims x) (vd-dims y)))
     rez))
 
 (defmethod vd* ((x number) &rest args)
@@ -54,7 +54,7 @@
 (defmethod div ((x vd) (y vd) )
   (let ((rez (make-instance 'vd)))
     (setf (vd-val rez) (/ (vd-val x) (vd-val y))
-	  (d-lst rez) (mapcar #'- (d-lst x) (d-lst y)))
+	  (vd-dims rez) (mapcar #'- (vd-dims x) (vd-dims y)))
     rez))
 
 (defmethod vd/ ((x vd) &rest args)
@@ -82,7 +82,7 @@
 (defmethod sum ((x vd) (y vd) )
   (let ((rez (make-instance 'vd)))
     (setf (vd-val rez) (+ (vd-val x) (vd-val y))
-	  (d-lst rez) (d-lst x))
+	  (vd-dims rez) (vd-dims x))
     rez))
 
 (defmethod vd+ ((x number) &rest args)
@@ -106,7 +106,7 @@
 (defmethod diff ((x vd) (y vd) )
   (let ((rez (make-instance 'vd)))
     (setf (vd-val rez) (- (vd-val x) (vd-val y))
-	  (d-lst rez) (d-lst x))
+	  (vd-dims rez) (vd-dims x))
     rez))
 
 (defmethod vd- ((x number) &rest args)
@@ -123,7 +123,7 @@
       (dolist (y args)
 	(setf rez (diff rez y)))
       rez)
-    (make-instance 'vd :val (- (vd-val x)) :d-lst (d-lst x))))
+    (make-instance 'vd :val (- (vd-val x)) :dims (vd-dims x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (progn

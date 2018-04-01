@@ -14,7 +14,7 @@
     (3 	 "кило"  "kilo"  "к"  "k")
     (2 	 "гекто" "hecto" "г"  "h")
     (1 	 "дека"  "deca"  "да" "da")
-    (0   ""      ""      ""   "")
+;;; (0   ""      ""      ""   "")
     (-1  "деци"  "deci"  "д"  "d")
     (-2  "санти" "centi" "с"  "c")
     (-3  "милли" "milli" "м"  "m")
@@ -34,28 +34,29 @@
 5 - обозначение множителя международное;")
 
 
-(defparameter *international-mut-prefix* (make-hash-table :test 'equal))
+(progn
+  (defparameter *mut-prefix* (make-hash-table :test 'equal))
+  (mapc #'(lambda (el)
+	    (setf (gethash (fifth el) *mut-prefix*)
+		  (expt 10 (first el))))
+	*mult-prefix*))
 
-(mapc #'(lambda (el)
-	  (setf (gethash (fifth el) *international-mut-prefix*)
-		(expt 10 (first el))))
-      *mult-prefix*)
-
-;;;;(gethash "μ" *international-mut-prefix*)
+(progn
+  (defparameter *mut-prefix-ru* (make-hash-table :test 'equal))
+  (mapc #'(lambda (el)
+	    (setf (gethash (fourth el) *mut-prefix-ru*)
+		  (expt 10 (first el))))
+	*mult-prefix*))
 
 (defun prefix-from->to(x str-prefix-from str-prefix-to)
   "Перевод значения числа х, предваряемого приставкой str-prefix-from,
 в число с приставкой str-prefix-to
 Пример использования:
 5.5 ΜPa -> 5500 kPa
-(prefix-from->to 5.5 \"M\" \"k\")
-=> 5500.0
-(prefix-from->to 5.5 \"\" \"k\")
-=> 0.0055
-(prefix-from->to 5.5 \"\" \"\")
-=> 1.0
-"
-  (* x (/ (gethash str-prefix-from *international-mut-prefix*)
-	  (gethash str-prefix-to *international-mut-prefix*))))
+;;;; (prefix-from->to 5.5 \"M\" \"k\")=> 5500.0
+;;;; (prefix-from->to 5.5 \"\" \"k\") => 0.0055
+;;;; (prefix-from->to 5.5 \"\" \"\") => 1.0"
+  (* x (/ (gethash str-prefix-from *mut-prefix*)
+	  (gethash str-prefix-to   *mut-prefix*))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -13,10 +13,16 @@
   (:export |m| |kg| |s| |A| |K| |cd| |mol| |rad| |sr| )
   (:export |Hz| |N| |Pa| |J| |W| |C| |V| |Ω| |S| |F| |Wb| |H| |Τ| |lm| |lx| |Bq| |Gy| |Sv| )
   (:export vd vd* vd/ vd- vd+)
+  (:export vd-val vd-dims)
   (:export *si-main-units* *si-derived-units-tbl-02* *si-derived-units-tbl-03* *si-derived-units-tbl-04*)
+  (:export *nm-vl* *nm-vl-ru->en* *nm-vl-en->ru*)
+  (:export *mult-nm-vl*)
   (:export *dimension->string* *string->dimension*)
   (:export *dimension->string-ru* *string->dimension-ru*)
   (:export *dimension->name* *name->dimension*)
   (:export *dimension->name-ru* *name->dimension-ru*)
+
+  (:export dimensionp)
   )
+
 

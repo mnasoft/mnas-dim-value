@@ -2,6 +2,14 @@
 
 (in-package #:mnas-dim-value)
 
+(defun dimensionp (str)
+  (multiple-value-bind (val find) (gethash str *mult-nm-vl*)
+    (if find val nil)))
+
+(dimensionp "pV")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defparameter *op* '(("+" . 1) ("-" . 1) ("*" . 2) ("/" . 2) ("^" . 3)))
 
 (defun foo-operatorp (op) (assoc op *op* :test #'equal))
@@ -30,7 +38,7 @@
 
 (defun foo-lexem-tree (ll)
   "Пример использования
-(foo-rev(foo-lexem-tree (foo-split *s*)))"
+;;;; (foo-rev(foo-lexem-tree (foo-split *s*)))"
   (do ((i 0 (1+ i)) (len (length ll)) (tree nil) (st  nil) (obj nil))
       ((>= i len) tree)
     (setf obj (nth i ll))    
@@ -61,10 +69,6 @@
     ((foo-is-digit str) (parse-integer str))
     ((foo-operatorp str) (read-from-string str))
     ))
-
-
-(defun foo-is-dimension(str)
-  )
 
 (defun foo-max-operand-level(ll)
   "Возвращает максимальный уровень операда, примененного в выражении"
@@ -100,15 +104,24 @@
     (setf ll (foo-operand-op-operand ll (foo-max-operand-level ll)))))
 
 (defun foo-parse-list-recursive(ll)
-  (let ((a (car ll) (car ll)))
+  (let ((a (car ll)))
    (cons
-   ((null ll) nil))));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ((null ll) nil))
+   ))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (declaim (optimize (debug 3)))
 
-(defparameter *ss* "25*kg^2+65*kg*g")
+(defparameter *ss* "25 kg^2+65kg*g")
+
+(foo-split *ss*)
 
 (defparameter *tt* "(kg^(-2))*(m*s^3)/(H^2*m^3)")
 
@@ -119,7 +132,3 @@
 (defparameter *oo* '(0 1 2 3 4 5 6))
 
 (foo-parse-list *ll*)
-
-
-
-
