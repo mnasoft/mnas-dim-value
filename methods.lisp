@@ -29,3 +29,16 @@
   (multiple-value-bind (val find) (gethash str *mult-nm-vl*)
     (if find val nil)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmethod print-object         ((x nd) o-s)
+  (format o-s "~S~%"
+	  (list 'q-n-en (nd-quantity-name-en x)
+		'q-n-ru (nd-quantity-name-ru x)
+		'u-n-en (nd-unit-name-en x)
+		'u-n-ru (nd-unit-name-ru x)
+		'u-s-en (nd-unit-symbol-en x)
+		'u-s-ru (nd-unit-symbol-ru x)
+		'd-symb (nd-dimension-symbol x)
+		'value  (nd-value x))))

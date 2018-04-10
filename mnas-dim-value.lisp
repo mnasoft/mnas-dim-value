@@ -3,43 +3,6 @@
 (in-package #:mnas-dim-value)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-"kgf/mm^2" "kgf/cm^2" "kgf/m^2" "mm_Hg" "mm_H2O"
-
-(list
- (list "in"    (vd* 0.0254         |m|))
- (list "Å"     (vd* 1.0e-10        |m|))
-
- (list "t"     (vd* 1000           |kg|))
- (list "u"     (vd* 1.6605402e-27  |kg|))
- (list "lb"    (vd* 0.45359237     |kg|))
-
- (list "tf"    (vd* 1000 *g*       |kg|))
- (list "gf"    (vd* 1/1000 *g*     |kg|))
- (list "lbf"   (vd* 0.45359237 *g* |kg|))
-  
- (list "cal"   (vd* 4.1868         |J|))
-  
- (list "St"    (vd  1/10000 :m 2 :s -1))
-
- (list "m_Hg"  (vd* 133322.0       |Pa|))
- (list "m_H2O" (vd* 9806.65        |Pa|))
- (list "bar"   (vd* 100000         |Pa|))
- (list "atm"   (vd* 101325         |Pa|))
- (list "Torr"  (vd*
-		(/ 101325.0 760)   |Pa|))
- (list "psi"   (vd/
-		( vd* 0.45359237 *g* |kg|)
-		( vd* 0.0254 |m|)
-		( vd* 0.0254 |m|)))
-  
- (list "b"     (vd* 1e-28      |m| |m|))
-
- (list "kn"  (vd/ |m| (vd/ 3600 1852.0 |s|)))
-  
- (list "Gal"  (vd 1/100 :m 1 :s -2)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun K->C(K)
@@ -65,3 +28,61 @@
 (defun Pa->kgs/cm2 (Pa)
   "Переводит значение давления, заданное в Pa, в kgs/cm2."
   (/ Pa 9.8065 10000.0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun dim-string-by-dim-name ( d-type )
+  "Пример использования:
+;;;;(dim-string-by-dim-name \"length\")
+;;;;(dim-string-by-dim-name \"specific entropy\")
+;;;;(dim-string-by-dim-name \"capacitance\")
+;;;;(dim-string-by-dim-name \"mass density\")
+"
+  (let ((rez nil))
+    (mapc #'(lambda (f-data)
+	      (let ((func-dim-string (first f-data))
+		    (data-tbl        (second f-data)))
+		(mapc
+		 #'(lambda (el )
+		     (when (or
+			    (and (stringp (first el)) (string= d-type (first el)))
+			    (and (listp (first el)) (find  d-type (first el) :test #'equal)))
+		       (push (funcall func-dim-string el) rez)))
+		 data-tbl)))
+	  (list
+	   (list #'sixth  *si-main-units*)
+	   (list #'fourth *si-derived-units-tbl-02*)
+	   (list #'sixth  *si-derived-units-tbl-03*)
+	   (list #'fourth *si-derived-units-tbl-04*)
+	   (list #'fifth  *not-si-units-tbl-05*)))
+    rez))
+
+(defun dim-name-list (&key  (en-ru #'first))
+  "Возвращает список наименований величин
+Пример использования 
+;;;;(dim-name-list) 
+;;;;(dim-name-list :en-ru #'second)
+"
+  (let ((rez nil))
+    (mapc #'(lambda (f-data)
+	      (let ((func-dim-string (first f-data))
+		    (data-tbl        (second f-data)))
+		(mapc
+		 #'(lambda (el )
+		     (cond
+		       ((stringp (funcall func-dim-string el))
+			(push (funcall func-dim-string el) rez))
+		       ((listp (funcall func-dim-string el))
+			(dolist (i (funcall func-dim-string el))
+			  (push i rez)))))
+		 data-tbl)))
+	  (list
+	   (list en-ru *si-main-units*)
+	   (list en-ru *si-derived-units-tbl-02*)
+	   (list en-ru *si-derived-units-tbl-03*)
+	   (list en-ru *si-derived-units-tbl-04*)
+	   (list en-ru *not-si-units-tbl-05*)))
+    (delete-duplicates (sort rez #'string< ) :test #'equal )))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+

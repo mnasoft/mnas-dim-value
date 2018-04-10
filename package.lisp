@@ -9,12 +9,15 @@
   (:export kgs/cm2->Pa)			;
   (:export Pa->kgs/cm2)			;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
+  (:export dim-name-list dim-string-by-dim-name)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
   (:export *g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)
   (:export |m| |kg| |s| |A| |K| |cd| |mol| |rad| |sr| )
   (:export |Hz| |N| |Pa| |J| |W| |C| |V| |Ω| |S| |F| |Wb| |H| |Τ| |lm| |lx| |Bq| |Gy| |Sv| )
   (:export vd vd* vd/ vd- vd+)
   (:export vd-val vd-dims)
   (:export *si-main-units* *si-derived-units-tbl-02* *si-derived-units-tbl-03* *si-derived-units-tbl-04*)
+  (:export *not-si-units-tbl-05*)
   (:export *nm-vl* *nm-vl-ru->en* *nm-vl-en->ru*)
   (:export *mult-nm-vl*)
   (:export *dimension->string* *string->dimension*)
