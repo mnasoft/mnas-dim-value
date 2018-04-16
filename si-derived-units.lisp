@@ -231,13 +231,13 @@
   (mapcar
    #'(lambda (el)
               (make-instance 'nd
-		      :quantity-name-en (first el)
-		      :quantity-name-ru (second el)
-		      :dimension-symbol (third el)
-		      :unit-name-en     (fourth el)
-		      :unit-name-ru     (fifth el)
-		      :unit-symbol-en   (sixth el)
-		      :unit-symbol-ru   (seventh  el)
+		      :quantity-name-en (first     el)
+		      :quantity-name-ru (second    el)
+		      :dimension-symbol (third     el)
+		      :unit-name-en     (fourth    el)
+		      :unit-name-ru     (fifth     el)
+		      :unit-symbol-en   (sixth     el)
+		      :unit-symbol-ru   (seventh   el)
 		      :value            (car (last el))
 		      )
        )
@@ -247,13 +247,13 @@
   (mapcar
    #'(lambda (el)
               (make-instance 'nd
-		      :quantity-name-en (first el)
-		      :quantity-name-ru (second el)
-		      :dimension-symbol (third el)
-		      :unit-name-en     (fourth el)
-		      :unit-name-ru     (fifth el)
-		      :unit-symbol-en   (sixth el)
-		      :unit-symbol-ru   (seventh  el)
+		      :quantity-name-en (first     el)
+		      :quantity-name-ru (second    el)
+		      :dimension-symbol (third     el)
+		      :unit-name-en     (fourth    el)
+		      :unit-name-ru     (fifth     el)
+		      :unit-symbol-en   (sixth     el)
+		      :unit-symbol-ru   (seventh   el)
 		      :value            (car (last el))
 		      )
        )
@@ -263,23 +263,17 @@
   (mapcar
    #'(lambda (el)
               (make-instance 'nd
-		      :quantity-name-en (first el)
-		      :quantity-name-ru (second el)
-		      :dimension-symbol (third el)
-		      :unit-name-en     (fourth el)
-		      :unit-name-ru     (fifth el)
-		      :unit-symbol-en   (sixth el)
-		      :unit-symbol-ru   (seventh  el)
-		      :value            (car (last el))
-		      )
-       )
+		      :quantity-name-en (first     el)
+		      :quantity-name-ru (second    el)
+		      :dimension-symbol (third     el)
+		      :unit-name-en     (fourth    el)
+		      :unit-name-ru     (fifth     el)
+		      :unit-symbol-en   (sixth     el)
+		      :unit-symbol-ru   (seventh   el)
+		      :value            (car (last el))))
    *si-derived-units-tbl-04*))
 
-(mapcar #'( lambda (el) (length el) ) *si-derived-units-tbl-04*)
-
-(first *si-derived-units-tbl-04*)
-
-;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
    (list "momentum"                 '("импульс"
 				"количество движения")                   nil             "kg*m/s"  (vd 1 :kg 1 :m 1 :s -1))
@@ -288,6 +282,6 @@
    (list "mass flow rate"           "массовый расход"                    nil             "kg/s"    (vd 1 :kg 1 :s -1)     )
    (list "volumetric flow"          "объёмный расход"                    nil             "m^3/s"   (vd 1 :m 3 :s -1)      )
    (list "flow rate"                "молекулярный расход"                nil             "mol/s"   (vd 1 :mol 1 :s -1)    )
-   (list "molar weight"             "молекулярный вес"                   nil             "kg/mol"  (vd 1 :kg 1 :mol -1))
-   (list "energy density"           "плотноть энергии"                   nil            "J/m^3"      "m^-1*kg^1*s^-2"          (vd/ |J| |m| |m| |m|)  )
-   (list "force impulse"            "импульс силы"                       nil            "N*s"        "m^-1*s^1*A^2"            (vd* |N| |s| ))
+   (list "molar weight"             "молекулярный вес"                   nil             "kg/mol"  (vd 1 :kg 1 :mol -1)   )
+   (list "energy density"           "плотноть энергии"                   nil             "J/m^3"   (vd/ |J| |m| |m| |m|)  )
+   (list "force impulse"            "импульс силы"                       nil             "N*s"     (vd* |N| |s| )         )

@@ -32,6 +32,7 @@
 		      *mut-prefix*))
 	   *nm-vl*))
 
+(print-hash-table *mult-nm-vl*)
 "kgf/mm^2" "kgf/cm^2" "kgf/m^2" "mm_Hg" "mm_H2O"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -39,73 +40,49 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (progn
-  (defparameter *dimension->string* (make-hash-table :test #'equal)
-    "Задает соответствие размерности величины сторке.")
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string* ) (fourth el))) (reverse *si-derived-units-tbl-04*))
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string* ) (sixth  el))) (reverse *si-derived-units-tbl-03*))
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string* ) (fourth el))) (reverse *si-derived-units-tbl-02*))
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string* ) (sixth  el))) (reverse *si-main-units*))
-  (setf (gethash '(0 1 0 0 0 0 0 0 0) *dimension->string*) "kg")
-  (print-hash-table *dimension->string*))
+  (defparameter *dim->unit-symbol-en* (make-hash-table :test #'equal) "Задает соответствие размерности величины сторке.")
+  (flet ((dimension->string (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->unit-symbol-en*) (nd-unit-symbol-en el))) (reverse tbl))))
+    (mapc #'(lambda (el) (dimension->string el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
+    (setf (gethash '(0 1 0 0 0 0 0 0 0) *dim->unit-symbol-en*) "kg"))
+  (print-hash-table *dim->unit-symbol-en*))
 
 (progn
-  (defparameter *string->dimension* (make-hash-table :test #'equal)
-    "Задает соответствие строки обозначающей размернсть списку размерностей")
-  (mapc #'(lambda (el) (setf (gethash (fourth el) *string->dimension*) (vd-dims (car (last el))))) (reverse *si-derived-units-tbl-04*))
-  (mapc #'(lambda (el) (setf (gethash (sixth  el) *string->dimension*) (vd-dims (car (last el))))) (reverse *si-derived-units-tbl-03*))
-  (mapc #'(lambda (el) (setf (gethash (fourth el) *string->dimension*) (vd-dims (car (last el))))) (reverse *si-derived-units-tbl-02*))
-  (mapc #'(lambda (el) (setf (gethash (sixth  el) *string->dimension*) (vd-dims (car (last el))))) (reverse *si-main-units*))
-  (remhash "g" *string->dimension*)
-  (setf (gethash "kg" *string->dimension*)  '(0 1 0 0 0 0 0 0 0))
-  (print-hash-table *string->dimension*))
+  (defparameter *unit-symbol-en->dim* (make-hash-table :test #'equal) "Задает соответствие строки обозначающей размернсть списку размерностей")
+  (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-unit-symbol-en el) *unit-symbol-en->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (mapc #'(lambda (el) (string->dimension el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
+    (remhash "g" *unit-symbol-en->dim*)
+    (setf (gethash "kg" *unit-symbol-en->dim*)  '(0 1 0 0 0 0 0 0 0)))
+  (print-hash-table *unit-symbol-en->dim*))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (progn
-  (defparameter *dimension->string-ru* (make-hash-table :test #'equal ))
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string-ru*) (seventh el))) *si-main-units*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string-ru*) (fourth  el))) *si-derived-units-tbl-02*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string-ru*) (seventh el))) *si-derived-units-tbl-03*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->string-ru*) (fourth  el))) *si-derived-units-tbl-04*)
-  (setf (gethash '(0 1 0 0 0 0 0 0 0) *dimension->string-ru*) "кг")
-  (print-hash-table *dimension->string-ru*))
+  (defparameter *dim->unit-symbol-ru* (make-hash-table :test #'equal) "Задает соответствие размерности величины сторке.")
+  (flet ((dimension->string-ru (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->unit-symbol-ru*) (nd-unit-symbol-ru el))) (reverse tbl))))
+    (mapc #'(lambda (el) (dimension->string-ru el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
+    (setf (gethash '(0 1 0 0 0 0 0 0 0) *dim->unit-symbol-ru*) "кг"))
+  (print-hash-table *dim->unit-symbol-ru*))
 
 (progn
-  (defparameter *string->dimension-ru* (make-hash-table :test #'equal ))
-  (mapc #'(lambda (el) (setf (gethash (seventh el) *string->dimension-ru*) (vd-dims (car (last el))))) *si-main-units*)
-  (mapc #'(lambda (el) (setf (gethash (fourth el)  *string->dimension-ru*) (vd-dims (car (last el))))) *si-derived-units-tbl-02*)
-  (mapc #'(lambda (el) (setf (gethash (seventh el) *string->dimension-ru*) (vd-dims (car (last el))))) *si-derived-units-tbl-03*)
-  (mapc #'(lambda (el) (setf (gethash (fourth el)  *string->dimension-ru*) (vd-dims (car (last el))))) *si-derived-units-tbl-04*)
-  (remhash "г" *string->dimension-ru*)
-  (setf (gethash "кг" *string->dimension-ru*)  '(0 1 0 0 0 0 0 0 0))
-  (print-hash-table *string->dimension-ru*))
-
-"ToDo
-Необходимо после чевертых элементов добавить пятый со строками на русском языке
-*si-derived-units-tbl-02*
-*si-derived-units-tbl-04*
-"
+  (defparameter *unit-symbol-ru->dim* (make-hash-table :test #'equal) "Задает соответствие строки обозначающей размернсть списку размерностей")
+  (flet ((string->dimension-ru (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-unit-symbol-ru el) *unit-symbol-ru->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (mapc #'(lambda (el) (string->dimension-ru el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
+    (remhash "г" *unit-symbol-ru->dim*)
+    (setf (gethash "кг" *unit-symbol-ru->dim*)  '(0 1 0 0 0 0 0 0 0)))
+  (print-hash-table *unit-symbol-ru->dim*))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (progn
-  (defparameter *dimension->name* (make-hash-table :test #'equal ))
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->name*) (first el))) *si-main-units*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->name*) (first el))) *si-derived-units-tbl-02*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->name*) (first el))) *si-derived-units-tbl-03*)
-  (mapc #'(lambda (el) (setf (gethash (vd-dims (car (last el))) *dimension->name*) (first el))) *si-derived-units-tbl-04*)
-  (print-hash-table *dimension->name*))
+  (defparameter *dim->quantity-name-en* (make-hash-table :test #'equal) "Задает соответствие размерности наименованию величины.")
+  (flet ((dim->quantity-name-en (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->quantity-name-en*) (nd-quantity-name-en el))) (reverse tbl))))
+    (mapc #'(lambda (el) (dim->quantity-name-en el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*)))
+  (print-hash-table *dim->quantity-name-en*))
 
 (progn
-  (defparameter *name->dimension* (make-hash-table :test #'equal ))
-  (mapc #'(lambda (el) (setf (gethash (first el) *name->dimension*) (vd-dims (car (last el))))) *si-main-units*)
-  (mapc #'(lambda (el) (setf (gethash (first el) *name->dimension*) (vd-dims (car (last el))))) *si-derived-units-tbl-02*)
-  (mapc #'(lambda (el) (setf (gethash (first el) *name->dimension*) (vd-dims (car (last el))))) *si-derived-units-tbl-03*)
-  (mapc #'(lambda (el) (setf (gethash (first el) *name->dimension*) (vd-dims (car (last el))))) *si-derived-units-tbl-04*)
-  (print-hash-table *name->dimension*))
+  (defparameter *quantity-name-en->dim* (make-hash-table :test #'equal) "Задает соответствие строки обозначающей размернсть списку размерностей")
+  (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-quantity-name-en el) *quantity-name-en->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (mapc #'(lambda (el) (string->dimension el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*)))
+  (print-hash-table *quantity-name-en->dim*))
 
-"ToDo 
-Необходимо доработать так, чтобы каждой размерности в переменной *dimension->name* соответствовали списки имен зазмерностей
-Необходимо доработать так, чтобы ключами были строки, а не списки
-"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

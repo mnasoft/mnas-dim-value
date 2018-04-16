@@ -2,19 +2,34 @@
 
 (in-package #:mnas-dim-value)
 
-(vd/ (vd* 2.56054  |kg| |m| |m| ) |s| |s| |s|)
+(defparameter *nd-list*
+  (reverse
+   (append
+    *nd-si-main-units*
+    *nd-si-derived-units-tbl-02*
+    *nd-si-derived-units-tbl-03*
+    *nd-si-derived-units-tbl-04*
+    *nd-not-si-units-tbl-05*
+    *nd-not-si-units-tbl-07*)))
 
+(defun quantity-name (value &key (vd-language *vd-language*))
+  (let ((rez nil)
+	(item nil)
+	(quantity-name-language
+	 (cond
+	   ((eq vd-language :en) #'nd-quantity-name-en)
+	   ((eq vd-language :ru) #'nd-quantity-name-ru))))
+    (mapc
+     #'(lambda (el)
+	 (when (equal (vd-dims (nd-value el))
+		      (vd-dims value))
+	   (setf item (funcall quantity-name-language el))
+	   (cond
+	     ((stringp item) (push item rez))
+	     ((listp item) (setf rez (append item rez))))))
+     *nd-list*)
+    (remove-duplicates rez :test #'equal)))
 
-(vd-val |kg|)
-(vd-dims |kg|)
+(quantity-name (vd* |m| |m| |m|) )
 
-(defparameter *a* (vd*  |kg|))
-
-
-
-
-(gethash (vd-dims *a*) *dimension->string*)
-
-(print-hash-table *dimension->string*)
-
-(vd-print *a* t)
+(vd/ (vd* |N| |m|) |rad|)

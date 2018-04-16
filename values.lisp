@@ -2,12 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(defun dimensionp (str)
-  (multiple-value-bind (val find) (gethash str *mult-nm-vl*)
-    (if find val nil)))
-
-(dimensionp "pV")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *op* '(("+" . 1) ("-" . 1) ("*" . 2) ("/" . 2) ("^" . 3)))

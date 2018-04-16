@@ -16,8 +16,10 @@
   (:export |Hz| |N| |Pa| |J| |W| |C| |V| |Ω| |S| |F| |Wb| |H| |Τ| |lm| |lx| |Bq| |Gy| |Sv| )
   (:export vd vd* vd/ vd- vd+)
   (:export vd-val vd-dims)
-  (:export *si-main-units* *si-derived-units-tbl-02* *si-derived-units-tbl-03* *si-derived-units-tbl-04*)
-  (:export *not-si-units-tbl-05*)
+  (:export *si-main-units*    *si-derived-units-tbl-02*    *si-derived-units-tbl-03*    *si-derived-units-tbl-04*)
+  (:export *nd-si-main-units* *nd-si-derived-units-tbl-02* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-04*)
+  (:export *not-si-units-tbl-05*    *not-si-units-tbl-07*)
+  (:export *nd-not-si-units-tbl-05* *nd-not-si-units-tbl-07*)
   (:export *nm-vl* *nm-vl-ru->en* *nm-vl-en->ru*)
   (:export *mult-nm-vl*)
   (:export *dimension->string* *string->dimension*)
@@ -27,5 +29,3 @@
 
   (:export dimensionp)
   )
-
-
