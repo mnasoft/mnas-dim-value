@@ -13,6 +13,11 @@
     *nd-not-si-units-tbl-07*)))
 
 (defun quantity-name (value &key (vd-language *vd-language*))
+  "Возвращает наименование величины.
+Пример использования:
+;;;; (quantity-name (vd/ |kg| |m| |m| |m|) :vd-language :en) => (\"density\" \"mass density\")
+;;;; (quantity-name (vd/ (vd* |kg| *g*) (vd-expt (vd* 0.01 |m|) 2) 1000))
+"
   (let ((rez nil)
 	(item nil)
 	(quantity-name-language
@@ -30,6 +35,3 @@
      *nd-list*)
     (remove-duplicates rez :test #'equal)))
 
-(quantity-name (vd* |m| |m| |m|) )
-
-(vd/ (vd* |N| |m|) |rad|)

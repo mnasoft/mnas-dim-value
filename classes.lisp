@@ -126,6 +126,20 @@
     (make-instance 'vd :val (- (vd-val x)) :dims (vd-dims x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmethod vd-expt ((x vd) (p number))
+  (make-instance
+   'vd
+   :val (expt (vd-val x) p)
+   :dims (mapcar  #'(lambda (el) (* el p)) (vd-dims x))))
+
+(defmethod vd-sqrt ((x vd))
+  (make-instance
+   'vd
+   :val (sqrt (vd-val x))
+   :dims (mapcar  #'(lambda (el) (/ el 2)) (vd-dims x))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (progn
   (defparameter |m|   (vd 1 :m   1) "метр")
   (defparameter |kg|  (vd 1 :kg  1) "килограмм")
@@ -166,8 +180,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defclass nd ()
-  ((quantity-name-en :accessor nd-quantity-name-en  :initarg :quantity-name-en :initform "" :documentation "Наименование величины английское. Например: длина")
-   (quantity-name-ru :accessor nd-quantity-name-ru  :initarg :quantity-name-ru :initform "" :documentation "Наименование величины английское. Например: length")
+  ((quantity-name-en :accessor nd-quantity-name-en  :initarg :quantity-name-en :initform "" :documentation "Наименование величины английское. Например: length")
+   (quantity-name-ru :accessor nd-quantity-name-ru  :initarg :quantity-name-ru :initform "" :documentation "Наименование величины русское. Например: длина")
    (unit-name-en     :accessor nd-unit-name-en      :initarg :unit-name-en     :initform "" :documentation "Наименование единицы английское. Например: metre") 
    (unit-name-ru     :accessor nd-unit-name-ru      :initarg :unit-name-ru     :initform "" :documentation "Наименование единицы русское. Например: метр") 
    (unit-symbol-en   :accessor nd-unit-symbol-en    :initarg :unit-symbol-en   :initform "" :documentation "Обозначение единицы английское. Например: m")
@@ -175,8 +189,3 @@
    (dimension-symbol :accessor nd-dimension-symbol  :initarg :dimension-symbol :initform "" :documentation "Символ размерности. Например: L")
    (value            :accessor nd-value             :initarg :value            :initform 1  :documentation "Значение, выраженное в единицах СИ. Например: (vd 1 :m 1)"))
   (:documentation "Число с размерностью."))
-
-
-
-
-

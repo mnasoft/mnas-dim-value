@@ -15,6 +15,7 @@
   (:export |m| |kg| |s| |A| |K| |cd| |mol| |rad| |sr| )
   (:export |Hz| |N| |Pa| |J| |W| |C| |V| |Ω| |S| |F| |Wb| |H| |Τ| |lm| |lx| |Bq| |Gy| |Sv| )
   (:export vd vd* vd/ vd- vd+)
+  (:export vd-expt vd-sqrt)
   (:export vd-val vd-dims)
   (:export *si-main-units*    *si-derived-units-tbl-02*    *si-derived-units-tbl-03*    *si-derived-units-tbl-04*)
   (:export *nd-si-main-units* *nd-si-derived-units-tbl-02* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-04*)
