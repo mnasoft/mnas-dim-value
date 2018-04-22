@@ -4,11 +4,25 @@
 
 (defun print-hash-table (ht) (maphash #'(lambda (key val) (format t "~S ~S~%" key val)) ht))
 
+(defun hash-table->list (ht)
+  (let ((rez nil))
+    (maphash #'(lambda (key val) (push (list key val) rez) ) ht)
+    rez))
+
 (progn
   (defparameter *nm-vl* (make-hash-table :test #'equal) "Задает соответствие сроки, обозначающей размерность значению.")
   (mapc #'(lambda (el) (setf (gethash (sixth  el) *nm-vl*) (car (last el)))) *si-main-units*)
   (mapc #'(lambda (el) (setf (gethash (sixth  el) *nm-vl*) (car (last el)))) *si-derived-units-tbl-03*)
   (print-hash-table *nm-vl*))
+
+(mapc 
+ #'(lambda (n-v)
+     (mapc
+      #'(lambda (n-c)
+	  (setf (gethash (concatenate 'string (first n-c ) (first n-v)) *nm-vl*)
+		(vd* (second n-c ) (second n-v))))
+      (hash-table->list *m-coeff-en*)))
+ (hash-table->list  *nm-vl*))
 
 (progn
   (defparameter *nm-vl-ru->en* (make-hash-table :test #'equal) "Задает соответствие сроки, обозначающей размерность значению.")
@@ -29,7 +43,7 @@
 		      #'(lambda (m-key m-val)
 			  (setf (gethash (concatenate 'string m-key key) *mult-nm-vl*)
 				(vd* val m-val)))
-		      *mut-prefix*))
+		      *m-coeff-en*))
 	   *nm-vl*))
 
 (print-hash-table *mult-nm-vl*)

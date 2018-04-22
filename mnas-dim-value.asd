@@ -15,6 +15,7 @@
 	       (:file "mult-coeff")
 	       (:file "hash-tables")
        	       (:file "methods")
+	       (:file "marco")
 
 	       (:file "razmernost")
 	       (:file "mnas-dim-value")	       

@@ -35,16 +35,16 @@
 
 
 (progn
-  (defparameter *mut-prefix* (make-hash-table :test 'equal))
+  (defparameter *m-coeff-en* (make-hash-table :test 'equal))
   (mapc #'(lambda (el)
-	    (setf (gethash (fifth el) *mut-prefix*)
+	    (setf (gethash (fifth el) *m-coeff-en*)
 		  (expt 10 (first el))))
 	*mult-prefix*))
 
 (progn
-  (defparameter *mut-prefix-ru* (make-hash-table :test 'equal))
+  (defparameter *m-coeff-ru* (make-hash-table :test 'equal))
   (mapc #'(lambda (el)
-	    (setf (gethash (fourth el) *mut-prefix-ru*)
+	    (setf (gethash (fourth el) *m-coeff-ru*)
 		  (expt 10 (first el))))
 	*mult-prefix*))
 
@@ -56,7 +56,7 @@
 ;;;; (prefix-from->to 5.5 \"M\" \"k\")=> 5500.0
 ;;;; (prefix-from->to 5.5 \"\" \"k\") => 0.0055
 ;;;; (prefix-from->to 5.5 \"\" \"\") => 1.0"
-  (* x (/ (gethash str-prefix-from *mut-prefix*)
-	  (gethash str-prefix-to   *mut-prefix*))))
+  (* x (/ (gethash str-prefix-from *m-coeff-en*)
+	  (gethash str-prefix-to   *m-coeff-en*))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

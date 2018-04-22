@@ -37,39 +37,4 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmethod mult ((x vd) (y string))
-  (mult x (gethash y *nm-vl*)))
-
-(defmethod mult ((y string) (x vd))
-  (mult x (gethash y *nm-vl*)))
-
-(defmethod mult ((x number) (y string))
-  (mult x (gethash y *nm-vl*)))
-
-(defmethod mult ((y number) (x vd))
-  (mult x (gethash y *nm-vl*)))
-
-
-(defmethod vd* ((x string) &rest args)
-  (let ((rez (gethash x *nm-vl*)))
-    (dolist (y args)
-      (setf rez (mult rez y)))
-    rez))
-
-(defmethod vd* ((x string) &rest args)
-  (let ((rez (gethash x *nm-vl*)))
-    (dolist (y args)
-      (setf rez (mult rez y)))
-    rez))
-
-(defmethod vd ((x string))
-  (gethash x *nm-vl*))
-
-(vd "sr")
-
-(defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
-  (make-instance 'vd :val x :dims (list m kg s A K cd mol rad sr) ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
+(quantity (3 "cm") ^ 3)

@@ -21,63 +21,42 @@
   (equal (vd-dims x) (vd-dims y)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defmethod vd-convert ((x vd)) x)
 
-(defmethod mult ((x number) (y vd)) (mult (vd x) y))
+(defmethod vd-convert ((x number)) (vd x))
 
-(defmethod mult ((y vd) (x number)) (mult (vd x) y))
+(defmethod vd-convert ((x string)) (gethash x *nm-vl*))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defmethod mult ((x vd) (y vd) )
-  (let
-      ((rez (make-instance 'vd)))
+  (let ((rez (vd 0)))
     (setf (vd-val rez) (* (vd-val x) (vd-val y))
 	  (vd-dims rez) (mapcar #'+ (vd-dims x) (vd-dims y)))
     rez))
 
-(defmethod vd* ((x number) &rest args)
-  (let ((rez (vd x) ))
+(defun vd* (x &rest args)
+  (let ((rez (vd-convert x)))
     (dolist (y args)
-      (setf rez (mult rez y)))
-    rez))
-
-(defmethod vd* ((x vd) &rest args)
-  (let ((rez x))
-    (dolist (y args)
-      (setf rez (mult rez y)))
+      (setf rez (mult rez (vd-convert y))))
     rez))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmethod div ((x number) (y vd) ) (div (make-instance 'vd :val x) y))
-
-(defmethod div ((y vd) (x number) ) (div y (make-instance 'vd :val x)))
-
 (defmethod div ((x vd) (y vd) )
-  (let ((rez (make-instance 'vd)))
+  (let ((rez (vd 0)))
     (setf (vd-val rez) (/ (vd-val x) (vd-val y))
 	  (vd-dims rez) (mapcar #'- (vd-dims x) (vd-dims y)))
     rez))
 
-(defmethod vd/ ((x vd) &rest args)
+(defun vd/ (x &rest args)
   (if args
-      (let ((rez x ))
+      (let ((rez (vd-convert x)))
 	(dolist (y args)
-	  (setf rez (div rez y)))
+	  (setf rez (div rez (vd-convert y))))
 	rez)
-      (div (vd 1) x)))
-
-(defmethod vd/ ((x number) &rest args)
-  (if args
-      (let ((rez (vd x)))
-	(dolist (y args)
-	  (setf rez (div rez y)))
-	rez)
-      (div (vd 1) x)))
+      (div (vd 1) (vd-convert x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defmethod sum ((x number) (y vd) ) (sum (make-instance 'vd :val x) y))
- 
-(defmethod sum ((y vd) (x number) ) (sum y (make-instance 'vd :val x)))
 
 (defmethod sum ((x vd) (y vd) )
   (let ((rez (make-instance 'vd)))
@@ -85,23 +64,13 @@
 	  (vd-dims rez) (vd-dims x))
     rez))
 
-(defmethod vd+ ((x number) &rest args)
-  (let ((rez (vd x) ))
+(defun vd+ (x &rest args)
+  (let ((rez (vd-convert x)))
     (dolist (y args)
-      (setf rez (sum rez y)))
-    rez))
-
-(defmethod vd+ ((x vd) &rest args)
-  (let ((rez  x))
-    (dolist (y args)
-      (setf rez (sum rez y)))
+      (setf rez (sum rez (vd-convert y))))
     rez))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defmethod diff ((x number) (y vd) ) (diff (make-instance 'vd :val x) y))
- 
-(defmethod diff ((y vd) (x number) ) (diff y (make-instance 'vd :val x)))
 
 (defmethod diff ((x vd) (y vd) )
   (let ((rez (make-instance 'vd)))
@@ -109,29 +78,22 @@
 	  (vd-dims rez) (vd-dims x))
     rez))
 
-(defmethod vd- ((x number) &rest args)
+(defun vd- (x  &rest args)
   (if args
-    (let ((rez (vd x)))
+    (let ((rez (vd-convert x)))
       (dolist (y args)
-	(setf rez (diff rez y)))
-      rez)
-    (vd (- x))))
-  
-(defmethod vd- ((x vd) &rest args)
-  (if args
-    (let ((rez x))
-      (dolist (y args)
-	(setf rez (diff rez y)))
+	(setf rez (diff rez (vd-convert y))))
       rez)
     (make-instance 'vd :val (- (vd-val x)) :dims (vd-dims x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmethod vd-expt ((x vd) (p number))
+(defmethod vd-expt (val (p number))
+  (let ((x (vd-convert val)))
   (make-instance
    'vd
    :val (expt (vd-val x) p)
-   :dims (mapcar  #'(lambda (el) (* el p)) (vd-dims x))))
+   :dims (mapcar  #'(lambda (el) (* el p)) (vd-dims x)))))
 
 (defmethod vd-sqrt ((x vd))
   (make-instance
