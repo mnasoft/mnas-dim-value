@@ -60,7 +60,7 @@
     (dolist (i data)
       (if (atom i)
 	  (push i rez)
-	  (push (vd-quantity i) rez)))
+	  (push (rec-quantity i) rez)))
     (vd-quantity (reverse rez))))
 
 (defmacro quantity (x &rest y )
@@ -68,5 +68,4 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
+(vd 55 :m 4)

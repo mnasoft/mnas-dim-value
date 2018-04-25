@@ -1,7 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:mnas-dim-value
-  (:use    #:cl #:cl-ppcre)
+  (:use    #:cl ); #:cl-ppcre)
   (:export K->C) ;; Перевод градусов кельвина в градусы цельсия
   (:export C->K) ;; Перевод градусов цельсия в градусы кельвина
   (:export k->M) ;; Перевод значения с приставкой кило в число с приставкой мега
@@ -29,4 +29,5 @@
   (:export *dimension->name-ru* *name->dimension-ru*)
 
   (:export dimensionp)
+  (:export quantity)
   )
