@@ -60,7 +60,7 @@
   (equal (vd-dims x) (vd-dims y)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defgeneric vd-convert (T))
+(defgeneric vd-convert (obj))
 
 (defmethod vd-convert ((x vd)) x)
 

@@ -43,5 +43,5 @@
  (quantity 36 "°"  + 36 "'" + 15 "\""  )
  (quantity 36 "°"  + 36 "'" ))
 
-(quantity 1 "W")
+
 
