@@ -21,5 +21,6 @@
    (unit-symbol-en   :accessor nd-unit-symbol-en    :initarg :unit-symbol-en   :initform "" :documentation "Обозначение единицы английское. Например: m")
    (unit-symbol-ru   :accessor nd-unit-symbol-ru    :initarg :unit-symbol-ru   :initform "" :documentation "Обозначение единицы русское. Например: м")
    (dimension-symbol :accessor nd-dimension-symbol  :initarg :dimension-symbol :initform "" :documentation "Символ размерности. Например: L")
-   (value            :accessor nd-value             :initarg :value            :initform 1  :documentation "Значение, выраженное в единицах СИ. Например: (vd 1 :m 1)"))
+   (value            :accessor nd-value             :initarg :value            :initform 1  :documentation "Значение, выраженное в единицах СИ. Например: (vd 1 :m 1)")
+   (coeff            :accessor nd-coeff             :initarg :coeff :initform '((-24 24))   :documentation "Список диапионов разрешенных степеней множителей"))
   (:documentation "Число с размерностью."))

@@ -6,67 +6,67 @@
   (list
    (list "mass"      "масса" nil
 	 "ton"       "тонна"
-	 "t"         "т"                 (vd* 1000 |kg|))
+	 "t"         "т"                 (vd* 1000 |kg|)                        '((0 24)))
    (list "mass"      "масса" nil
 	 ""          "атомная единица массы"
-	 "u"         "а.е.м."            (vd 1.660540210d-27 :kg 1))
+	 "u"         "а.е.м."            (vd 1.660540210d-27 :kg 1)             '((-24 24)))
    (list "time"      "время" nil
 	 "minute"    "минута"
-	 "min"       "мин"               (vd* 60             |s|))
+	 "min"       "мин"               (vd* 60             |s|)               nil)
    (list "time"      "время" nil
 	 "hour"      "час"
-	 "h"         "ч"                 (vd* 3600           |s|))
+	 "h"         "ч"                 (vd* 3600           |s|)               nil)
    (list "time"      "время" nil
 	 "day"       "сутки"
-	 "d"         "сут"               (vd* 86400          |s|))
+	 "d"         "сут"               (vd* 86400          |s|)               nil)
    (list "plane angle" "плоский угол" nil
 	 "degree"    "градус"
-	 "°"         "°"                 (vd* (/ pi 180) |rad|))
+	 "°"         "°"                 (vd* (/ pi 180) |rad|)                 nil)
    (list "plane angle" "плоский угол" nil
 	 "minute"    "минута"
-	 "'"         "'"                 (vd* (/ pi 180 60) |rad|))
+	 "'"         "'"                 (vd* (/ pi 180 60) |rad|)              nil)
    (list "plane angle" "плоский угол" nil
 	 "second"    "секунда"
-	 "\""        "\""                (vd* (/ pi 180 60 60) |rad|))
+	 "\""        "\""                (vd* (/ pi 180 60 60) |rad|)           nil)
    (list "plane angle" "плоский угол" nil
 	 "gon"       "град"
-	 "gon"       "град"              (vd* (/ pi 200) |rad|))
+	 "gon"       "град"              (vd* (/ pi 200) |rad|)                 nil)
    (list "volume"    "объём" nil
 	 "liter"     "литр"
-	 "l"         "л"                 (vd* 1/1000 |m| |m| |m|))
+	 "l"         "л"                 (vd* 1/1000 |m| |m| |m|)               '((-24 24)))
    (list "length"    "длина" nil
 	 "astronomical unit" "астрономическая единица"
-	 "ua"        "а.е."              (vd* 1.495978706916d11  |m|))
+	 "ua"        "а.е."              (vd* 1.495978706916d11  |m|)           nil)
    (list "length"    "длина" nil
 	 "light year" "световой год"
-	 "ly"        "св.год"            (vd* 9.460730472580800d15 |m|))
+	 "ly"        "св.год"            (vd* 9.460730472580800d15 |m|)         nil)
    (list "length"    "длина" nil
 	 "parsec"    "парсек"
-	 "pc"        "пк"                (vd* 3.0856776d16  |m|))
+	 "pc"        "пк"                (vd* 3.0856776d16  |m|)   nil)
    (list "optical force" "оптическая сила" nil
 	 ""          "диоптрия"
-	 "1/m"       "дптр"              (vd/ |m|))
+	 "дптр"      "дптр"              (vd/ |m|)   nil)
    (list "area"      "площадь" nil
 	 "hectare"   "гектар"
-	 "ha"        "га"                (vd* 100 100 |m| |m|))
+	 "ha"        "га"                (vd* 100 100 |m| |m|)   nil)
    (list "area"      "площадь" nil
 	 "are"       "aр"
-	 "a"         "а"                 (vd* 100     |m| |m|)) ;;;; 
+	 "a"         "а"                 (vd* 100     |m| |m|)   nil) ;;;; 
    (list "energy"    "энергия" nil
 	 "electron-volt" "электрон-вольт"
-	 "eV"        "эВ"                (vd* 1.60217733d-19 |J|))
+	 "eV"        "эВ"                (vd* 1.60217733d-19 |J|)   nil)
    (list "energy"    "энергия" nil
 	 "kilowatt-hour" "киловатт-час"
-	 "kW*h"      "кВт*ч"             (vd* 36/10 1000 1000 |J|))
+	 "kW*h"      "кВт*ч"             (vd* 36/10 1000 1000 |J|)   nil)
    (list "full power" "полная мощность" nil
 	 "volt-ampere" "вольт-ампер"
-	 "V*A"       "В*А"               (vd* |W|))
+	 "V*A"       "В*А"               (vd* |W|)   nil)
    (list "reactive power" "рекативная мощность" nil
 	 "var"       "вар"
-	 "var"       "вар"               (vd* |W|))
+	 "var"       "вар"               (vd* |W|)   nil)
    (list "electric charge" "электрический заряд" nil
 	 "ampere hour" "ампер-час"
-	 "A*h"       "А*ч"               (vd* 36/10 1000 |C|))
+	 "A*h"       "А*ч"               (vd* 36/10 1000 |C|)   nil)
    )
   "Внесистемные единицы, допустимые к применению наравне с единицами СИ")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -75,28 +75,28 @@
   (list 
    (list "length"         "длина"               nil
 	 "nautical mile"  "морская миля"
-	 "nmi"            "миля"                (vd 1852 :m 1))
+	 "nmi"            "миля"                (vd 1852 :m 1)   nil)
    (list ""               "масса"    nil
 	 ""               "карат"
-	 ""               "кар"                 (vd 2/10000 :kg 1))
+	 "кар"            "кар"                 (vd 2/10000 :kg 1)   nil)
    (list ""               "линейная плотность"  nil
 	 ""               "текс"
-	 "tex"            "текс"                (vd 1/1000000 :kg 1 :m -1))
+	 "tex"            "текс"                (vd 1/1000000 :kg 1 :m -1)   nil)
    (list ""               "скорость"            nil
 	 "knot"           "узел"
-	 "kn"             "уз"                  (vd/ |m| (vd/ 3600 1852 |s|)))
+	 "kn"             "уз"                  (vd/ |m| (vd/ 3600 1852 |s|))   nil)
    (list ""               "ускорение"           nil
 	 ""               "гал"
-	 "Gal"            "Гал"                 (vd 1/100 :m 1 :s -2))
+	 "Gal"            "Гал"                 (vd 1/100 :m 1 :s -2)   nil)
    (list ""               "частота вращения"    nil
 	 ""               "оборот в секунду"
-	 "r/s"            "об/с"                (vd (* pi 2)  :rad 1  :s -1))
+	 "r/s"            "об/с"                (vd (* pi 2)  :rad 1  :s -1)   nil)
    (list ""               "частота вращения"    nil
 	 ""               "оборот в минуту"
-	 "r/min"          "об/мин"              (vd (* pi 2 1/60) :rad 1 :s -1))
+	 "r/min"          "об/мин"              (vd (* pi 2 1/60) :rad 1 :s -1)   nil)
    (list ""               "давление"            nil
 	 ""               "бар"
-	 "bar"            "бар"                 (vd* 100000 |Pa|))
+	 "bar"            "бар"                 (vd* 100000 |Pa|)   nil)
    )
   "Внесистемные единицы, временно допустимые к применению")
 
@@ -104,89 +104,89 @@
   (list
    (list "length"        "длина"                nil
 	 "angstrom"      "ангстрем"
-	 "Å" "Å"                                (vd* 1d-10 |m|))
+	 "Å" "Å"                                (vd* 1d-10 |m|)   nil)
    (list "area"          "площадь"              nil
 	 "barn"          "барн"
-	 "b"             "б"                    (vd* 1d-28 |m| |m|))
+	 "b"             "б"                    (vd* 1d-28 |m| |m|)   nil)
    (list ""              "масса"
 	 ""              "центнер"
-	 "q"             "ц"                    (vd* 100 |kg|))
+	 "q"             "ц"                    (vd* 100 |kg|)   nil)
    (list ""              "телесный угол"        nil
 	 ""              "квадратный градус"
-	 "□˚"            "□˚"                   (vd* |sr| (/ (* pi pi) (* 180 180)))) ;;;; "□˚"
+	 "□˚"            "□˚"                   (vd* |sr| (/ (* pi pi) (* 180 180)))   nil) ;;;; "□˚"
    (list "force"         "сила"                 nil
 	 ""              "дина"
-	 "dyn"           "дин"                  (vd* 1/100000 |N|))
+	 "dyn"           "дин"                  (vd* 1/100000 |N|)   nil)
    (list "force"         "сила"                 nil
 	 ""	         "килограмм-сила"
-	 "kgf"           "кгс"                  (vd* 1 *g*     |kg|))
+	 "kgf"           "кгс"                  (vd* 1 *g*     |kg|)   nil)
 
    (list "force"         "сила"                 nil
 	 ""	         "килопонд"
-	 "kp"            "-"                    (vd* 1 *g*     |kg|))
+	 "kp"            "-"                    (vd* 1 *g*     |kg|)   nil)
    (list "force"         "сила"                 nil
 	 ""	         "грамм-сила"
-	 "gf"            "гс"                   (vd* 1/1000 *g*     |kg|))
+	 "gf"            "гс"                   (vd* 1/1000 *g*     |kg|)   nil)
    (list "force"         "сила"                 nil
 	 ""	         "понд"
-	 "p"             "-"                    (vd* 1 *g*     |kg|))
+	 "p"             "-"                    (vd* 1 *g*     |kg|)   nil)
    (list "force"         "сила"                 nil
 	 ""              "тонна-сила"
-	 "tf"            "тс"                   (vd* 1000 *g*       |kg|))
+	 "tf"            "тс"                   (vd* 1000 *g*       |kg|)   nil)
    (list "pressure"      "давление"
 	 ""              "килограмм-сила на квадратный сантиметр"
-	 "kgf/cm^2"      "кгс/см^2"             (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|))
+	 "kgf/cm^2"      "кгс/см^2"             (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
    (list "pressure"      "давление"
 	 ""              "килопонд на квадратный сантиметр"
-	 "kp/cm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|))
+	 "kp/cm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
    (list "pressure"      "давление"             nil
 	 ""              "миллиметр водяного столба"
-	 "mm H2O"        "мм вод. ст."          (vd* 9.80665 |Pa|))
+	 "mm H2O"        "мм вод. ст."          (vd* 9.80665 |Pa|)   nil)
    (list "pressure"      "давление"             nil
 	 ""              "миллиметр ртутного столба"
-	 "mm Hg"         "мм pт. ст."           (vd* 133.322 |Pa|))
+	 "mm Hg"         "мм pт. ст."           (vd* 133.322 |Pa|)   nil)
    (list "pressure"      "давление"             nil
 	 ""              "торр"
-	 "Torr"          "-"                    (vd* 133.322 |Pa|))
+	 "Torr"          "-"                    (vd* 133.322 |Pa|)   nil)
    (list "stress"        "напряжение"
 	 ""              "килограмм-сила на квадратный миллиметр"
-	 "kgf/mm^2"      "кгс/мм^2"             (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|))
+	 "kgf/mm^2"      "кгс/мм^2"             (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
    (list "stress"        "напряжение"
 	 ""              "килопонд на квадратный миллиметр"
-	 "kp/mm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|))
+	 "kp/mm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
    (list ""              '("работа" "энергия")  nil
 	 ""              "эрг"
-	 "erg"           "эрг"                  (vd/ |J| 10 1000 1000))
+	 "erg"           "эрг"                  (vd/ |J| 10 1000 1000)   nil)
    (list ""              "мощность"             nil
 	 "horsepower"              "лошадиная сила"
-	 "hp"            "л.с."                  (vd* 75 *g* |kg| (vd/ |m| |s|)))
+	 "hp"            "л.с."                  (vd* 75 *g* |kg| (vd/ |m| |s|))   nil)
    (list "kinematic viscosity" "динамическая вязкость" nil
 	 ""              "пуаз"
-	 "P"             "П"                    (vd* 1/10 |Pa| |s|))
+	 "P"             "П"                    (vd* 1/10 |Pa| |s|)   nil)
    (list "kinematic viscosity" "кинематическая вязкость" nil
 	 ""              "стокс"
-	 "St"            "Ст"                   (vd 1/10000 :m 2 :s -1))
+	 "St"            "Ст"                   (vd 1/10000 :m 2 :s -1)   nil)
 ;;;; ....
    (list "quantity of heat" '("количество теплоты" "термодинамический потециал") nil
 	 ""              "калория"
-	 "cal"           "кал"                  (vd* 4.1868 |J|))
+	 "cal"           "кал"                  (vd* 4.1868 |J|)   nil)
    (list "quantity of heat" '("количество теплоты" "термодинамический потециал") nil
 	 ""              "калория термохимическая"
-	 "cal_{th}"      "кал_{тх}"             (vd* 4.1840 |J|))
+	 "cal_{th}"      "кал_{тх}"             (vd* 4.1840 |J|)               nil)
    (list "" '("теплота химической рекции")      nil
 	 ""              "калория  15-градусная"
-	 "cal_{15}"      "кал_{15}"             (vd* 4.1855 |J|))
+	 "cal_{15}"      "кал_{15}"             (vd* 4.1855 |J|)               nil)
 ;;;; ....
    (list ""              "длина"                nil
 	 ""              "микрон"
-	 "μ"             "мк"                   (vd/ |m| 1000 1000))
+	 "μ"             "мк"                   (vd/ |m| 1000 1000)             nil)
    (list ""              "угол поворота"         nil
 	 ""              "оборот"
-	 "r"             "об"                   (vd* 2 pi |rad|))
+	 "r"             "об"                   (vd* 2 pi |rad|)                nil)
 ;;;; ....
    (list ""              "площадь"              nil
 	 ""              "ар"
-	 "a"             "а"                   (vd* 100 |m| |m|)))
+	 "a"             "а"                   (vd* 100 |m| |m|)                nil))
   "Соотношение некоторых внесистемных единиц с единицами СИ"
   )
 
@@ -195,15 +195,16 @@
 (defparameter *nd-not-si-units-tbl-05*
   (mapcar
    #'(lambda (el)
-              (make-instance 'nd
-		      :quantity-name-en (first el)
-		      :quantity-name-ru (second el)
-		      :dimension-symbol (third el)
-		      :unit-name-en     (fourth el)
-		      :unit-name-ru     (fifth el)
-		      :unit-symbol-en   (sixth el)
-		      :unit-symbol-ru   (seventh  el)
-		      :value            (car (last el))
+       (make-instance 'nd
+		      :quantity-name-en (first   el)
+		      :quantity-name-ru (second  el)
+		      :dimension-symbol (third   el)
+		      :unit-name-en     (fourth  el)
+		      :unit-name-ru     (fifth   el)
+		      :unit-symbol-en   (sixth   el)
+		      :unit-symbol-ru   (seventh el)
+		      :value            (eighth  el)
+		      :coeff            (ninth   el)
 		      )
        )
    *not-si-units-tbl-05*))
@@ -211,15 +212,16 @@
 (defparameter *nd-not-si-units-tbl-07*
   (mapcar
    #'(lambda (el)
-              (make-instance 'nd
-		      :quantity-name-en (first el)
-		      :quantity-name-ru (second el)
-		      :dimension-symbol (third el)
-		      :unit-name-en     (fourth el)
-		      :unit-name-ru     (fifth el)
-		      :unit-symbol-en   (sixth el)
-		      :unit-symbol-ru   (seventh  el)
-		      :value            (car (last el))
+       (make-instance 'nd
+		      :quantity-name-en (first   el)
+		      :quantity-name-ru (second  el)
+		      :dimension-symbol (third   el)
+		      :unit-name-en     (fourth  el)
+		      :unit-name-ru     (fifth   el)
+		      :unit-symbol-en   (sixth   el)
+		      :unit-symbol-ru   (seventh el)
+		      :value            (eighth  el)
+		      :coeff            (ninth   el)
 		      )
        )
    *not-si-units-tbl-07*))

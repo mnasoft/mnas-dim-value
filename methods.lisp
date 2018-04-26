@@ -36,7 +36,8 @@
 		'u-s-en (nd-unit-symbol-en   x)
 		'u-s-ru (nd-unit-symbol-ru   x)
 		'd-symb (nd-dimension-symbol x)
-		'value  (nd-value            x))))
+		'value  (nd-value            x)
+		'coeff  (nd-coeff            x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

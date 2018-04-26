@@ -18,3 +18,9 @@
 
 (defparameter *dim->quantity-name-en* (make-hash-table :test #'equal) "Задает соответствие размерности наименованию величины.")
 (defparameter *quantity-name-en->dim* (make-hash-table :test #'equal) "Задает соответствие строки обозначающей размернсть списку размерностей")
+
+(defparameter *d "°")
+
+(defparameter *m "'")
+
+(defparameter *s "\"")
