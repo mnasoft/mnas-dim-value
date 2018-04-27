@@ -33,7 +33,7 @@
 	 "gon"       "град"              (vd* (/ pi 200) |rad|)                 nil)
    (list "volume"    "объём" nil
 	 "liter"     "литр"
-	 "l"         "л"                 (vd* 1/1000 |m| |m| |m|)               '((-24 24)))
+	 "l"         "л"                 (vd* 1/1000 |m| |m| |m|)               '((-3 -3) (0 3)))
    (list "length"    "длина" nil
 	 "astronomical unit" "астрономическая единица"
 	 "ua"        "а.е."              (vd* 1.495978706916d11  |m|)           nil)
@@ -104,35 +104,38 @@
   (list
    (list "length"        "длина"                nil
 	 "angstrom"      "ангстрем"
-	 "Å" "Å"                                (vd* 1d-10 |m|)   nil)
+	 "Å" "Å"                                (vd* 1d-10 |m|)         nil)
    (list "area"          "площадь"              nil
 	 "barn"          "барн"
-	 "b"             "б"                    (vd* 1d-28 |m| |m|)   nil)
+	 "b"             "б"                    (vd* 1d-28 |m| |m|)      nil)
    (list ""              "масса"
 	 ""              "центнер"
-	 "q"             "ц"                    (vd* 100 |kg|)   nil)
+	 "q"             "ц"                    (vd* 100 |kg|)           nil)
    (list ""              "телесный угол"        nil
 	 ""              "квадратный градус"
 	 "□˚"            "□˚"                   (vd* |sr| (/ (* pi pi) (* 180 180)))   nil) ;;;; "□˚"
    (list "force"         "сила"                 nil
 	 ""              "дина"
-	 "dyn"           "дин"                  (vd* 1/100000 |N|)   nil)
+	 "dyn"           "дин"                  (vd* 1/100000 |N|)       nil)
    (list "force"         "сила"                 nil
 	 ""	         "килограмм-сила"
-	 "kgf"           "кгс"                  (vd* 1 *g*     |kg|)   nil)
+	 "kgf"           "кгс"                  (vd* 1 *g*     |kg|)     nil)
 
    (list "force"         "сила"                 nil
 	 ""	         "килопонд"
-	 "kp"            "-"                    (vd* 1 *g*     |kg|)   nil)
+	 "kp"            "kp"                  (vd* 1 *g*     |kg|)     nil)
    (list "force"         "сила"                 nil
 	 ""	         "грамм-сила"
-	 "gf"            "гс"                   (vd* 1/1000 *g*     |kg|)   nil)
+	 "gf"            "гс"                   (vd* 1/1000 *g*     |kg|)
+	 '((-24 3)))
    (list "force"         "сила"                 nil
 	 ""	         "понд"
-	 "p"             "-"                    (vd* 1 *g*     |kg|)   nil)
+	 "p"             "p"                    (vd* 1 *g*     |kg|)
+	 '((-24 24)))
    (list "force"         "сила"                 nil
 	 ""              "тонна-сила"
-	 "tf"            "тс"                   (vd* 1000 *g*       |kg|)   nil)
+	 "tf"            "тс"                   (vd* 1000 *g*       |kg|)
+	 '((0 24)))
    (list "pressure"      "давление"
 	 ""              "килограмм-сила на квадратный сантиметр"
 	 "kgf/cm^2"      "кгс/см^2"             (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
@@ -140,14 +143,14 @@
 	 ""              "килопонд на квадратный сантиметр"
 	 "kp/cm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
    (list "pressure"      "давление"             nil
-	 ""              "миллиметр водяного столба"
-	 "mm H2O"        "мм вод. ст."          (vd* 9.80665 |Pa|)   nil)
+	 ""              "метр водяного столба"
+	 "m_H2O"         "м вод. ст."           (vd* 9806.65 |Pa|)      '((-3 24)))
    (list "pressure"      "давление"             nil
-	 ""              "миллиметр ртутного столба"
-	 "mm Hg"         "мм pт. ст."           (vd* 133.322 |Pa|)   nil)
+	 ""              "метр ртутного столба"
+	 "m_Hg"          "м_pт._ст."            (vd* 133322d0 |Pa|)     '((-3 24)))
    (list "pressure"      "давление"             nil
 	 ""              "торр"
-	 "Torr"          "-"                    (vd* 133.322 |Pa|)   nil)
+	 "Torr"          "Торр"                 (vd* 133.322d0 |Pa|)    '((-24 24)))
    (list "stress"        "напряжение"
 	 ""              "килограмм-сила на квадратный миллиметр"
 	 "kgf/mm^2"      "кгс/мм^2"             (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
@@ -156,26 +159,33 @@
 	 "kp/mm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
    (list ""              '("работа" "энергия")  nil
 	 ""              "эрг"
-	 "erg"           "эрг"                  (vd/ |J| 10 1000 1000)   nil)
+	 "erg"           "эрг"                  (vd/ |J| 10 1000 1000)
+	 '((-24 24)))
    (list ""              "мощность"             nil
 	 "horsepower"              "лошадиная сила"
-	 "hp"            "л.с."                  (vd* 75 *g* |kg| (vd/ |m| |s|))   nil)
+	 "hp"            "л.с."                  (vd* 75 *g* |kg| (vd/ |m| |s|))
+	 nil)
    (list "kinematic viscosity" "динамическая вязкость" nil
 	 ""              "пуаз"
-	 "P"             "П"                    (vd* 1/10 |Pa| |s|)   nil)
+	 "P"             "П"                    (vd* 1/10 |Pa| |s|)
+	 '((-24 24)))
    (list "kinematic viscosity" "кинематическая вязкость" nil
 	 ""              "стокс"
-	 "St"            "Ст"                   (vd 1/10000 :m 2 :s -1)   nil)
+	 "St"            "Ст"                   (vd 1/10000 :m 2 :s -1)
+	 '((24 24)))
 ;;;; ....
    (list "quantity of heat" '("количество теплоты" "термодинамический потециал") nil
 	 ""              "калория"
-	 "cal"           "кал"                  (vd* 4.1868 |J|)   nil)
+	 "cal"           "кал"                  (vd* 4.1868 |J|)
+	 '((-24 24)))
    (list "quantity of heat" '("количество теплоты" "термодинамический потециал") nil
 	 ""              "калория термохимическая"
-	 "cal_{th}"      "кал_{тх}"             (vd* 4.1840 |J|)               nil)
+	 "cal_{th}"      "кал_{тх}"             (vd* 4.1840 |J|)
+	 '((-24 24)))
    (list "" '("теплота химической рекции")      nil
 	 ""              "калория  15-градусная"
-	 "cal_{15}"      "кал_{15}"             (vd* 4.1855 |J|)               nil)
+	 "cal_{15}"      "кал_{15}"             (vd* 4.1855 |J|)
+	 '((-24 24)))
 ;;;; ....
    (list ""              "длина"                nil
 	 ""              "микрон"
@@ -186,45 +196,32 @@
 ;;;; ....
    (list ""              "площадь"              nil
 	 ""              "ар"
-	 "a"             "а"                   (vd* 100 |m| |m|)                nil))
+	 "a"             "а"                   (vd* 100 |m| |m|)                '((0 2)))
+   )
   "Соотношение некоторых внесистемных единиц с единицами СИ"
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *nd-not-si-units-tbl-05*
-  (mapcar
-   #'(lambda (el)
-       (make-instance 'nd
-		      :quantity-name-en (first   el)
-		      :quantity-name-ru (second  el)
-		      :dimension-symbol (third   el)
-		      :unit-name-en     (fourth  el)
-		      :unit-name-ru     (fifth   el)
-		      :unit-symbol-en   (sixth   el)
-		      :unit-symbol-ru   (seventh el)
-		      :value            (eighth  el)
-		      :coeff            (ninth   el)
-		      )
-       )
-   *not-si-units-tbl-05*))
+(defun make-nd-form-list-el (el)
+  (make-instance 'nd
+		 :quantity-name-en (first   el)
+		 :quantity-name-ru (second  el)
+		 :dimension-symbol (third   el)
+		 :unit-name-en     (fourth  el)
+		 :unit-name-ru     (fifth   el)
+		 :unit-symbol-en   (sixth   el)
+		 :unit-symbol-ru   (seventh el)
+		 :value            (eighth  el)
+		 :coeff            (ninth   el)))
 
-(defparameter *nd-not-si-units-tbl-07*
-  (mapcar
-   #'(lambda (el)
-       (make-instance 'nd
-		      :quantity-name-en (first   el)
-		      :quantity-name-ru (second  el)
-		      :dimension-symbol (third   el)
-		      :unit-name-en     (fourth  el)
-		      :unit-name-ru     (fifth   el)
-		      :unit-symbol-en   (sixth   el)
-		      :unit-symbol-ru   (seventh el)
-		      :value            (eighth  el)
-		      :coeff            (ninth   el)
-		      )
-       )
-   *not-si-units-tbl-07*))
+(defparameter *nd-not-si-units-tbl-05*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-05*))
+
+(defparameter *nd-not-si-units-tbl-07*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-07*))
+
+(defparameter *nd-other-units-tbl-b-01* (mapcar #'make-nd-form-list-el *other-units-tbl-b-01*))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

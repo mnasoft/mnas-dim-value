@@ -56,7 +56,9 @@
   (unless *nm-vl-loaded*
     (mapc #'add-multiplid-values
 	  (append *nd-si-derived-units-tbl-03* *nd-si-main-units*
-		  *nd-not-si-units-tbl-07* *nd-not-si-units-tbl-05*))
+		  *nd-not-si-units-tbl-07* *nd-not-si-units-tbl-05*
+		  *nd-other-units-tbl-b-01*
+		  ))
     (print-hash-table *nm-vl*)
     (setf *nm-vl-loaded* t)))
 
