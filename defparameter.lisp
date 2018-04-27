@@ -19,8 +19,14 @@
 (defparameter *dim->quantity-name-en* (make-hash-table :test #'equal) "Задает соответствие размерности наименованию величины.")
 (defparameter *quantity-name-en->dim* (make-hash-table :test #'equal) "Задает соответствие строки обозначающей размернсть списку размерностей")
 
-(defparameter *d "°")
+(defparameter *d        "°"    "Градус плоского угла")
 
-(defparameter *m "'")
+(defparameter *m        "'"    "Минута плоского угла")
 
-(defparameter *s "\"")
+(defparameter *s        "\""   "Секунда плоского угла")
+
+(defparameter *sd       "□˚"   "Квадратный градус телесного угла")
+
+(defparameter *angstrom "Å"    "Ангстрем" )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
