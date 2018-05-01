@@ -37,7 +37,7 @@
 			      ((mnas-string:read-from-string-number el nil) el)
 			      (t (str:concat d-q el d-q))))
 			(add-space str)))))
-		 (format t "~A~%" rez)
+;;;;		 (format t "~A~%" rez)
 		 rez)))
       (read-from-string
        (string-add-brackets&quotes
@@ -45,3 +45,28 @@
 
 (defun quantity-from-string (str)
   (eval (quantity-from-string-not-eval str)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun prompt-read-line ()
+  (format t "Введите выражение:")
+  (read-line))
+
+(defun quantity-inetractive ()
+  (do* ((str-lst  nil (push str str-lst))
+	(str     (prompt-read-line) (prompt-read-line))
+	(rez      nil)
+	(rez-lst  nil))
+       ((string= str "exit")
+	(values (reverse str-lst)
+		(reverse rez-lst)))
+    (cond
+      ((string= "*" str) (push (vd* (pop rez-lst) (pop rez-lst)) rez-lst))
+      ((string= "/" str) (push (vd/ (pop rez-lst) (pop rez-lst)) rez-lst))
+      ((string= "+" str) (push (vd+ (pop rez-lst) (pop rez-lst)) rez-lst))
+      ((string= "-" str) (push (vd- (pop rez-lst) (pop rez-lst)) rez-lst))
+      (t
+       (format t "~A~%" (quantity-from-string-not-eval str))
+       (setf rez (quantity-from-string str))
+       (push rez rez-lst)
+       (format t "~A~%" rez)))))

@@ -50,7 +50,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(quantity-from-string-not-eval "25 kg + 783.565 g"       )
+(quantity-from-string "(25 kgf + 783.565 gf) / cm^2")
 
 (quantity-from-string "70*kgf/(70*cm^2)"                 )
 

@@ -20,3 +20,4 @@
   (defparameter *c*     (vd 299792458 :m 1 :s -1)               "Скорость света в вакууме, м/с")
   (defparameter *μ-0*   (vd/ (vd* 4 pi 1d-7 |H|) |m|)           "Магнитная постоянная, Гн/м")
   (defparameter *ε-0*   (vd/ 1 *μ-0* *c* *c*)                   "Электрическая постоянная, Ф/м"))
+;;;; acceleration of gravity
