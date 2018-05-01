@@ -13,23 +13,6 @@
 
 (defparameter *nm-vl-loaded* nil)
 
-(defun load-nm-vl-bak ()
-  (unless *nm-vl-loaded*
-    (mapc #'(lambda (el) (setf (gethash (nd-unit-symbol-en el) *nm-vl*) (nd-value el))) *nd-si-derived-units-tbl-03*)
-    (mapc #'(lambda (el) (setf (gethash (nd-unit-symbol-en el) *nm-vl*) (nd-value el))) *nd-si-main-units*)
-    (mapc 
-     #'(lambda (n-v)
-	 (mapc
-	  #'(lambda (n-c)
-	      (setf (gethash (concatenate 'string (first n-c ) (first n-v)) *nm-vl*)
-		    (vd* (second n-c ) (second n-v))))
-	  (hash-table->list *m-coeff-en*)))
-     (hash-table->list *nm-vl*))
-    (mapc #'(lambda (el) (setf (gethash (nd-unit-symbol-en el) *nm-vl*) (nd-value el))) *nd-not-si-units-tbl-07*)
-    (mapc #'(lambda (el) (setf (gethash (nd-unit-symbol-en el) *nm-vl*) (nd-value el))) *nd-not-si-units-tbl-05*)
-    (print-hash-table *nm-vl*)
-    (setf *nm-vl-loaded* t)))
-
 (defun is-in-range (val r-list)
     (eval (append (list 'or)
 	  (mapcar

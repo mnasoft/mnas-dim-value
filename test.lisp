@@ -36,13 +36,28 @@
     (remove-duplicates rez :test #'equal)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(print-hash-table *mult-nm-vl*)
+(defun do-symbols->list (package)
+  "Пример использования 
+;;;; (do-symbols->list 'mnas-dim-value)"
+  (let ((lst ()))
+    (do-symbols (s (find-package package)) (push s lst))
+    lst))
 
-(print-hash-table *nm-vl*)
+(do-symbols->list 'mnas-dim-value)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(quantity 45 *d + 30 *m + 25.456 *s)
+(quantity-from-string-not-eval "25 kg + 783.565 g"       )
 
-(quantity 14000 "r" / "h")
+(quantity-from-string "70*kgf/(70*cm^2)"                 )
+
+(quantity-from-string "(0-1)*(55 m^2+45 mm^2)kgf/cm^2"   )
+
+(quantity-from-string "(1/kg^2)*(m*s^3)/(N^2*m^3)"       )
+
+(quantity-from-string "3600 r/h"                         )
+
+(quantity-from-string "2°+10'+55.4\""                    ) 

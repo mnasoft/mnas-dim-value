@@ -103,12 +103,12 @@
 (defparameter *other-units-tbl-b-01*
   (list
    (list "length"        "длина"                nil
-	 "angstrom"      "ангстрем"
-	 "Å" "Å"                                (vd* 1d-10 |m|)         nil)
+	 "angstrom"      "ангстрем"          
+	 "Å"             "Å"                    (vd* 1d-10 |m|)         nil)
    (list "area"          "площадь"              nil
 	 "barn"          "барн"
 	 "b"             "б"                    (vd* 1d-28 |m| |m|)      nil)
-   (list ""              "масса"
+   (list "mass"          "масса"                nil 
 	 ""              "центнер"
 	 "q"             "ц"                    (vd* 100 |kg|)           nil)
    (list ""              "телесный угол"        nil
@@ -136,12 +136,12 @@
 	 ""              "тонна-сила"
 	 "tf"            "тс"                   (vd* 1000 *g*       |kg|)
 	 '((0 24)))
-   (list "pressure"      "давление"
+   (list "pressure"      "давление"             nil 
 	 ""              "килограмм-сила на квадратный сантиметр"
 	 "kgf/cm^2"      "кгс/см^2"             (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
-   (list "pressure"      "давление"
+   (list "pressure"      "давление"             nil
 	 ""              "килопонд на квадратный сантиметр"
-	 "kp/cm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
+	 "kp/cm^2"       "kp/cm^2"              (vd/ (vd* |kg| *g*) 1/100 1/100 |m| |m|)   nil)
    (list "pressure"      "давление"             nil
 	 ""              "метр водяного столба"
 	 "m_H2O"         "м вод. ст."           (vd* 9806.65 |Pa|)      '((-3 24)))
@@ -151,10 +151,10 @@
    (list "pressure"      "давление"             nil
 	 ""              "торр"
 	 "Torr"          "Торр"                 (vd* 133.322d0 |Pa|)    '((-24 24)))
-   (list "stress"        "напряжение"
+   (list "stress"        "напряжение"           nil
 	 ""              "килограмм-сила на квадратный миллиметр"
 	 "kgf/mm^2"      "кгс/мм^2"             (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
-   (list "stress"        "напряжение"
+   (list "stress"        "напряжение"           nil
 	 ""              "килопонд на квадратный миллиметр"
 	 "kp/mm^2"       "-"                    (vd/ (vd* |kg| *g*) 1/1000 1/1000 |m| |m|)   nil)
    (list ""              '("работа" "энергия")  nil
@@ -221,7 +221,17 @@
 
 (defparameter *nd-other-units-tbl-b-01* (mapcar #'make-nd-form-list-el *other-units-tbl-b-01*))
 
+(defun check-is-si-table-good (tbl)
+  (let ((rez t))
+    (mapc
+     #'(lambda (el)
+	 (when (/= (length el) 9)
+	   (setf rez nil)
+	   (print el)))
+     tbl)
+    rez))
 
+(check-is-si-table-good (append *not-si-units-tbl-05* *not-si-units-tbl-07* *other-units-tbl-b-01*))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
