@@ -53,6 +53,7 @@
   (read-line))
 
 (defun quantity-inetractive ()
+  "Позволяет выполнить запуск интерактивного калькулятора"
   (do* ((str-lst  nil (push str str-lst))
 	(str     (prompt-read-line) (prompt-read-line))
 	(rez      nil)
@@ -70,3 +71,7 @@
        (setf rez (quantity-from-string str))
        (push rez rez-lst)
        (format t "~A~%" rez)))))
+
+(defun qi ()
+  "Позволяет выполнить запуск интерактивного калькулятора короткой командой"
+  (quantity-inetractive))
