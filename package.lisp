@@ -32,5 +32,4 @@
   (:export quantity)
   
   (:export prompt-read-line)
-  (:export quantity-inetractive qi)
   )

@@ -62,6 +62,8 @@
 	(values (reverse str-lst)
 		(reverse rez-lst)))
     (cond
+      ((string= ""      (string-trim " " str)))
+      ((string= "help"  (string-trim " " str)) (help))
       ((string= "*" str) (push (vd* (pop rez-lst) (pop rez-lst)) rez-lst))
       ((string= "/" str) (push (vd/ (pop rez-lst) (pop rez-lst)) rez-lst))
       ((string= "+" str) (push (vd+ (pop rez-lst) (pop rez-lst)) rez-lst))
@@ -72,6 +74,10 @@
        (push rez rez-lst)
        (format t "~A~%" rez)))))
 
+(export 'quantity-inetractive)
+
 (defun qi ()
   "Позволяет выполнить запуск интерактивного калькулятора короткой командой"
   (quantity-inetractive))
+
+(export	'qi)
