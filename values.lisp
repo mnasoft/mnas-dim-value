@@ -77,6 +77,11 @@
 	 (push x2 rez-lst)))
       ((string= "pop"  str) (pop rez-lst) )
       ((string= "push" str) (push (car rez-lst) rez-lst))
+      ((string= "^" str) (push
+			  (let ((x1 (pop rez-lst))
+				(x2 (pop rez-lst)))
+			    (vd-expt x2 x1))
+			  rez-lst))
       ((string= "*" str) (push (vd* (pop rez-lst) (pop rez-lst)) rez-lst))
       ((string= "/" str) (push
 			  (let ((x1 (pop rez-lst))
@@ -84,7 +89,11 @@
 			    (vd/ x2 x1))
 			  rez-lst))
       ((string= "+" str) (push (vd+ (pop rez-lst) (pop rez-lst)) rez-lst))
-      ((string= "-" str) (push (vd- (pop rez-lst) (pop rez-lst)) rez-lst))
+      ((string= "-" str) (push
+			  (let ((x1 (pop rez-lst))
+				(x2 (pop rez-lst)))
+			    (vd- x2 x1))
+			  rez-lst))
       (t
        (format t "~A~%" (quantity-from-string-not-eval str))
        (setf rez (quantity-from-string str))
@@ -92,6 +101,8 @@
        (format t "~A~%" rez)))))
 
 (export 'quantity-inetractive)
+
+
 
 (defun qi ()
   "Позволяет выполнить запуск интерактивного калькулятора короткой командой"
