@@ -69,6 +69,7 @@
     (cond
       ((string= ""      str) )
       ((string= "help"  str) (help))
+      ((string= "constants"  str) (constants-help))
       ((string= "clear" str) (setf rez-lst  nil))
       ((or (string= "<>"    str) (string= "flip"    str) )
        (let ((x1 (pop rez-lst))
@@ -133,3 +134,10 @@ flip  - меняет местами регистры X1 и Χ2
      "3600 r/h"
      "2°+10'+55.4\"")))
 
+(defun constants-help ()
+  (mapc
+   #'(lambda (el)
+       (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
+   '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
+
+(qi)
