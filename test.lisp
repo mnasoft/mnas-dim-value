@@ -2,6 +2,8 @@
 
 (in-package #:mnas-dim-value)
 
+
+
 (defparameter *nd-list*
   (reverse
    (append
@@ -61,3 +63,7 @@
 (quantity-from-string "3600 r/h"                         )
 
 (quantity-from-string "2°+10'+55.4\""                    ) 
+
+(dimensionp "kgf/mm^2")
+
+(quantity-from-string (concatenate 'string "10" "*" "kgf/m^2"))

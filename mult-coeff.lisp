@@ -25,7 +25,7 @@
     (-18 "атто"  "atto"  "а"  "a")
     (-21 "зепто" "zepto" "з"  "z")
     (-24 "йокто" "yocto" "и"  "y"))
-  "*muti-prefix-data* содержит множителные приставки;
+  "*mult-prefix* содержит множителные приставки;
 Каждый подсписок содержит описание одной множительной приставки в следующем формате:
 1 - степень в которую необходимо возвести 10 для раскрытия приставки;
 2 - наименование множителя русское;
@@ -35,14 +35,26 @@
 
 
 (progn
-  (defparameter *m-coeff-en* (make-hash-table :test 'equal))
+  (defparameter *m-coeff-en* (make-hash-table :test 'equal)
+    "Хеш- таблица *m-coeff-en* содержит международные множителные приставки системы СИ 
+Ключами являются строки.
+Значаниями являются числа.
+Пример использования:
+  (gethash \"M\" *m-coeff-en*) => 1000000
+  (gethash \"m\" *m-coeff-en*) => 1/1000000")
   (mapc #'(lambda (el)
 	    (setf (gethash (fifth el) *m-coeff-en*)
 		  (expt 10 (first el))))
 	*mult-prefix*))
 
 (progn
-  (defparameter *m-coeff-ru* (make-hash-table :test 'equal))
+  (defparameter *m-coeff-ru* (make-hash-table :test 'equal)
+    "Хеш- таблица *m-coeff-en* содержит международные множителные приставки системы СИ 
+Ключами являются строки.
+Значаниями являются числа.
+Пример использования:
+  (gethash \"М\" *m-coeff-ru*) => 1000000
+  (gethash \"м\" *m-coeff-ru*) => 1/1000000")
   (mapc #'(lambda (el)
 	    (setf (gethash (fourth el) *m-coeff-ru*)
 		  (expt 10 (first el))))

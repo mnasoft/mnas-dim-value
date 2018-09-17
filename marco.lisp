@@ -65,7 +65,3 @@
 
 (defmacro quantity (x &rest y )
   (eval (list 'rec-quantity  (list 'quote (append (list x) y)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(vd 55 :m 4)

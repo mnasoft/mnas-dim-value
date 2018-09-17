@@ -31,9 +31,7 @@
 		 rez)))
       (read-from-string
        (string-add-brackets&quotes
-	(str:concat "quantity "(baz str)))))))
-
-
+	(str:concat "mnas-dim-value:quantity "(baz str)))))))
 
 (defun quantity-from-string (str)
   (eval (quantity-from-string-not-eval str)))
@@ -45,6 +43,27 @@
   (force-output t)
   (read-line))
 
+(defun qi-sample ()
+  (mapc
+   (lambda (el)
+     (format t "~A~%" el))
+   '(
+     "Команды:
+==============================
+exit  - выход из калькулятора;
+help  - отображает дополнительную справку;
+clear - очистка стека;
+flip  - меняет местами регистры X1 и Χ2
+<>    - меняет местами регистры X1 и Χ2
+============================="
+     "Примеры исппользования"
+     "(25 kgf + 783.565 gf) / cm^2"
+     "70*kgf/(70*cm^2)"
+     "(0-1)*(55 m^2+45 mm^2)kgf/cm^2"
+     "(1/kg^2)*(m*s^3)/(N^2*m^3)"
+     "3600 r/h"
+     "2°+10'+55.4\"")))
+
 (defun print-stack (stack)
   (qi-sample)
   (print-stack-clean)
@@ -55,6 +74,12 @@
 (defun print-stack-clean ()
   (loop for i from 0 to 10 do
        (format t "~%")))
+
+(defun constants-help ()
+  (mapc
+   #'(lambda (el)
+       (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
+   '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
 
 (defun quantity-inetractive ()
   "Позволяет выполнить запуск интерактивного калькулятора"
@@ -101,43 +126,8 @@
        (push rez rez-lst)
        (format t "~A~%" rez)))))
 
-(export 'quantity-inetractive)
-
-
-
-(defun qi ()
-  "Позволяет выполнить запуск интерактивного калькулятора короткой командой"
-  (quantity-inetractive))
-
-(export	'qi)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun qi-sample ()
-  (mapc
-   (lambda (el)
-     (format t "~A~%" el))
-   '(
-     "Команды:
-==============================
-exit  - выход из калькулятора;
-help  - отображает дополнительную справку;
-clear - очистка стека;
-flip  - меняет местами регистры X1 и Χ2
-<>    - меняет местами регистры X1 и Χ2
-============================="
-     "Примеры исппользования"
-     "(25 kgf + 783.565 gf) / cm^2"
-     "70*kgf/(70*cm^2)"
-     "(0-1)*(55 m^2+45 mm^2)kgf/cm^2"
-     "(1/kg^2)*(m*s^3)/(N^2*m^3)"
-     "3600 r/h"
-     "2°+10'+55.4\"")))
-
-(defun constants-help ()
-  (mapc
-   #'(lambda (el)
-       (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
-   '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
-
-(qi)
+(defun qi ()
+  "Запускает интерактивный калькулятор короткой командой"
+  (mnas-dim-value:quantity-inetractive))
