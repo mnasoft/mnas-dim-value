@@ -46,7 +46,7 @@
 "
 
 (defun dimensionp (str)
-  (multiple-value-bind (val find) (gethash str *mult-nm-vl*)
+  (multiple-value-bind (val find) (gethash str *nm-vl*)
     (if find val nil)))
 
 (defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
