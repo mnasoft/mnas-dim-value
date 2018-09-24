@@ -27,6 +27,7 @@
   (:export *dimension->string-ru* *string->dimension-ru*)
   (:export *dimension->name* *name->dimension*)
   (:export *dimension->name-ru* *name->dimension-ru*)
+  (:export ^)
 ;;;; methods.lisp
   (:export dimensionp)
 ;;;; marco.lisp  

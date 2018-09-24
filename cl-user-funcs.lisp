@@ -5,12 +5,20 @@
 (import 'mnas-dim-value:quantity-inetractive)
 (import 'mnas-dim-value:qi)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(import 'mnas-dim-value:quantity-from-string)
+(import 'mnas-dim-value:quantity)
 
-(import 'mnas-dim-value:vd*)
-(import 'mnas-dim-value:vd/)
-(import 'mnas-dim-value:vd+)
-(import 'mnas-dim-value:vd-)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(import 'mnas-dim-value:vd)
+
+(import 'mnas-dim-value:^)
+
+(progn
+  (import 'mnas-dim-value:vd*)
+  (import 'mnas-dim-value:vd/)
+  (import 'mnas-dim-value:vd+)
+  (import 'mnas-dim-value:vd-))
 
 (import 'mnas-dim-value:vd-expt)
 

@@ -2,6 +2,8 @@
 
 (in-package #:mnas-dim-value)
 
+(defparameter ^ '^ "Обозначение бинарной опреации возведения в степень")
+
 (defun op-exclude (op lst func-op)
   "Выполняет исключение первого вхождения бинарной операции op 
 из списка lst, заменяя ее на функцию func-op.
