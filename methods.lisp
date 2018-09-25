@@ -4,14 +4,12 @@
 
 ;;;; (defmethod print-object :before ((x vd) s) (format s "#vd" ))
 
-(defparameter *vd-language* :ru "Язык (member :en :ru)")
+(defparameter *vd-language* :en "Язык (member :en :ru)")
 
 (defmethod print-object ((x vd) o-s)
   (multiple-value-bind (dimens find)
-      (gethash (vd-dims x)
-	       (cond
-		 ((eq *vd-language* :en) *dim->unit-symbol-en*)
-		 ((eq *vd-language* :ru) *dim->unit-symbol-ru*)))
+      (gethash (vd-dims x) (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
+				 (t *dim->unit-symbol-en*)))
     (if find
 	(format o-s "~S ~A" (vd-val x) dimens)
 	(progn (format o-s "~S [" (vd-val x))
