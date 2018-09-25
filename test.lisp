@@ -2,8 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(qi
-
 (defparameter *nd-list*
   (reverse
    (append
