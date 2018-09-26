@@ -1,4 +1,4 @@
-;;;; si-units-main.lisp
+;;;; si-main-units.lisp
 
 (in-package #:mnas-dim-value)
 

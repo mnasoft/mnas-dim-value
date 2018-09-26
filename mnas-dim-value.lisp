@@ -33,10 +33,10 @@
 
 (defun dim-string-by-dim-name ( d-type )
   "Пример использования:
-;;;;(dim-string-by-dim-name \"length\")
-;;;;(dim-string-by-dim-name \"specific entropy\")
-;;;;(dim-string-by-dim-name \"capacitance\")
-;;;;(dim-string-by-dim-name \"mass density\")
+;;;;(mnas-dim-value:dim-string-by-dim-name \"length\")
+;;;;(mnas-dim-value:dim-string-by-dim-name \"specific entropy\")
+;;;;(mnas-dim-value:dim-string-by-dim-name \"capacitance\")
+;;;;(mnas-dim-value:dim-string-by-dim-name \"mass density\")
 "
   (let ((rez nil))
     (mapc #'(lambda (f-data)
@@ -104,8 +104,6 @@
 (export 'help)
 
 (defun help () (format t help ))
-
-(export 'help)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

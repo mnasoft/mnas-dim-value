@@ -81,7 +81,7 @@ flip  - меняет местами регистры X1 и Χ2
        (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
    '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
 
-(defun quantity-inetractive ()
+(defun quantity-interactive ()
   "Позволяет выполнить запуск интерактивного калькулятора"
   (do* ((rez-lst  nil)
 	(rez      nil)
@@ -130,4 +130,4 @@ flip  - меняет местами регистры X1 и Χ2
 
 (defun qi ()
   "Запускает интерактивный калькулятор короткой командой"
-  (mnas-dim-value:quantity-inetractive))
+  (mnas-dim-value:quantity-interactive))

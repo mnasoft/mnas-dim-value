@@ -1,60 +1,45 @@
 ;;;; cl-user-funcs.lisp
 
-(in-package #:cl-user )
+(in-package #:mnas-dim-value )
 
-
-(import 'mnas-dim-value:quantity-inetractive)
-(import 'mnas-dim-value:qi)
-
-(import 'mnas-dim-value:quantity-from-string)
-(import 'mnas-dim-value:quantity)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(import 'mnas-dim-value:vd)
-
-(import 'mnas-dim-value:^)
-
-(progn
-  (import 'mnas-dim-value:vd*)
-  (import 'mnas-dim-value:vd/)
-  (import 'mnas-dim-value:vd+)
-  (import 'mnas-dim-value:vd-))
-
-(import 'mnas-dim-value:vd-expt)
-
-(progn
-  (import 'mnas-dim-value:|m|)
-  (import 'mnas-dim-value:|kg|)
-  (import 'mnas-dim-value:|s|)
-  (import 'mnas-dim-value:|A|)
-  (import 'mnas-dim-value:|K|)
-  (import 'mnas-dim-value:|cd|)
-  (import 'mnas-dim-value:|mol|)
-  (import 'mnas-dim-value:|rad|)
-  (import 'mnas-dim-value:|sr|)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (import 'mnas-dim-value:|Hz|)
-  (import 'mnas-dim-value:|N|)
-  (import 'mnas-dim-value:|Pa|)
-  (import 'mnas-dim-value:|J|)
-  (import 'mnas-dim-value:|W|)
-  (import 'mnas-dim-value:|C|)
-  (import 'mnas-dim-value:|V|)
-  (import 'mnas-dim-value:|F|)
-  (import 'mnas-dim-value:|Ω|)
-  (import 'mnas-dim-value:|S|)
-
-  (import 'mnas-dim-value:|Wb|)
-  (import 'mnas-dim-value:|Τ|)
-  (import 'mnas-dim-value:|H|)
-
-  (import 'mnas-dim-value:|lm|)
-  (import 'mnas-dim-value:|lx|)
-  (import 'mnas-dim-value:|Bq|)
-  (import 'mnas-dim-value:|Gy|)
-  (import 'mnas-dim-value:|Sv|)
-  (import 'mnas-dim-value:|kat|)
+(defun import-symbols ()
+  (import 'mnas-dim-value:quantity-interactive (find-package :cl-user))
+  (import 'mnas-dim-value:qi (find-package :cl-user))
+  (import 'mnas-dim-value:quantity-from-string (find-package :cl-user))
+  (import 'mnas-dim-value:quantity (find-package :cl-user))
+  (import 'mnas-dim-value:vd (find-package :cl-user))
+  (import 'mnas-dim-value:^ (find-package :cl-user))
+  (import 'mnas-dim-value:vd* (find-package :cl-user))
+  (import 'mnas-dim-value:vd/ (find-package :cl-user))
+  (import 'mnas-dim-value:vd+ (find-package :cl-user))
+  (import 'mnas-dim-value:vd- (find-package :cl-user))
+  (import 'mnas-dim-value:vd-expt (find-package :cl-user))
+  (import 'mnas-dim-value:|m| (find-package :cl-user))
+  (import 'mnas-dim-value:|kg| (find-package :cl-user))
+  (import 'mnas-dim-value:|s| (find-package :cl-user))
+  (import 'mnas-dim-value:|A| (find-package :cl-user))
+  (import 'mnas-dim-value:|K| (find-package :cl-user))
+  (import 'mnas-dim-value:|cd| (find-package :cl-user))
+  (import 'mnas-dim-value:|mol| (find-package :cl-user))
+  (import 'mnas-dim-value:|rad| (find-package :cl-user))
+  (import 'mnas-dim-value:|sr| (find-package :cl-user))
+  (import 'mnas-dim-value:|Hz| (find-package :cl-user))
+  (import 'mnas-dim-value:|N| (find-package :cl-user))
+  (import 'mnas-dim-value:|Pa| (find-package :cl-user))
+  (import 'mnas-dim-value:|J| (find-package :cl-user))
+  (import 'mnas-dim-value:|W| (find-package :cl-user))
+  (import 'mnas-dim-value:|C| (find-package :cl-user))
+  (import 'mnas-dim-value:|V| (find-package :cl-user))
+  (import 'mnas-dim-value:|F| (find-package :cl-user))
+  (import 'mnas-dim-value:|Ω| (find-package :cl-user))
+  (import 'mnas-dim-value:|S| (find-package :cl-user))
+  (import 'mnas-dim-value:|Wb| (find-package :cl-user))
+  (import 'mnas-dim-value:|Τ| (find-package :cl-user))
+  (import 'mnas-dim-value:|H| (find-package :cl-user))
+  (import 'mnas-dim-value:|lm| (find-package :cl-user))
+  (import 'mnas-dim-value:|lx| (find-package :cl-user))
+  (import 'mnas-dim-value:|Bq| (find-package :cl-user))
+  (import 'mnas-dim-value:|Gy| (find-package :cl-user))
+  (import 'mnas-dim-value:|Sv| (find-package :cl-user))
+  (import 'mnas-dim-value:|kat| (find-package :cl-user))
   )
