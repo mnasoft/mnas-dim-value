@@ -2,7 +2,7 @@
 
 (in-package #:mnas-dim-value )
 
-(defun import-symbols ()
+(defun mnas-dim-value-import-symbols ()
   (import '(mnas-dim-value:quantity-interactive 
 	    mnas-dim-value:qi 
 	    mnas-dim-value:quantity-from-string 

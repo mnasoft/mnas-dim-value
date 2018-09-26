@@ -101,4 +101,4 @@
 	   mnas-dim-value::prompt-read-line
 	   mnas-dim-value::quantity-interactive
 	   mnas-dim-value::qi)
-  (:export mnas-dim-value::import-symbols))
+  (:export mnas-dim-value::mnas-dim-value-import-symbols))
