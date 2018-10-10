@@ -12,7 +12,9 @@
 	   mnas-dim-value::kgs/cm2->Pa	
 	   mnas-dim-value::Pa->kgs/cm2	
 	   mnas-dim-value::dim-name-list
-	   mnas-dim-value::dim-string-by-dim-name )
+	   mnas-dim-value::dim-string-by-dim-name
+	   mnas-dim-value::help	   
+	   )
 ;;;; constants.lisp  
   (:export mnas-dim-value::|*g*|
 	   mnas-dim-value::|*Gn*|
@@ -101,4 +103,6 @@
 	   mnas-dim-value::prompt-read-line
 	   mnas-dim-value::quantity-interactive
 	   mnas-dim-value::qi)
-  (:export mnas-dim-value::mnas-dim-value-import-symbols))
+;;;; cl-user-funcs.lisp  
+  (:export mnas-dim-value::use-mnas-dim-value
+	   mnas-dim-value::unuse-mnas-dim-value))
