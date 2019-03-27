@@ -35,7 +35,3 @@
 	     ((listp item) (setf rez (append item rez))))))
      *nd-list*)
     (remove-duplicates rez :test #'equal)))
-
-(quantity-name (vd/ "N" (vd*  "cm" "cm")))
-
-(quantity-name (vd*  "cm" "cm"))

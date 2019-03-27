@@ -143,3 +143,21 @@
    :val (sqrt (vd-val x))
    :dims (mapcar  #'(lambda (el) (/ el 2)) (vd-dims x))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmethod unit-name ((x vd) o-s)
+  (multiple-value-bind (dimens find)
+      (gethash (vd-dims x) (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
+				 (t *dim->unit-symbol-en*)))
+    (if find
+	(format o-s "~A" dimens)
+	(progn (format o-s "[" )
+	       (mapc #'(lambda (no str)
+			 (cond
+			   ((= (nth no (vd-dims x)) 1) (format o-s (concatenate 'string str "")))
+			   ((/= (nth no (vd-dims x)) 0) (format o-s (concatenate 'string str "^~A") (nth no (vd-dims x))))))
+		     '( 0    1   2   3   4    5     6     7    8)
+		     (cond
+		       ((eq *vd-language* :en) '("m" "kg" "s" "A" "K" "cd" "mol"  "rad" "sr"))
+		       ((eq *vd-language* :ru) '("м" "кг" "с" "А" "К" "кд" "моль" "рад" "ср"))))
+	       (format o-s "]")))))

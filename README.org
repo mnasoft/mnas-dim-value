@@ -27,6 +27,18 @@
        (mnas-dim-value:quantity 1 "d" + 15 "h" 20 + "min" + 30.5 "s"))
 #+END_SRC
 
+#+name: foo
+#+begin_src lisp
+(mdv:quantity-name (mdv:vd/ "N" (mdv:vd*  "cm" "cm")))
+#+end_src
+
+#+name: foo
+#+begin_src lisp
+  (mdv:quantity-name (mdv:vd*  "cm" "cm"))
+#+end_src
+
+#+RESULTS: foo
+| pressure |
 
 * Задачи
 ** TODO Печать класса vd с разделителями типа cdot;

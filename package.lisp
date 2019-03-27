@@ -3,6 +3,7 @@
 (defpackage #:mnas-dim-value)
 
 (defpackage #:mnas-dim-value
+  (:nicknames "MDV")
   (:use    #:cl )
 ;;;; mnas-dim-value.lisp  
   (:export mnas-dim-value::K->C 
@@ -106,4 +107,6 @@
 	   mnas-dim-value::qi)
 ;;;; cl-user-funcs.lisp  
   (:export mnas-dim-value::use-mnas-dim-value
-	   mnas-dim-value::unuse-mnas-dim-value))
+	   mnas-dim-value::unuse-mnas-dim-value)
+  (:export mnas-dim-value::quantity-name mnas-dim-value::unit-name)
+  )
