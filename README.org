@@ -1,0 +1,265 @@
+
+* Примеры использования
+** Первый
+#+BEGIN_SRC lisp 
+  (progn
+    (list
+     (mnas-dim-value:quantity 220 "V" 15 "A")  
+     (mnas-dim-value:quantity 220 * "V" * 15 * "A")))
+#+END_SRC
+
+#+RESULTS:
+| 3300 | W | 3300 | W |
+
+** Второй
+#+BEGIN_SRC lisp 
+  (progn
+    (in-package :mnas-dim-value)
+    ;; (mnas-dim-value:quantity 101325 "Pa" + ( 2.0 mnas-dim-value:|*g*| / (1 * "cm" ^ 2)))
+    (list
+     (mnas-dim-value:quantity 101325 "Pa" + ( 2.0 mnas-dim-value:|*g*| / (1 * "cm" * "cm")))))
+#+END_SRC
+
+** Третий
+#+BEGIN_SRC lisp
+     (progn
+       (in-package :mnas-dim-value)
+       (mnas-dim-value:quantity 1 "d" + 15 "h" 20 + "min" + 30.5 "s"))
+#+END_SRC
+
+
+* Задачи
+** TODO Печать класса vd с разделителями типа cdot;
+** TODO Печать класса vd в html формат;
+** TODO Печать класса vd с диапазоном значений от 0.1 до 1000;
+** TODO Печать в виде суммы величин.
+Например: время c -> (+ д ч мин с) => 15 д 9 ч 25 мин 50 с
+** TODO Выбор множителей
+  - для таблицы 5; +
+  - для таблицы 7. +
+** TODO Разбор выражения, заданного в виде строки +
+** TODO Консольная интерактивная программа с возможностями:
+  - присвоения значения переменным;
+  - загрузки выражений из файла (человеко-читаемого);
+  - выгрузка выражений в файл (человеко-читаемый);
+  - написания функций.
+** TODO Диалоговая программа ввода данных
+** DONE Исправить предупреждение в методе print-object ((x vd) o-s)
+** DONE Импортировать в пакет :cl-user значения размерностей, имеющих наименования.
+** DONE Импортировать функции vd*, vd/, vd+, vd- в пакет :cl-user.
+** Добавить имена типов размерностей для данных, содержащихся в переменны
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*si-main-units*
+#+END_SRC
+
+#+RESULTS:
+| length              | длина                         | L | meter    | метр      | m   | м    |      1 | m   |
+| mass                | масса                         | M | kilogram | килограмм | g   | г    | 1/1000 | kg  |
+| time                | время                         | T | second   | секунда   | s   | с    |      1 | s   |
+| electric current    | сила тока электрического      | I | ampere   | ампер     | A   | А    |      1 | A   |
+| temperature         | температура термодинамическая | Θ | kelvin   | кельвин   | K   | К    |      1 | K   |
+| amount of substance | количество вещества           | N | mole     | моль      | mol | моль |      1 | mol |
+| luminous intensity  | сила света                    | J | candela  | кандела   | cd  | кд   |      1 | cd  |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*si-derived-units-tbl-02*
+#+END_SRC
+
+#+RESULTS:
+| area                    | площадь                          | NIL |   | квадратный метр              | m^2     | м^2      | 1 | m^2     |
+| volume                  | объём                            | NIL |   | кубический метр              | m^3     | м^3      | 1 | m^3     |
+| velocity                | скорость                         | NIL |   | метр в секунду               | m/s     | м/с      | 1 | m/s     |
+| acceleration            | ускорение                        | NIL |   | метр на секунду в квадрате   | m/s^2   | м/с^2    | 1 | m/s^2   |
+| wave number             | волновое число                   | NIL |   | метр в минус первой степени  | 1/m     | 1/м      | 1 | 1/m     |
+| (density mass density)  | плотность                        | NIL |   | килограмм на кубический метр | kg/m^3  | кг/м^3   | 1 | kg/m^3  |
+| specific volume         | удельный объём                   | NIL |   | кубический метр на килограмм | m^3/kg  | м^3/кг   | 1 | m^3/kg  |
+| current density         | плотность электрического тока    | NIL |   | ампер на квадратный метр     | A/m^2   | А/м^2    | 1 | A/m^2   |
+| magnetic field strength | напряжённость магнитного поля    | NIL |   | ампер на метр                | A/m     | А/м      | 1 | A/m     |
+| molar concentration     | молярная концентрация компонента | NIL |   | моль на кубический метр      | mol/m^3 | моль/м^3 | 1 | mol/m^3 |
+| luminance               | яркость                          | NIL |   | кандела на квадратный метр   | cd/m^2  | кд/м^2   | 1 | cd/m^2  |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*si-derived-units-tbl-03*
+#+END_SRC
+
+#+RESULTS:
+| plane angle                                                                                                          | плоский угол                                                                          | L/L     | radian         | радиан         | rad | рад | m^1*m^-1            | 1 | rad |
+| solid angle                                                                                                          | телесный угол                                                                         | L^2/L^2 | steradian      | стерадиан      | sr  | ср  | m^2*m^-2=1          | 1 | sr  |
+| frequency                                                                                                            | частота                                                                               | NIL     | hertz          | герц           | Hz  | Гц  | s^-1                | 1 | Hz  |
+| force                                                                                                                | сила                                                                                  | NIL     | newton         | ньютон         | N   | Н   | m*kg*s^-2           | 1 | N   |
+| pressure                                                                                                             | давление                                                                              | NIL     | pascal         | паскаль        | Pa  | Па  | m^-1*kg*s^-2        | 1 | Pa  |
+| (energy work quantity of heat)                                                                                       | (энергия работа количество теплоты)                                                   | NIL     | joule          | джоуль         | J   | Дж  | kg*m^2/s^2          | 1 | J   |
+| (power radiant flux)                                                                                                 | (мощность поток излучения)                                                            | NIL     | watt           | ватт           | W   | Вт  | kg*m^2/s^3          | 1 | W   |
+| (electric charge quantity of electricity)                                                                            | (электрический заряд количество электричества)                                        | NIL     | coulomb        | кулон          | C   | Кл  | s*A                 | 1 | C   |
+| (electric potential difference electromotive force)                                                                  | (электрическое напряжение электродвижущая сила)                                       | NIL     | volt           | вольт          | V   | В   | m^2*kg*s^-3*A^-1    | 1 | V   |
+| capacitance                                                                                                          | электрическая ёмкость                                                                 | NIL     | farad          | фарад          | F   | Ф   | m^-2*kg^-1*s^4*A^2  | 1 | F   |
+| electric resistance                                                                                                  | электрическое сопротивление                                                           | NIL     | ohm            | ом             | Ω   | Ом  | m^2*kg*s^-3*A^-2    | 1 | Ω   |
+| electric conductance                                                                                                 | электрическая проводимость                                                            | NIL     | siemens        | сименс         | S   | См  | m^-2*kg^-1*s^3*A^2  | 1 | S   |
+| magnetic flux                                                                                                        | магнитный поток                                                                       | NIL     | weber          | вебер          | Wb  | Вб  | m^2*kg*s^-2*A^-1    | 1 | Wb  |
+| magnetic flux density                                                                                                | магнитная индукция                                                                    | NIL     | tesla          | тесла          | T   | Тл  | kg*s^-2*A^-1        | 1 | T   |
+| inductance                                                                                                           | индуктивность                                                                         | NIL     | henry          | генри          | H   | Гн  | m^2*kg*s^-2*A^-2    | 1 | H   |
+| Celsius temperature                                                                                                  | температура по Цельсию                                                                | NIL     | degree Celsius | градус Цельсия | °C  | °С  | K                   | 1 | K   |
+| luminous flux                                                                                                        | световой поток                                                                        | NIL     | lumen          | люмен          | lm  | лм  | m^2*m^-2*cd=cd      | 1 | lm  |
+| illuminance                                                                                                          | освещенность                                                                          | NIL     | lux            | люкс           | lx  | лк  | m^2*m^-4*cd=m^-2*cd | 1 | lx  |
+| activity (referred to a radionuclide)                                                                                | активность (радионуклида)                                                             | NIL     | becquerel      | беккерель      | Bq  | Бк  | s^-1                | 1 | Hz  |
+| (absorbed dose specific energy (imparted) kerma)                                                                     | (поглощенная доза излучения показатель поглощенной дозы керма)                        | NIL     | gray           | грей           | Gy  | Гр  | m^2*s^-2            | 1 | Gy  |
+| (dose equivalent ambient dose equivalent directional dose equivalent personal dose equivalent organ equivalent dose) | (эквивалентная доза ионизирующего излучения эффективная доза ионизирующего излучения) | NIL     | sievert        | зиверт         | Sv  | Зв  | m^2*s^-2            | 1 | Gy  |
+| catalytic activity                                                                                                   | активность катализатора                                                               | NIL     | katal          | катал          | kat | кат | s^-1*mol            | 1 | kat |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*si-derived-units-tbl-04*
+#+END_SRC
+
+#+RESULTS:
+| moment of force                           | момент силы                                      | NIL |   | ньютон-метр                     | N*m        | Н*м         | m^2*kg*s^-2             | 1 | J       |          |
+| surface tension                           | поверхностное натяжение                          | NIL |   | ньютон-метр                     | N/m        | Н*м         | kg*s^-2                 | 1 | N/m     |          |
+| dynamic viscosity                         | динамическая вязкость                            | NIL |   | паскаль-секунда                 | Pa*s       | Па*с        | m^-1*kg*s^-1            | 1 | Pa*s    |          |
+| electric charge density                   | пространственная плотность электрического заряда | NIL |   | кулон на кубический метр        | C/m^3      | Кл/м^3      | m^-3*s*A                | 1 | C/m^3   |          |
+| electric flux density                     | электрическое смещение                           | NIL |   | кулон на квадратный метр        | C/m^2      | Кл/м^2      | m^-2*s*A                | 1 | C/m^2   |          |
+| electric field strength                   | напряженность электрического поля                | NIL |   | воль на метр                    | V/m        | В/м         | m*kg*s^-3*A^-1          | 1 | V/m     |          |
+| permittivity                              | диэлектрическая проницаемость                    | NIL |   | фарад на метр                   | F/m        | Ф/м         | m^-3*kg-1*s^4*A^2       | 1 | F/m     |          |
+| permeability                              | магнитная проницаемость                          | NIL |   | генри на метр                   | H/m        | Гн/м        | m*kg*s^-2*A^-2          | 1 | H/m     |          |
+| specific energy                           | удельная энергия                                 | NIL |   | джоуль на килограмм             | J/kg       | Дж/кг       | m^2*s^-2                | 1 | Gy      |          |
+| (heat capacity entropy)                   | (теплоемкость системы энтропия системы)          | NIL |   | джоуль на кельвин               | J/K        | Дж/К        | kg*m^2/(s^2*K)          | 1 | J/K     |          |
+| (specific heat capacity specific entropy) | (удельная теплоёмкость удельная энтропия)        | NIL |   | джоуль на килограмм-кельвин     | J/(kg*K)   | Дж/(кг*К)   | m^2/(s^2*K)             | 1 | J/      | (kg*K)   |
+| (heat flux density irradiance)            | поверхностная плотность потока энергии           | NIL |   | ватт на квадратный метр         | W/m^2      | Вт/м^2      | kg*s^-3                 | 1 | W/m^2   |          |
+| thermal conductivity                      | теплопроводность                                 | NIL |   | ватт на метр-кельвин            | W/(m*K)    | Вт/(м*К)    | m*kg*s^-3*K^-1          | 1 | W/      | (m*K)    |
+| molar energy                              | молярная внутренняя энергия                      | NIL |   | джоуль на моль                  | J/mol      | Дж/моль     | m^2*kg*s^-2*mol^-1      | 1 | J/mol   |          |
+| (molar entropy molar heat capacity)       | (молярная энтропия молярная теплоёмкость)        | NIL |   | джоуль на моль-кельвин          | J/(mol*K)  | Дж/(моль*К) | m^2*kg*s^-2*K^-1*mol^-1 | 1 | J/      | (mol*K)  |
+| exposure (x and γ rays)                   | экспозиционная доза фотонного излучения          | NIL |   | кулон на килограмм              | C/kg       | Кл/кг       | kg^-1*s*A               | 1 | C/kg    |          |
+| absorbed dose rate                        | мощность поглощённой дозы                        | NIL |   | грей в секунду                  | Gy/s       | Гр/с        | m^2*s^-3                | 1 | Gy/s    |          |
+| angular velocity                          | угловая скорость                                 | NIL |   | радиан в секунду                | rad/s      | рад/с       | s^-1                    | 1 | rad/s   |          |
+| angular acceleration                      | угловое ускорение                                | NIL |   | радиан на секунду в квадрате    | rad/s^2    | рад/с^2     | s^-2                    | 1 | rad/s^2 |          |
+| radiant intensity                         | сила излучения                                   | NIL |   | ватт на стерадиан               | W/sr       | Вт/ср       | m^4*m^-2*kg*s^-3        | 1 | W/sr    |          |
+| radiance                                  | энергетическая яркость                           | NIL |   | ватт на стерадан-кадратный метр | W/(sr*m^2) | Вт/(ср*м^2) | m^2*m^-2*kg*s^-3        | 1 | W/      | (sr*m^2) |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*not-si-units-tbl-05*
+#+END_SRC
+
+#+RESULTS:
+| mass            | масса               | NIL | ton               | тонна                   | t    | т      |                   1000 | kg  | ((0 24))        |
+| mass            | масса               | NIL |                   | атомная единица массы   | u    | а.е.м. |         1.66054021d-27 | kg  | ((-24 24))      |
+| time            | время               | NIL | minute            | минута                  | min  | мин    |                     60 | s   | NIL             |
+| time            | время               | NIL | hour              | час                     | h    | ч      |                   3600 | s   | NIL             |
+| time            | время               | NIL | day               | сутки                   | d    | сут    |                  86400 | s   | NIL             |
+| plane angle     | плоский угол        | NIL | degree            | градус                  | °    | °      | 0.017453292519943295d0 | rad | NIL             |
+| plane angle     | плоский угол        | NIL | minute            | минута                  | '    | '      |   2.908882086657216d-4 | rad | NIL             |
+| plane angle     | плоский угол        | NIL | second            | секунда                 | "    | "      |    4.84813681109536d-6 | rad | NIL             |
+| plane angle     | плоский угол        | NIL | gon               | град                    | gon  | град   | 0.015707963267948967d0 | rad | NIL             |
+| volume          | объём               | NIL | liter             | литр                    | l    | л      |                 1/1000 | m^3 | ((-3 -3) (0 3)) |
+| length          | длина               | NIL | astronomical unit | астрономическая единица | ua   | а.е.   |      1.495978706916d11 | m   | NIL             |
+| length          | длина               | NIL | light year        | световой год            | ly   | св.год |     9.4607304725808d15 | m   | NIL             |
+| length          | длина               | NIL | parsec            | парсек                  | pc   | пк     |           3.0856776d16 | m   | NIL             |
+| optical force   | оптическая сила     | NIL |                   | диоптрия                | дптр | дптр   |                      1 | 1/m | NIL             |
+| area            | площадь             | NIL | hectare           | гектар                  | ha   | га     |                  10000 | m^2 | NIL             |
+| area            | площадь             | NIL | are               | aр                      | a    | а      |                    100 | m^2 | NIL             |
+| energy          | энергия             | NIL | electron-volt     | электрон-вольт          | eV   | эВ     |         1.60217733d-19 | J   | NIL             |
+| energy          | энергия             | NIL | kilowatt-hour     | киловатт-час            | kW*h | кВт*ч  |                3600000 | J   | NIL             |
+| full power      | полная мощность     | NIL | volt-ampere       | вольт-ампер             | V*A  | В*А    |                      1 | W   | NIL             |
+| reactive power  | рекативная мощность | NIL | var               | вар                     | var  | вар    |                      1 | W   | NIL             |
+| electric charge | электрический заряд | NIL | ampere hour       | ампер-час               | A*h  | А*ч    |                   3600 | C   | NIL             |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*not-si-units-tbl-07*
+#+END_SRC
+
+#+RESULTS:
+| length           | длина              | NIL | nautical mile | морская миля     | nmi   | миля   |                  1852 | m        | NIL |
+| mass             | масса              | NIL |               | карат            | кар   | кар    |                1/5000 | kg       | NIL |
+| linear density   | линейная плотность | NIL |               | текс             | tex   | текс   |             1/1000000 | [m^-1kg] | NIL |
+| velocity         | скорость           | NIL | knot          | узел             | kn    | уз     |               463/900 | [ms]     | NIL |
+| acceleration     | ускорение          | NIL |               | гал              | Gal   | Гал    |                 1/100 | m/s^2    | NIL |
+| rotational speed | частота вращения   | NIL |               | оборот в секунду | r/s   | об/с   |   6.283185307179586d0 | rad/s    | NIL |
+| rotational speed | частота вращения   | NIL |               | оборот в минуту  | r/min | об/мин | 0.10471975511965977d0 | rad/s    | NIL |
+| pressure         | давление           | NIL |               | бар              | bar   | бар    |                100000 | Pa       | NIL |
+
+#+BEGIN_SRC lisp
+  mnas-dim-value:*other-units-tbl-b-01*
+#+END_SRC
+
+#+RESULTS:
+| length                         | длина                                           | NIL | angstrom      | ангстрем                               | Å        | Å          |               1.0d-10 | m         | NIL        |
+| area                           | площадь                                         | NIL | barn          | барн                                   | b        | б          |               1.0d-28 | m^2       | NIL        |
+| mass                           | масса                                           | NIL |               | центнер                                | q        | ц          |                   100 | kg        | NIL        |
+| solid angle                    | телесный угол                                   | NIL | square degree | квадратный градус                      | □˚       | □˚         | 3.0461741978670857d-4 | sr        | NIL        |
+| force                          | сила                                            | NIL |               | дина                                   | dyn      | дин        |              1/100000 | N         | NIL        |
+| force                          | сила                                            | NIL |               | килограмм-сила                         | kgf      | кгс        |              9.8065d0 | N         | NIL        |
+| force                          | сила                                            | NIL |               | килопонд                               | kp       | kp         |              9.8065d0 | N         | NIL        |
+| force                          | сила                                            | NIL |               | грамм-сила                             | gf       | гс         |           0.0098065d0 | N         | ((-24 3))  |
+| force                          | сила                                            | NIL |               | понд                                   | p        | p          |              9.8065d0 | N         | ((-24 24)) |
+| force                          | сила                                            | NIL |               | тонна-сила                             | tf       | тс         |              9806.5d0 | N         | ((0 24))   |
+| pressure                       | давление                                        | NIL |               | килограмм-сила на квадратный сантиметр | kgf/cm^2 | кгс/см^2   |             98065.0d0 | Pa        | NIL        |
+| pressure                       | давление                                        | NIL |               | килопонд на квадратный сантиметр       | kp/cm^2  | kp/cm^2    |             98065.0d0 | Pa        | NIL        |
+| pressure                       | давление                                        | NIL |               | метр водяного столба                   | m_H2O    | м вод. ст. |               9806.65 | Pa        | ((-3 24))  |
+| pressure                       | давление                                        | NIL |               | метр ртутного столба                   | m_Hg     | м_pт._ст.  |            133322.0d0 | Pa        | ((-3 24))  |
+| pressure                       | давление                                        | NIL |               | торр                                   | Torr     | Торр       |             133.322d0 | Pa        | ((-24 24)) |
+| stress                         | напряжение                                      | NIL |               | килограмм-сила на квадратный миллиметр | kgf/mm^2 | кгс/мм^2   |           9806500.0d0 | Pa        | NIL        |
+| stress                         | напряжение                                      | NIL |               | килопонд на квадратный миллиметр       | kp/mm^2  | -          |           9806500.0d0 | Pa        | NIL        |
+| (energy work quantity of heat) | (работа энергия)                                | NIL |               | эрг                                    | erg      | эрг        |            1/10000000 | J         | ((-24 24)) |
+| power                          | мощность                                        | NIL | horsepower    | лошадиная сила                         | hp       | л.с.       |            735.4875d0 | W         | NIL        |
+| kinematic viscosity            | динамическая вязкость                           | NIL |               | пуаз                                   | P        | П          |                  1/10 | Pa*s      | ((-24 24)) |
+| kinematic viscosity            | кинематическая вязкость                         | NIL |               | стокс                                  | St       | Ст         |               1/10000 | [m^2s^-1] | ((24 24))  |
+| quantity of heat               | (количество теплоты термодинамический потециал) | NIL |               | калория                                | cal      | кал        |                4.1868 | J         | ((-24 24)) |
+| quantity of heat               | (количество теплоты термодинамический потециал) | NIL |               | калория термохимическая                | cal_{th} | кал_{тх}   |                 4.184 | J         | ((-24 24)) |
+|                                | (теплота химической рекции)                     | NIL |               | калория  15-градусная                  | cal_{15} | кал_{15}   |                4.1855 | J         | ((-24 24)) |
+| length                         | длина                                           | NIL |               | микрон                                 | μ        | мк         |             1/1000000 | m         | NIL        |
+| angle of rotation              | угол поворота                                   | NIL |               | оборот                                 | r        | об         |   6.283185307179586d0 | rad       | NIL        |
+| area                           | площадь                                         | NIL |               | ар                                     | a        | а          |                   100 | m^2       | ((0 2))    |
+
+#+BEGIN_SRC lisp
+
+
+  mnas-dim-value:*nd-si-main-units*
+  mnas-dim-value:*nd-si-derived-units-tbl-02*
+  mnas-dim-value:*nd-si-derived-units-tbl-03*
+  mnas-dim-value:*nd-si-derived-units-tbl-04*
+  mnas-dim-value:*nd-not-si-units-tbl-05*
+  mnas-dim-value:*nd-not-si-units-tbl-07*
+
+
+
+
+
+  mnas-dim-value:*C-0*
+  mnas-dim-value:*DIMENSION->NAME*
+  mnas-dim-value:*DIMENSION->NAME-RU*
+  mnas-dim-value:*DIMENSION->STRING*
+  mnas-dim-value:*DIMENSION->STRING-RU*
+  mnas-dim-value:*F*
+  mnas-dim-value:*MULT-NM-VL*
+  mnas-dim-value:*NAME->DIMENSION*
+  mnas-dim-value:*NAME->DIMENSION-RU*
+  mnas-dim-value:*ND-NOT-SI-UNITS-TBL-05*
+  mnas-dim-value:*ND-NOT-SI-UNITS-TBL-07*
+  mnas-dim-value:*ND-SI-DERIVED-UNITS-TBL-02*
+  mnas-dim-value:*ND-SI-DERIVED-UNITS-TBL-03*
+  mnas-dim-value:*ND-SI-DERIVED-UNITS-TBL-04*
+  mnas-dim-value:*ND-SI-MAIN-UNITS*
+  mnas-dim-value:*NM-VL*
+  mnas-dim-value:*NM-VL-EN->RU*
+  mnas-dim-value:*NM-VL-RU->EN*
+  mnas-dim-value:*NOT-SI-UNITS-TBL-05*
+  mnas-dim-value:*NOT-SI-UNITS-TBL-07*
+  mnas-dim-value:*R-0*
+  mnas-dim-value:*SI-DERIVED-UNITS-TBL-02*
+  mnas-dim-value:*SI-DERIVED-UNITS-TBL-03*
+  mnas-dim-value:*SI-DERIVED-UNITS-TBL-04*
+  mnas-dim-value:*SI-MAIN-UNITS*
+  mnas-dim-value:*STRING->DIMENSION*
+  mnas-dim-value:*STRING->DIMENSION-RU*
+  mnas-dim-value:*V-0*
+#+END_SRC
+
+
+
+#+RESULTS:
+| length | длина              | NIL | nautical mile | морская миля     | nmi   | миля   |                  1852 | m        | NIL |
+|        | масса              | NIL |               | карат            | кар   | кар    |                1/5000 | kg       | NIL |
+|        | линейная плотность | NIL |               | текс             | tex   | текс   |             1/1000000 | [m^-1kg] | NIL |
+|        | скорость           | NIL | knot          | узел             | kn    | уз     |               463/900 | [ms]     | NIL |
+|        | ускорение          | NIL |               | гал              | Gal   | Гал    |                 1/100 | m/s^2    | NIL |
+|        | частота вращения   | NIL |               | оборот в секунду | r/s   | об/с   |   6.283185307179586d0 | rad/s    | NIL |
+|        | частота вращения   | NIL |               | оборот в минуту  | r/min | об/мин | 0.10471975511965977d0 | rad/s    | NIL |
+|        | давление           | NIL |               | бар              | bar   | бар    |                100000 | Pa       | NIL |

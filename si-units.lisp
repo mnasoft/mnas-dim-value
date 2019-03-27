@@ -73,30 +73,30 @@
 
 (defparameter *not-si-units-tbl-07*
   (list 
-   (list "length"         "длина"               nil
-	 "nautical mile"  "морская миля"
-	 "nmi"            "миля"                (vd 1852 :m 1)   nil)
-   (list ""               "масса"    nil
-	 ""               "карат"
-	 "кар"            "кар"                 (vd 2/10000 :kg 1)   nil)
-   (list ""               "линейная плотность"  nil
-	 ""               "текс"
-	 "tex"            "текс"                (vd 1/1000000 :kg 1 :m -1)   nil)
-   (list ""               "скорость"            nil
-	 "knot"           "узел"
-	 "kn"             "уз"                  (vd/ |m| (vd/ 3600 1852 |s|))   nil)
-   (list ""               "ускорение"           nil
-	 ""               "гал"
-	 "Gal"            "Гал"                 (vd 1/100 :m 1 :s -2)   nil)
-   (list ""               "частота вращения"    nil
-	 ""               "оборот в секунду"
-	 "r/s"            "об/с"                (vd (* pi 2)  :rad 1  :s -1)   nil)
-   (list ""               "частота вращения"    nil
-	 ""               "оборот в минуту"
-	 "r/min"          "об/мин"              (vd (* pi 2 1/60) :rad 1 :s -1)   nil)
-   (list ""               "давление"            nil
-	 ""               "бар"
-	 "bar"            "бар"                 (vd* 100000 |Pa|)   nil)
+   (list "length"           "длина"               nil
+	 "nautical mile"    "морская миля"
+	 "nmi"              "миля"                (vd 1852 :m 1)   nil)
+   (list "mass"             "масса"               nil
+	 ""                 "карат"
+	 "кар"              "кар"                 (vd 2/10000 :kg 1)   nil)
+   (list "linear density"   "линейная плотность"  nil
+	 ""                 "текс"
+	 "tex"              "текс"                (vd 1/1000000 :kg 1 :m -1)   nil)
+   (list "velocity"         "скорость"            nil
+	 "knot"             "узел"
+	 "kn"               "уз"                  (vd/ |m| (vd/ 3600 1852 |s|))   nil)
+   (list "acceleration"     "ускорение"           nil
+	 ""                 "гал"
+	 "Gal"              "Гал"                 (vd 1/100 :m 1 :s -2)   nil)
+   (list "rotational speed" "частота вращения"    nil
+	 ""                 "оборот в секунду"
+	 "r/s"              "об/с"                (vd (* pi 2)  :rad 1  :s -1)   nil)
+   (list "rotational speed" "частота вращения"    nil
+	 ""                 "оборот в минуту"
+	 "r/min"            "об/мин"              (vd (* pi 2 1/60) :rad 1 :s -1)   nil)
+   (list "pressure"         "давление"            nil
+	 ""                 "бар"
+	 "bar"              "бар"                 (vd* 100000 |Pa|)   nil)
    )
   "Внесистемные единицы, временно допустимые к применению")
 
@@ -111,8 +111,8 @@
    (list "mass"          "масса"                nil 
 	 ""              "центнер"
 	 "q"             "ц"                    (vd* 100 |kg|)           nil)
-   (list ""              "телесный угол"        nil
-	 ""              "квадратный градус"
+   (list "solid angle"   "телесный угол"        nil
+	 "square degree" "квадратный градус"
 	 "□˚"            "□˚"                   (vd* |sr| (/ (* pi pi) (* 180 180)))   nil) ;;;; "□˚"
    (list "force"         "сила"                 nil
 	 ""              "дина"
@@ -157,11 +157,14 @@
    (list "stress"        "напряжение"           nil
 	 ""              "килопонд на квадратный миллиметр"
 	 "kp/mm^2"       "-"                    (vd/ (vd* |kg| |*g*|) 1/1000 1/1000 |m| |m|)   nil)
-   (list ""              '("работа" "энергия")  nil
+   (list '("energy"
+	   "work"
+	   "quantity of heat")
+	                '("работа" "энергия")   nil
 	 ""              "эрг"
 	 "erg"           "эрг"                  (vd/ |J| 10 1000 1000)
 	 '((-24 24)))
-   (list ""              "мощность"             nil
+   (list "power"         "мощность"             nil
 	 "horsepower"              "лошадиная сила"
 	 "hp"            "л.с."                  (vd* 75 |*g*| |kg| (vd/ |m| |s|))
 	 nil)
@@ -182,19 +185,19 @@
 	 ""              "калория термохимическая"
 	 "cal_{th}"      "кал_{тх}"             (vd* 4.1840 |J|)
 	 '((-24 24)))
-   (list "" '("теплота химической рекции")      nil
+   (list "heat of chemical reaction" '("теплота химической рекции") nil
 	 ""              "калория  15-градусная"
 	 "cal_{15}"      "кал_{15}"             (vd* 4.1855 |J|)
 	 '((-24 24)))
 ;;;; ....
-   (list ""              "длина"                nil
+   (list "length"        "длина"                nil
 	 ""              "микрон"
 	 "μ"             "мк"                   (vd/ |m| 1000 1000)             nil)
-   (list ""              "угол поворота"         nil
+   (list "angle of rotation" "угол поворота"    nil
 	 ""              "оборот"
 	 "r"             "об"                   (vd* 2 pi |rad|)                nil)
 ;;;; ....
-   (list ""              "площадь"              nil
+   (list "area"          "площадь"              nil
 	 ""              "ар"
 	 "a"             "а"                   (vd* 100 |m| |m|)                '((0 2)))
    )

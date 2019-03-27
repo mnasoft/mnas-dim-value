@@ -19,47 +19,7 @@
                (:file "methods"          :depends-on ("package" "classes"))
                (:file "defparameter"     :depends-on ("package"))	       
                (:file "classes"          :depends-on ("package"))
-	       (:file "mnas-dim-value"   :depends-on ("package"
-						      "razmernost"
-						      "marco"
-						      "classes"
-						      "defparameter"
-						      "methods"
-						      "mult-coeff"
-						      "defparameter-vd"
-						      "si-main-units"
-						      "si-derived-units"
-						      "constants"
-						      "si-units"
-						      "hash-tables"
-						      ))
-       	       (:file "values"           :depends-on ("package"
-						      "razmernost"
-						      "marco"
-						      "classes"
-						      "defparameter"
-						      "methods"
-						      "mult-coeff"
-						      "defparameter-vd"
-						      "si-main-units"
-						      "si-derived-units"
-						      "constants"
-						      "si-units"
-						      "hash-tables"
-						      "mnas-dim-value"
-						      ))
-	       (:file "cl-user-funcs"    :depends-on ("package"
-						      "razmernost"
-						      "marco"
-						      "classes"
-						      "defparameter"
-						      "methods"
-						      "mult-coeff"
-						      "defparameter-vd"
-						      "si-main-units"
-						      "si-derived-units"
-						      "constants"
-						      "si-units"
-						      "hash-tables"
-						      "mnas-dim-value"
-						      ))))
+	       (:file "mnas-dim-value"   :depends-on ("package" "razmernost" "marco" "classes" "defparameter" "methods" "mult-coeff" "defparameter-vd" "si-main-units" "si-derived-units" "constants" "si-units" "hash-tables"))
+       	       (:file "values"           :depends-on ("package" "razmernost" "marco" "classes" "defparameter" "methods" "mult-coeff" "defparameter-vd" "si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))
+	       (:file "defunses"         :depends-on ("package" "razmernost" "marco" "classes" "defparameter" "methods" "mult-coeff" "defparameter-vd" "si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))
+	       (:file "cl-user-funcs"    :depends-on ("package" "razmernost" "marco" "classes" "defparameter" "methods" "mult-coeff" "defparameter-vd" "si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))))

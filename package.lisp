@@ -81,6 +81,7 @@
 	   mnas-dim-value::*not-si-units-tbl-07*)
   (:export mnas-dim-value::*nd-not-si-units-tbl-05*
 	   mnas-dim-value::*nd-not-si-units-tbl-07*)
+  (:export mnas-dim-value::*other-units-tbl-b-01*)
   (:export mnas-dim-value::*nm-vl*
 	   mnas-dim-value::*nm-vl-ru->en*
 	   mnas-dim-value::*nm-vl-en->ru*)
