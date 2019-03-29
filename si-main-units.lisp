@@ -6,14 +6,15 @@
 
 (defparameter *si-main-units*
   (list
-   (list "length"              "длина"	                       "L" "meter"    "метр"      "m"   "м"    |m|   )
-;;;(list "mass"                "масса"                         "M" "kilogram" "килограмм" "kg"  "кг"   |kg|  )
+   (list "dimensionless"       "безразмерный"                  "U" "ul"       "бр"        "ul"  "бр"   (vd* 1))
+   (list "length"              "длина"	                       "L" "meter"    "метр"      "m"   "м"    |m|    )
+;;;(list "mass"                "масса"                         "M" "kilogram" "килограмм" "kg"  "кг"   |kg|   )
    (list "mass"                "масса"                         "M" "kilogram" "килограмм" "g"   "г"    (vd* 1/1000 |kg|))
-   (list "time"                "время"                         "T" "second"   "секунда"   "s"   "с"    |s|   )
-   (list "electric current"    "сила тока электрического"      "I" "ampere"   "ампер"     "A"   "А"    |A|   )
-   (list "temperature"         "температура термодинамическая" "Θ" "kelvin"   "кельвин"   "K"   "К"    |K|   )
-   (list "amount of substance" "количество вещества"           "N" "mole"     "моль"      "mol" "моль" |mol| )
-   (list "luminous intensity"  "сила света"                    "J" "candela"  "кандела"   "cd"  "кд"   |cd|  ))
+   (list "time"                "время"                         "T" "second"   "секунда"   "s"   "с"    |s|    )
+   (list "electric current"    "сила тока электрического"      "I" "ampere"   "ампер"     "A"   "А"    |A|    )
+   (list "temperature"         "температура термодинамическая" "Θ" "kelvin"   "кельвин"   "K"   "К"    |K|    )
+   (list "amount of substance" "количество вещества"           "N" "mole"     "моль"      "mol" "моль" |mol|  )
+   (list "luminous intensity"  "сила света"                    "J" "candela"  "кандела"   "cd"  "кд"   |cd|   ))
   "si-main-units
 Задает основные единицы измерения системы SI
 Каждый подсписок состоит из следующих элементов:

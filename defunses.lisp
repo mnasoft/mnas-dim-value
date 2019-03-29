@@ -10,7 +10,7 @@
     *nd-si-derived-units-tbl-03*
     *nd-si-derived-units-tbl-04*
     *nd-not-si-units-tbl-05*
-					    *nd-not-si-units-tbl-07*
+    *nd-not-si-units-tbl-07*
     )))
 
 (defun quantity-name (value &key (vd-language *vd-language*))
