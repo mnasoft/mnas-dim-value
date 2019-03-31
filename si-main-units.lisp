@@ -15,8 +15,7 @@
    (list "temperature"         "температура термодинамическая" "Θ" "kelvin"   "кельвин"   "K"   "К"    |K|    )
    (list "amount of substance" "количество вещества"           "N" "mole"     "моль"      "mol" "моль" |mol|  )
    (list "luminous intensity"  "сила света"                    "J" "candela"  "кандела"   "cd"  "кд"   |cd|   ))
-  "si-main-units
-Задает основные единицы измерения системы SI
+  "Задает основные единицы измерения системы SI
 Каждый подсписок состоит из следующих элементов:
 1 - английксое наименование величины
 2 - русское наименование величины
@@ -41,3 +40,5 @@
 		      :value            (car (last el))
 		      ))
    *si-main-units*))
+
+(setf (documentation  '*nd-si-main-units* 'variable)  (documentation  '*si-main-units* 'variable))

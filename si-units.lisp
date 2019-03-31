@@ -220,9 +220,18 @@
 
 (defparameter *nd-not-si-units-tbl-05*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-05*))
 
+(setf (documentation  '*nd-not-si-units-tbl-05* 'variable)
+      (documentation  '*not-si-units-tbl-05* 'variable))
+
 (defparameter *nd-not-si-units-tbl-07*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-07*))
 
+(setf (documentation  '*nd-not-si-units-tbl-07* 'variable)
+      (documentation  '*not-si-units-tbl-07* 'variable))
+
 (defparameter *nd-other-units-tbl-b-01* (mapcar #'make-nd-form-list-el *other-units-tbl-b-01*))
+
+(setf (documentation  '*nd-other-units-tbl-b-01* 'variable)
+      (documentation  '*other-units-tbl-b-01* 'variable))
 
 (defun check-is-si-table-good (tbl)
   (let ((rez t))

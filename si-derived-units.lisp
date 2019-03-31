@@ -50,8 +50,7 @@
 	 ""                          "кандела на квадратный метр"
 	 "cd/m^2"                    "кд/м^2"
 	 (vd 1 :cd 1 :m -2)))
-  "si-derived-units-expressed-in-terms-of-base-units
-Производные единицы СИ, наименования и обозначения которых образованы с использованием
+  "Производные единицы СИ, наименования и обозначения которых образованы с использованием
  наименований и обозначений основных единиц СИ.
 Каждый подсписок состоит из следующих элементов:
 1 - английское наименование величины
@@ -132,8 +131,7 @@
 	  "katal"                        "катал"
 	  "kat"                          "кат"     "s^-1*mol"                    |kat|))
   
-  "si-derived-units-with-special-names-and-symbols
-Задает производные единицы СИ, имефщие специальные наименование и обозначения
+  "Задает производные единицы СИ, имефщие специальные наименование и обозначения
 Каждый подсписок состоит из следующих элементов:
 1 - международное наименование величины
 2 - русское наименование величины
@@ -217,8 +215,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 )
 
-  "si-derived-units-whose-names-and-symbols-include-si-derived-units-with-special-names-and-symbols
-Задает производные единицы измерения системы SI
+  "Задает производные единицы измерения системы SI
 Каждый подсписок состоит из следующих элементов:
 1 - английское наименование величины
 2 - русское наименование величины
@@ -243,6 +240,9 @@
        )
    *si-derived-units-tbl-02*))
 
+(setf (documentation  '*nd-si-derived-units-tbl-02* 'variable)
+      (documentation  '*si-derived-units-tbl-02* 'variable))
+
 (defparameter *nd-si-derived-units-tbl-03*
   (mapcar
    #'(lambda (el)
@@ -259,6 +259,9 @@
        )
    *si-derived-units-tbl-03*))
 
+(setf (documentation  '*nd-si-derived-units-tbl-03* 'variable)
+      (documentation  '*si-derived-units-tbl-03* 'variable))
+
 (defparameter *nd-si-derived-units-tbl-04*
   (mapcar
    #'(lambda (el)
@@ -272,6 +275,9 @@
 		      :unit-symbol-ru   (seventh   el)
 		      :value            (car (last el))))
    *si-derived-units-tbl-04*))
+
+(setf (documentation  '*nd-si-derived-units-tbl-04* 'variable)
+      (documentation  '*si-derived-units-tbl-04* 'variable))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

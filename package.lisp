@@ -70,31 +70,26 @@
 	   mnas-dim-value::vd-sqrt)
   (:export mnas-dim-value::vd-val
 	   mnas-dim-value::vd-dims)
-  (:export mnas-dim-value::*si-main-units*
-	   mnas-dim-value::*si-derived-units-tbl-02*
-	   mnas-dim-value::*si-derived-units-tbl-03*
-	   mnas-dim-value::*si-derived-units-tbl-04*)
-  (:export mnas-dim-value::*nd-si-main-units*
+  (:intern  mnas-dim-value::*si-main-units*
+	    mnas-dim-value::*si-derived-units-tbl-02*
+	    mnas-dim-value::*si-derived-units-tbl-03*
+	    mnas-dim-value::*si-derived-units-tbl-04*
+	    mnas-dim-value::*not-si-units-tbl-05*
+	    mnas-dim-value::*not-si-units-tbl-07*
+	    mnas-dim-value::*other-units-tbl-b-01*
+	    )
+  
+  (:intern mnas-dim-value::*nd-si-main-units*
 	   mnas-dim-value::*nd-si-derived-units-tbl-02*
 	   mnas-dim-value::*nd-si-derived-units-tbl-03*
-	   mnas-dim-value::*nd-si-derived-units-tbl-04*)
-  (:export mnas-dim-value::*not-si-units-tbl-05*
-	   mnas-dim-value::*not-si-units-tbl-07*)
-  (:export mnas-dim-value::*nd-not-si-units-tbl-05*
-	   mnas-dim-value::*nd-not-si-units-tbl-07*)
-  (:export mnas-dim-value::*other-units-tbl-b-01*)
+	   mnas-dim-value::*nd-si-derived-units-tbl-04*
+	   mnas-dim-value::*nd-not-si-units-tbl-05*
+	   mnas-dim-value::*nd-not-si-units-tbl-07* 
+	   mnas-dim-value::*nd-other-units-tbl-b-01*)
+  
   (:export mnas-dim-value::*nm-vl*
 	   mnas-dim-value::*nm-vl-ru->en*
 	   mnas-dim-value::*nm-vl-en->ru*)
-  (:export mnas-dim-value::*mult-nm-vl*)
-  (:export mnas-dim-value::*dimension->string*
-	   mnas-dim-value::*string->dimension*)
-  (:export mnas-dim-value::*dimension->string-ru*
-	   mnas-dim-value::*string->dimension-ru*)
-  (:export mnas-dim-value::*dimension->name*
-	   mnas-dim-value::*name->dimension*)
-  (:export mnas-dim-value::*dimension->name-ru*
-	   mnas-dim-value::*name->dimension-ru*)
   (:export mnas-dim-value::^)
 ;;;; methods.lisp
   (:export mnas-dim-value::dimensionp)
