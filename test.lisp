@@ -40,3 +40,7 @@
 (unit-name (dimensionp "kgf/mm^2") nil)
 
 (print-hash-table enter-box::*nm-vl*)
+
+(vd* 1.0 "cal")
+
+(vd/ 50000.0 (vd* 1.0 "cal"))
