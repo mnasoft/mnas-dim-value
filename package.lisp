@@ -105,3 +105,5 @@
 	   mnas-dim-value::unuse-mnas-dim-value)
   (:export mnas-dim-value::quantity-name mnas-dim-value::unit-name)
   )
+
+;;;; (declaim (optimize (compilation-speed 0) (debug 3) (safety 0) (space 0) (speed 0)))
