@@ -2,6 +2,8 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
 (defparameter *mult-prefix*
   '(
     (24  "йотта" "Yotta" "И"  "Y")
@@ -35,7 +37,7 @@
 
 
 (progn
-  (defparameter *m-coeff-en* (make-hash-table :test 'equal)
+  (defvar *m-coeff-en* (make-hash-table :test 'equal)
     "Хеш- таблица *m-coeff-en* содержит международные множителные приставки системы СИ 
 Ключами являются строки.
 Значаниями являются числа.
@@ -48,7 +50,7 @@
 	*mult-prefix*))
 
 (progn
-  (defparameter *m-coeff-ru* (make-hash-table :test 'equal)
+  (defvar *m-coeff-ru* (make-hash-table :test 'equal)
     "Хеш- таблица *m-coeff-en* содержит международные множителные приставки системы СИ 
 Ключами являются строки.
 Значаниями являются числа.

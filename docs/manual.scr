@@ -12,3 +12,60 @@ This is where you explain what your project does.
   @item(class-graph  @image[src=./class-graph.gv.png]())
  @end(list)
 @end(section)
+
+@begin(section)
+ @title(Переменные_-_si-derived-units.lisp) 
+ @cl:with-package[name="mnas-dim-value"](
+   @cl:doc(variable *si-derived-units-tbl-02*)
+   @cl:doc(variable *si-derived-units-tbl-03*)
+   @cl:doc(variable *si-derived-units-tbl-04*)
+   @cl:doc(variable *nd-si-derived-units-tbl-02*)
+   @cl:doc(variable *nd-si-derived-units-tbl-03*)
+   @cl:doc(variable *nd-si-derived-units-tbl-04*)
+   )
+@end(section)
+
+@begin(section)
+ @title(Переменные_-_si-units.lisp)
+  @cl:with-package[name="mnas-dim-value"](
+  @cl:doc(variable *not-si-units-tbl-05*)
+  @cl:doc(variable *not-si-units-tbl-07*)
+  @cl:doc(variable *other-units-tbl-b-01*)
+  @cl:doc(variable *nd-not-si-units-tbl-05*)
+  @cl:doc(variable *nd-not-si-units-tbl-07*)
+  @cl:doc(variable *nd-other-units-tbl-b-01*)
+  @cl:doc(variable *dim-type*)
+  @cl:doc(variable *tbl-g1*)
+)
+@end(section)
+
+
+@begin(section)
+ @title(Переменные_-_si-main-units.lisp)
+ @cl:with-package[name="mnas-dim-value"](
+  @cl:doc(variable *si-main-units*)
+  @cl:doc(variable *nd-si-main-units*)
+)
+@end(section)
+
+@begin(section)
+ @title(Функции-macro.lisp)
+ @cl:with-package[name="mnas-dim-value"](
+   @cl:doc(function op-exclude )
+   @cl:doc(function m-op-exclude )
+   @cl:doc(function operatorp )
+   @cl:doc(function not-operatorp )
+   @cl:doc(function add-asterix )
+   @cl:doc(function vd-quantity )
+   @cl:doc(function rec-quantity )
+  )
+@end(section)
+
+@begin(section)
+ @title(Макросы_-_macro.lisp)
+ @cl:with-package[name="mnas-dim-value"](
+  @cl:doc(macro quantity))
+ @end(section)
+
+
+

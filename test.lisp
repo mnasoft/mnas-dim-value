@@ -1,27 +1,22 @@
 ;;;; test.lisp
 
-(in-package #:mnas-dim-value)
+(in-package #:cl-user)
 
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun do-symbols->list (package)
-  "Пример использования 
-;;;; (do-symbols->list 'mnas-dim-value)"
-  (let ((lst ()))
-    (do-symbols (s (find-package package)) (push s lst))
-    lst))
-
-(do-symbols->list 'mnas-dim-value)
+(annot:enable-annot-syntax)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(quantity-from-string "(25 kgf + 783.565 gf) / cm^2")
+(in-package :mdv)
+
+
+
+
+
+
+  
+(setf  (vd-names-ru *vv*) '("m" "kg" "s" "A" "K" "cd" "mol"  "rad" "sr"))
+		       ((eq *vd-language* :ru) '("м" "кг" "с" "А" "К" "кд" "моль" "рад" "ср"))))
+(defparameter *vv* (quantity-from-string "(25 kgf + 783.565 gf) / s cm^2"))
 
 (quantity-from-string "70*kgf/(70*cm^2)"                 )
 
@@ -33,7 +28,11 @@
 
 (quantity-from-string "2°+10'+55.4\""                    ) 
 
-(dimensionp "kgf/mm^2")
+(dimensionp "kgf*mm^2")
+
+(dimensionp "kg*m*s^-2")
+
+(dimensionp "N")
 
 (quantity-from-string (concatenate 'string "10" "*" "kgf/m^2"))
 
@@ -41,6 +40,8 @@
 
 (print-hash-table enter-box::*nm-vl*)
 
-(vd* 1.0 "cal")
+(vd* 1.0 "cal"  |m|)
 
-(vd/ 50000.0 (vd* 1.0 "cal"))
+(quantity-from-string  "4.1868 * m^3*kgs^-2")
+
+(vd/ 50000.0 (vd* 1.0 "cal" |m|)

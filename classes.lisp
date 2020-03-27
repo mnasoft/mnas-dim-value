@@ -2,14 +2,21 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
 ;;; "mnas-dim-value" goes here. Hacks and glory await!
 
 ;;;;m kg s A K cd mol rad sr
 
+@annot.class:export-class
 (defclass vd ()
-  ((val   :accessor vd-val  :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
-   (dims  :accessor vd-dims :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
-  (:documentation "Число с размерностью."))
+  ((val      :accessor vd-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
+   (dims     :accessor vd-dims     :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
+  (:documentation "Число с размерностью (ЧсР)."))
+
+(defvar +vd-names-en+ '("m" "kg" "s" "A" "K" "cd" "mol"  "rad" "sr"))
+
+(defvar +vd-names-ru+ '("м" "кг" "с" "А" "К" "кд" "моль" "рад" "ср"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

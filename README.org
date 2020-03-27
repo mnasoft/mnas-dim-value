@@ -45,47 +45,70 @@
 ** Первый
 #+BEGIN_SRC lisp 
   (progn
-    (list
-     (mnas-dim-value:quantity 220 "V" 15 "A")  
-     (mnas-dim-value:quantity 220 * "V" * 15 * "A")))
+      (list
+       (list (mdv:quantity 220 "V" 15 "A"))
+       (list (mdv:quantity 220 * "V" * 15 * "A"))
+       (list (mdv:quantity 20 "kgf" / "cm" / "cm"))))
 #+END_SRC
 
 #+RESULTS:
-| 3300 | W | 3300 | W |
+|        3300 | W  |
+|        3300 | W  |
+| 1961300.0d0 | Pa |
 
 ** Второй
 #+BEGIN_SRC lisp 
-  (progn
-    (in-package :mnas-dim-value)
-    ;; (mnas-dim-value:quantity 101325 "Pa" + ( 2.0 mnas-dim-value:|*g*| / (1 * "cm" ^ 2)))
-    (list
-     (mnas-dim-value:quantity 101325 "Pa" + ( 2.0 mnas-dim-value:|*g*| / (1 * "cm" * "cm")))))
+    (progn
+      (in-package :mnas-dim-value)
+      (list
+       (mdv:quantity 101325 "Pa" + ( 2.0 mdv:|*g*| / (1 * "cm" * "cm")))
+  ;;;  (mdv:quantity 101325 "Pa" + ( 2.0 mdv:|*g*| / (1 * "cm" ^ 2))) 
+  ))
 #+END_SRC
+
+#+RESULTS:
+| 297455.0d0 | Pa |
 
 ** Третий
 #+BEGIN_SRC lisp
      (progn
        (in-package :mnas-dim-value)
-       (mnas-dim-value:quantity 1 "d" + 15 "h" 20 + "min" + 30.5 "s"))
+       (list (mnas-dim-value:quantity 1 "d" + 15 "h" 20 + "min" + 30.5 "s")))
 #+END_SRC
+
+#+RESULTS:
+| 1166490.5 | s |
 
 #+name: foo
 #+begin_src lisp
 (mdv:quantity-name (mdv:vd/ "N" (mdv:vd*  "cm" "cm")))
 #+end_src
 
-#+name: foo
+#+RESULTS: foo
+| pressure |
+
+#+name: foo1
 #+begin_src lisp
   (mdv:quantity-name (mdv:vd*  "cm" "cm"))
 #+end_src
 
-#+RESULTS: foo
-| pressure |
+#+RESULTS: foo1
+| area |
+
+
 
 * Задачи
+1) [2/4] Добавить документацию
+   + [ ] к функциям;
+   + [ ] к классам;
+   + [X] подключить CODEX; 
+   + [X] подключить annot; 
+2) [ ] Заменить defparameter на defvar в определении хеш таблиц.
+
 ** TODO [0/1] Разобраться с безразмерными величинами
 - [ ] На настоящий момент образуются безразмерные величины с множительными приставками. Например Gul, Mul, kul=1000 ul. Лучше, чтобы образовывалась только одна безразмерная единица без множительной приставки.
 ** TODO Печать класса vd с разделителями типа cdot;
+kgf \cdot m;
 ** TODO Печать класса vd в html формат;
 ** TODO Печать класса vd с диапазоном значений от 0.1 до 1000;
 ** TODO Печать в виде суммы величин.

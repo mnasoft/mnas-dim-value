@@ -2,6 +2,9 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
+;;@intern
 (defparameter *not-si-units-tbl-05*
   (list
    (list "mass"      "масса" nil
@@ -71,6 +74,7 @@
   "Внесистемные единицы, допустимые к применению наравне с единицами СИ")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;@intern
 (defparameter *not-si-units-tbl-07*
   (list 
    (list "length"           "длина"               nil
@@ -100,6 +104,7 @@
    )
   "Внесистемные единицы, временно допустимые к применению")
 
+;;@intern
 (defparameter *other-units-tbl-b-01*
   (list
    (list "length"        "длина"                nil
@@ -218,16 +223,19 @@
 		 :value            (eighth  el)
 		 :coeff            (ninth   el)))
 
+;;@intern
 (defparameter *nd-not-si-units-tbl-05*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-05*))
 
 (setf (documentation  '*nd-not-si-units-tbl-05* 'variable)
       (documentation  '*not-si-units-tbl-05* 'variable))
 
+;;@intern
 (defparameter *nd-not-si-units-tbl-07*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-07*))
 
 (setf (documentation  '*nd-not-si-units-tbl-07* 'variable)
       (documentation  '*not-si-units-tbl-07* 'variable))
 
+;;@intern
 (defparameter *nd-other-units-tbl-b-01* (mapcar #'make-nd-form-list-el *other-units-tbl-b-01*))
 
 (setf (documentation  '*nd-other-units-tbl-b-01* 'variable)
@@ -407,7 +415,8 @@
     (("Поглощенная доза ионизирующего излучения" "керма") ("Gy" "Гр") ("TGy" "ТГр" "GGy" "ГГр" "MGy" "МГр" "kGy" "кГр" "mGy" "мГр" "μGy" "мкГр") ("-") ("-"))
     (("Активность нуклида в радиоактивном источнике" "активность радионуклида") ("Bq" "Бк") ("EBq" "ЭБк" "PBq" "ПБк" "TBq" "ТБк" "GBq" "ГБк" "MBq" "МБк" "kBq" "кБк") ("-") ("-"))
     (("Эквивалентная доза ионизирующего излучения" "эффективная доза ионизирующего излучения") ("Sv" "Зв") ("mSv" "мЗв") ("-") ("-"))
-    ))
+    )
+  "Рекомендуемые к применению единицы Си.")
 
 (mapcar
  #'(lambda (el)

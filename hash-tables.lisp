@@ -2,6 +2,8 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
 (defun print-hash-table (ht) (maphash #'(lambda (key val) (format t "~S ~S~%" key val)) ht))
 
 (defun hash-table->list (ht)

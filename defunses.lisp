@@ -2,6 +2,8 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
 (defparameter *nd-list*
   (reverse
    (append
@@ -13,12 +15,14 @@
     *nd-not-si-units-tbl-07*
     )))
 
-(defun quantity-name (value &key (vd-language *vd-language*))
+@export
+@annot.doc:doc
   "Возвращает наименование величины.
 Пример использования:
 ;;;; (quantity-name (vd/ |kg| |m| |m| |m|) :vd-language :en) => (\"density\" \"mass density\")
 ;;;; (quantity-name (vd/ (vd* |kg| *g*) (vd-expt (vd* 0.01 |m|) 2) 1000))
 "
+(defun quantity-name (value &key (vd-language *vd-language*))
   (let ((rez nil)
 	(item nil)
 	(quantity-name-language

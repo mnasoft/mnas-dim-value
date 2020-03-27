@@ -2,42 +2,50 @@
 
 (in-package #:mnas-dim-value)
 
+(annot:enable-annot-syntax)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@export
+@annot.doc:doc
+"Перевод градусов значения, заданного в градусах Кельвина, в градусы Цельсия."
+(defun K->C(K) (- K 273.15))
 
-(defun K->C(K)
-  "Перевод градусов значения, заданного в градусах Кельвина, в градусы Цельсия."
-  (- K 273.15))
+@export
+@annot.doc:doc
+"Перевод градусов значения, заданного в градусах Цельсия, в градусы Кельвина."
+(defun C->K(C) (+ C 273.15))
 
-(defun C->K(C)
-  "Перевод градусов значения, заданного в градусах Цельсия, в градусы Кельвина."
-  (+ C 273.15))
-
-(defun k->M (k)
+@export
+@annot.doc:doc
 "Перевод значения с приставкой кило в число с приставкой мега"
-(* 0.001 k))
+(defun k->M (k) (* 0.001 k))
 
-(defun M->k (M)
-  "Перевод значения с приставкой мега в число с приставкой кило"
-  (* 1000.0 M))
+@export
+@annot.doc:doc
+"Перевод значения с приставкой мега в число с приставкой кило"
+(defun M->k (M) (* 1000.0 M))
 
-(defun kgs/cm2->Pa (kgs/cm2)
-  "Переводит значение давления, заданное в kgs/cm2, в Pa."
-  (* 9.8065 10000.0 kgs/cm2))
+@export
+@annot.doc:doc
+"Переводит значение давления, заданное в kgs/cm2, в Pa."
+(defun kgs/cm2->Pa (kgs/cm2) (* 9.8065 10000.0 kgs/cm2))
 
-(defun Pa->kgs/cm2 (Pa)
-  "Переводит значение давления, заданное в Pa, в kgs/cm2."
-  (/ Pa 9.8065 10000.0))
+@export
+@annot.doc:doc
+"Переводит значение давления, заданное в Pa, в kgs/cm2."
+(defun Pa->kgs/cm2 (Pa) (/ Pa 9.8065 10000.0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun dim-string-by-dim-name ( d-type )
+@export
+@annot.doc:doc
   "Пример использования:
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"length\")
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"specific entropy\")
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"capacitance\")
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"mass density\")
 "
+(defun dim-string-by-dim-name ( d-type )
+
   (let ((rez nil))
     (mapc #'(lambda (f-data)
 	      (let ((func-dim-string (first f-data))
@@ -57,12 +65,13 @@
 	   (list #'fifth  *not-si-units-tbl-05*)))
     rez))
 
-(defun dim-name-list (&key  (en-ru #'first))
-  "Возвращает список наименований величин
+@export @annot.doc:doc "Возвращает список наименований величин
 Пример использования 
 ;;;;(dim-name-list) 
 ;;;;(dim-name-list :en-ru #'second)
 "
+(defun dim-name-list (&key  (en-ru #'first))
+
   (let ((rez nil))
     (mapc #'(lambda (f-data)
 	      (let ((func-dim-string (first f-data))
@@ -85,7 +94,7 @@
     (delete-duplicates (sort rez #'string< ) :test #'equal )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+@export
 (defparameter help 
   " 
  (in-package :mnas-dim-value)                         ;;;; Загрузка пакета
@@ -101,6 +110,9 @@
  (slad)                                               ;;;; Сохранить состояние и завершить работу
 ")
 
+@export
+@annot.doc:doc
+"help"
 (defun help () (format t help ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

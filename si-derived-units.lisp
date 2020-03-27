@@ -2,8 +2,9 @@
 
 (in-package #:mnas-dim-value)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(annot:enable-annot-syntax)
 
+;;@intern
 (defparameter *si-derived-units-tbl-02*
   (list
    (list "area"                      "площадь"     nil
@@ -59,6 +60,7 @@
 4 - международное обозначение единицы
 см. ГОСТ 8.417-2002 таблица 2")
 
+;;@intern
 (defparameter *si-derived-units-tbl-03*
   (list
    (list "plane angle"                   "плоский угол" "L/L"
@@ -146,6 +148,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;@intern
 (defparameter *si-derived-units-tbl-04*
   (list
    (list "moment of force"               "момент силы" nil
@@ -224,6 +227,7 @@
 5 - единицы, вараженная через основные и производные единицы СИ
 см. ГОСТ 8.417-2002, таблица 4")
 
+;;@intern
 (defparameter *nd-si-derived-units-tbl-02*
   (mapcar
    #'(lambda (el)
@@ -243,6 +247,7 @@
 (setf (documentation  '*nd-si-derived-units-tbl-02* 'variable)
       (documentation  '*si-derived-units-tbl-02* 'variable))
 
+;;@intern
 (defparameter *nd-si-derived-units-tbl-03*
   (mapcar
    #'(lambda (el)
@@ -262,6 +267,7 @@
 (setf (documentation  '*nd-si-derived-units-tbl-03* 'variable)
       (documentation  '*si-derived-units-tbl-03* 'variable))
 
+;;@intern
 (defparameter *nd-si-derived-units-tbl-04*
   (mapcar
    #'(lambda (el)
