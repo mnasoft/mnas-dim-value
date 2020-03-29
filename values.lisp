@@ -13,27 +13,46 @@
 	     (add-space-around-sym (sym str)
 	       (mnas-string:string-replace-all
 		str sym (concatenate 'string sps sym sps )))
-	     (add-space (str) (let ((rez str)) (mapcar #'(lambda (el) (setf rez (add-space-around-sym el rez))) sp-list) (str:words rez)))
+	     (add-space (str)
+	       (let ((rez str))
+		 (mapcar
+		  #'(lambda (el) (setf rez (add-space-around-sym el rez)))
+		  sp-list)
+		 (str:words rez)))
+	     (replase-5 (str)
+	       (mnas-string:replace-all
+		(mnas-string:replace-all
+		 (mnas-string:replace-all
+		  (mnas-string:replace-all
+		   (mnas-string:replace-all
+		    str
+		    " + " " :+ ")
+		   " - " " :- ")
+		  " * " " :* ")
+		 " / " " :/ ")
+		" ^ " " :^ "))
 	     (baz (str)
-	       (let ((rez
-		      (str:unwords 
-		       (mapcar
-			#'(lambda (el)
-			    (cond
-			      ((member el o-lst :test #'equal) el)
-			      ((or (string= dig el)
-				   (string= s-q el))
-			       (str:concat d-q el d-q))
-			      ((string= d-q el)
-			       (str:concat d-q "\\" el d-q))
-			      ((mnas-string:read-from-string-number el nil) el)
-			      (t (str:concat d-q el d-q))))
-			(add-space str)))))
-;;;;		 (format t "~A~%" rez)
+	       (let ((rez (str:unwords 
+			   (mapcar
+			    #'(lambda (el)
+				(cond
+				  ((member el o-lst :test #'equal) el)
+				  ((or (string= dig el)
+				       (string= s-q el))
+				   (str:concat d-q el d-q))
+				  ((string= d-q el)
+				   (str:concat d-q "\\" el d-q))
+				  ((mnas-string:read-from-string-number el nil) el)
+				  (t (str:concat d-q el d-q))))
+			    (add-space str)))))
+		 (format t "~S~%" rez)
 		 rez)))
       (read-from-string
        (string-add-brackets&quotes
-	(str:concat "mnas-dim-value:quantity "(baz str)))))))
+	(replase-5 
+	 (str:concat "mnas-dim-value:quantity "(baz str))))))))
+
+;;(str:unwords '("1" "234" "235"))
 
 @export
 (defun quantity-from-string (str)
@@ -87,7 +106,13 @@ flip  - меняет местами регистры X1 и Χ2
 
 @export
 @annot.doc:doc
-"Позволяет выполнить запуск интерактивного калькулятора"
+"@b(Описание:) функция запускает интерактивный калькулятор.
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+ (quantity-interactive)
+@end(code)
+"
 (defun quantity-interactive ()
   (do* ((rez-lst  nil)
 	(rez      nil)

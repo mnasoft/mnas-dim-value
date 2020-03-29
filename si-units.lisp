@@ -211,35 +211,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun make-nd-form-list-el (el)
-  (make-instance 'nd
-		 :quantity-name-en (first   el)
-		 :quantity-name-ru (second  el)
-		 :dimension-symbol (third   el)
-		 :unit-name-en     (fourth  el)
-		 :unit-name-ru     (fifth   el)
-		 :unit-symbol-en   (sixth   el)
-		 :unit-symbol-ru   (seventh el)
-		 :value            (eighth  el)
-		 :coeff            (ninth   el)))
+
 
 ;;@intern
-(defparameter *nd-not-si-units-tbl-05*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-05*))
-
-(setf (documentation  '*nd-not-si-units-tbl-05* 'variable)
-      (documentation  '*not-si-units-tbl-05* 'variable))
+(defparameter *nd-not-si-units-tbl-05*  (make-nd-form-list-el *not-si-units-tbl-05*) "Внесистемные единицы, допустимые к применению наравне с единицами СИ")
+(setf (documentation  '*nd-not-si-units-tbl-05* 'variable) (documentation  '*not-si-units-tbl-05* 'variable))
 
 ;;@intern
-(defparameter *nd-not-si-units-tbl-07*  (mapcar #'make-nd-form-list-el *not-si-units-tbl-07*))
+(defparameter *nd-not-si-units-tbl-07*  (make-nd-form-list-el *not-si-units-tbl-07*) "Внесистемные единицы, временно допустимые к применению")
 
-(setf (documentation  '*nd-not-si-units-tbl-07* 'variable)
-      (documentation  '*not-si-units-tbl-07* 'variable))
+(setf (documentation  '*nd-not-si-units-tbl-07* 'variable) (documentation  '*not-si-units-tbl-07* 'variable))
 
 ;;@intern
-(defparameter *nd-other-units-tbl-b-01* (mapcar #'make-nd-form-list-el *other-units-tbl-b-01*))
-
-(setf (documentation  '*nd-other-units-tbl-b-01* 'variable)
-      (documentation  '*other-units-tbl-b-01* 'variable))
+(defparameter *nd-other-units-tbl-b-01* (make-nd-form-list-el *other-units-tbl-b-01*) "Соотношение некоторых внесистемных единиц с единицами СИ")
+(setf (documentation  '*nd-other-units-tbl-b-01* 'variable) (documentation  '*other-units-tbl-b-01* 'variable))
 
 (defun check-is-si-table-good (tbl)
   (let ((rez t))
@@ -255,19 +240,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *dim-type*
-  '(("length"   ("Mm" "km" "m" "mm" ))
-    ("mass"     ("kt" "t" "kg" "g"  ))
-    ("time"     ("d" "h" "min" "s"))
-    ("electric current")
-    ("temperature")
-    ("amount of substance")
-    ("luminous intensity")
-    ("pressure" ("MPa" "kPa" "Pa" "kgf/mm^2" "kgf/cm^2" "kgf/m^2" "mm_Hg" "mm_H2O"))
-			   
-    ("force"    ("MN" "kN" "N" "tf" "kgf" "gf") )))
 
-(concatenate 'list  "€")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

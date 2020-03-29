@@ -32,20 +32,7 @@
 см. ГОСТ 8.417-2002, таблица 1")
 
 ;;@intern
-(defparameter *nd-si-main-units*
-  (mapcar 
-   #'(lambda (el)
-       (make-instance 'nd
-		      :quantity-name-en (first     el)
-		      :quantity-name-ru (second    el)
-		      :dimension-symbol (third     el)
-		      :unit-name-en     (fourth    el)
-		      :unit-name-ru     (fifth     el)
-		      :unit-symbol-en   (sixth     el)
-		      :unit-symbol-ru   (seventh   el)
-		      :value            (car (last el))
-		      ))
-   *si-main-units*))
+(defparameter *nd-si-main-units* (make-nd-items    *si-main-units*)  "Задает основные единицы измерения системы SI.")
 
 (setf (documentation  '*nd-si-main-units* 'variable)  (documentation  '*si-main-units* 'variable))
 

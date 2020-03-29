@@ -18,7 +18,7 @@
 (defmethod print-object ((x vd) o-s)
   (multiple-value-bind (dimens find) (gethash (vd-dims x) (dim->unit-symbol))
     (if find
-	(format o-s "~S ~A" (vd-val x) dimens)
+	(format o-s "~S [~A]" (vd-val x) dimens)
 	(progn (format o-s "~S " (vd-val x))
 	       (let ((st+ nil)
 		     (st- nil))
@@ -33,7 +33,7 @@
 		 (cond 
 		   ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
 		   ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
-		   ((and (null st+) st-) (format o-s "[1~{~A~^*~}]"          (nreverse st-)))))))))
+		   ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

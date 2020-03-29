@@ -31,3 +31,32 @@
    (value            :accessor nd-value             :initarg :value            :initform 1  :documentation "Значение, выраженное в единицах СИ. Например: (vd 1 :m 1)")
    (coeff            :accessor nd-coeff             :initarg :coeff :initform '((-24 24))   :documentation "Список диапазонов разрешенных степеней множителей для данной величины системы СИ"))
   (:documentation "Число с размерностью."))
+
+(defun make-nd-items (lst)
+  (mapcar
+   #'(lambda (el)
+       (make-instance 'nd
+		      :quantity-name-en (first     el)
+		      :quantity-name-ru (second    el)
+		      :dimension-symbol (third     el)
+		      :unit-name-en     (fourth    el)
+		      :unit-name-ru     (fifth     el)
+		      :unit-symbol-en   (sixth     el)
+		      :unit-symbol-ru   (seventh   el)
+		      :value            (car (last el))))
+   lst))
+
+(defun make-nd-form-list-el (lst)
+  (mapcar
+   #'(lambda (el)
+       (make-instance 'nd
+		      :quantity-name-en (first   el)
+		      :quantity-name-ru (second  el)
+		      :dimension-symbol (third   el)
+		      :unit-name-en     (fourth  el)
+		      :unit-name-ru     (fifth   el)
+		      :unit-symbol-en   (sixth   el)
+		      :unit-symbol-ru   (seventh el)
+		      :value            (eighth  el)
+		      :coeff            (ninth   el)))
+   lst))

@@ -227,63 +227,15 @@
 5 - единицы, вараженная через основные и производные единицы СИ
 см. ГОСТ 8.417-2002, таблица 4")
 
-;;@intern
-(defparameter *nd-si-derived-units-tbl-02*
-  (mapcar
-   #'(lambda (el)
-              (make-instance 'nd
-		      :quantity-name-en (first     el)
-		      :quantity-name-ru (second    el)
-		      :dimension-symbol (third     el)
-		      :unit-name-en     (fourth    el)
-		      :unit-name-ru     (fifth     el)
-		      :unit-symbol-en   (sixth     el)
-		      :unit-symbol-ru   (seventh   el)
-		      :value            (car (last el))
-		      )
-       )
-   *si-derived-units-tbl-02*))
+(defparameter *nd-si-derived-units-tbl-02* (make-nd-items *si-derived-units-tbl-02*)  "Задает производные единицы измерения системы SI.")
+(setf (documentation  '*nd-si-derived-units-tbl-02* 'variable) (documentation  '*si-derived-units-tbl-02* 'variable))
 
-(setf (documentation  '*nd-si-derived-units-tbl-02* 'variable)
-      (documentation  '*si-derived-units-tbl-02* 'variable))
+(defparameter *nd-si-derived-units-tbl-03* (make-nd-items *si-derived-units-tbl-03*) "Задает производные единицы СИ, имеющие специальные наименование и обозначения.")
+(setf (documentation  '*nd-si-derived-units-tbl-03* 'variable) (documentation  '*si-derived-units-tbl-03* 'variable))
 
-;;@intern
-(defparameter *nd-si-derived-units-tbl-03*
-  (mapcar
-   #'(lambda (el)
-              (make-instance 'nd
-		      :quantity-name-en (first     el)
-		      :quantity-name-ru (second    el)
-		      :dimension-symbol (third     el)
-		      :unit-name-en     (fourth    el)
-		      :unit-name-ru     (fifth     el)
-		      :unit-symbol-en   (sixth     el)
-		      :unit-symbol-ru   (seventh   el)
-		      :value            (car (last el))
-		      )
-       )
-   *si-derived-units-tbl-03*))
+(defparameter *nd-si-derived-units-tbl-04* (make-nd-items    *si-derived-units-tbl-04*) "Задает производные единицы измерения системы SI")
 
-(setf (documentation  '*nd-si-derived-units-tbl-03* 'variable)
-      (documentation  '*si-derived-units-tbl-03* 'variable))
-
-;;@intern
-(defparameter *nd-si-derived-units-tbl-04*
-  (mapcar
-   #'(lambda (el)
-              (make-instance 'nd
-		      :quantity-name-en (first     el)
-		      :quantity-name-ru (second    el)
-		      :dimension-symbol (third     el)
-		      :unit-name-en     (fourth    el)
-		      :unit-name-ru     (fifth     el)
-		      :unit-symbol-en   (sixth     el)
-		      :unit-symbol-ru   (seventh   el)
-		      :value            (car (last el))))
-   *si-derived-units-tbl-04*))
-
-(setf (documentation  '*nd-si-derived-units-tbl-04* 'variable)
-      (documentation  '*si-derived-units-tbl-04* 'variable))
+(setf (documentation  '*nd-si-derived-units-tbl-04* 'variable) (documentation  '*si-derived-units-tbl-04* 'variable))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

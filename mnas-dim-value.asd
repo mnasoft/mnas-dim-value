@@ -8,7 +8,7 @@
   :depends-on (#:str #:mnas-string ) ;;;; #:cl-ppcre
   :components ((:file "package")
                (:file "razmernost"       :depends-on ("package"))
-               (:file "marco"            :depends-on ("package"))
+               (:file "marco"            :depends-on ("package" "methods"))
                (:file "hash-tables"      :depends-on ("package" "classes" "defparameter" "mult-coeff" "methods" "defparameter-vd" "si-main-units" "si-derived-units" "constants" "si-units"))
                (:file "mult-coeff"       :depends-on ("package" "classes" "methods"))
                (:file "si-units"         :depends-on ("package" "classes" "methods"))

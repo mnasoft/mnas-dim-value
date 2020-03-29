@@ -8,8 +8,24 @@
 
 (in-package :mdv)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Переменная исключена т.к. пока нигде не используется
+(defparameter *dim-type*
+  '(("length"   ("Mm" "km" "m" "mm" ))
+    ("mass"     ("kt" "t" "kg" "g"  ))
+    ("time"     ("d" "h" "min" "s"))
+    ("electric current")
+    ("temperature")
+    ("amount of substance")
+    ("luminous intensity")
+    ("pressure" ("MPa" "kPa" "Pa" "kgf/mm^2" "kgf/cm^2" "kgf/m^2" "mm_Hg" "mm_H2O"))
+			   
+    ("force"    ("MN" "kN" "N" "tf" "kgf" "gf") )))
 
+(concatenate 'list  "€")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
