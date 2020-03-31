@@ -58,8 +58,6 @@
 		 (list '<= (first r-rez) val (second r-rez) )))
 	   r-list))))
 
-(trace  is-in-range)
-
 (defun add-multiplid-values (var)
   (setf (gethash (nd-unit-symbol-en var) *nm-vl*)
 	(nd-value var))
