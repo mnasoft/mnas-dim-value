@@ -4,5 +4,7 @@
 *.fasl
 *.lisp-temp
 build
-\#*#
+\#*\#
 
+Developers-memo.html
+README.html
