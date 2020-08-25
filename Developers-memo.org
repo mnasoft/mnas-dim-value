@@ -4,67 +4,26 @@
 3) http://commondoc.github.io/codex/docs/tutorial.html
 4) [[/home/namatv/.slynkrc]]
 
-* Генерироване документации
-#+name: pwd
-#+BEGIN_SRC shell
-pwd
+* Генерирование документации
+#+name: make-html
+#+BEGIN_SRC lisp
+  (mnas-package:make-codex-documentation  :mnas-dim-value :mnas-dim-value)
 #+END_SRC
-
-#+RESULTS: pwd
-: /home/namatv/quicklisp/local-projects/mnas/mnas-dim-value
-
-#+name: basename-pwd
-#+BEGIN_SRC shell
-basename `pwd`
-#+END_SRC
-
-#+RESULTS: basename-pwd
-: mnas-string
-
-#+name:make-graph
-#+BEGIN_SRC lisp :var pwd=pwd :var basename-pwd=basename-pwd
-  ;;;; (require :codex)
-  ;;;; (require :mnas-package)
-  ;;;;
-  ;;;; (require :mnas-format)
-  (let ((pkg :mnas-dim-value)
-	(fpath (concatenate
-		'string
-		(cond ((uiop:getenv "MSYS_HOME")) (t ""))
-		pwd "/docs/build/"
-		basename-pwd "/html/")))
-    (codex:document pkg)
-    (mnas-package:view-call-graph   pkg :out-type "png" :viewer nil :fpath fpath :fname "call-graph")
-    (mnas-package:view-system-graph pkg :out-type "png" :viewer nil :fpath fpath :fname "system-graph")
-    (mnas-package:view-class-graph  pkg :out-type "png" :viewer nil :fpath fpath :fname "class-graph")
-    (mnas-package:view-symbol-graph pkg :out-type "png" :viewer nil :fpath fpath :fname "symbol-graph"))
-#+END_SRC
-
-#+RESULTS: make-graph
-: #GRAPH(VC=115 RC=86)
-: (T:"k->c" T:"k->m" T:"dimensionp" T:"vd-convert" T:"c->k" T:"print-object" T:"print-hash-table" T:"vd" T:"unit-name" T:"dim->unit-symbol" T:"vd-names" T:"add-multiplid-values" T:"prefix-from->to" T:"quantity-name" T:"load-nm-vl-en->ru" T:"load-nm-vl-ru->en" T:"load-quantity-name-en->dim" T:"load-dim->quantity-name-en" T:"load-unit-symbol-en->dim" T:"load-dim->unit-symbol-ru" T:"load-dim->unit-symbol-en" T:"load-unit-symbol-ru->dim" T:"load-nm-vl" T:"dim-string-by-dim-name" T:"dim-name-list" T:"m" T:"lm" T:"*no*" T:"help" T:"kg" T:"k" T:"*μ-0*" T:"*nm-vl*" T:"gy" T:"*f*" T:"*c*" T:"*e*" T:"*ε-0*" T:"hz" T:"c" T:"wb" T:"w" T:"sr" T:"*c-0*" T:"kat" T:"τ" T:"f" T:"*gn*" T:"*nm-vl-en->ru*" T:"bq" T:"n" T:"v" T:"pa" T:"s" T:"*nm-vl-ru->en*" T:"j" T:"mol" T:"lx" T:"*na*" T:"sv" T:"*h*" T:"ω" T:"h" T:"a" T:"rad" T:"*r-0*" T:"cd" T:"*v-0*" T:"*k*" T:"*a-e-m*" T:"*m-e*" T:"*g*" T:"*aaa*" T:"*not-si-units-tbl-07*" T:"+vd-names-en+" T:"*nd-not-si-units-tbl-05*" T:"*quantity-name-en->dim-loaded*" T:"*d" T:"*dim->unit-symbol-en*" T:"*si-derived-units-tbl-03*" T:"*dim->quantity-name-en-loaded*" T:"*nd-si-derived-units-tbl-03*" T:"*unit-symbol-ru->dim-loaded*" T:"*si-derived-units-tbl-04*" T:"*quantity-name-en->dim*" T:"*nm-vl-loaded*" T:"*dim->unit-symbol-ru*" T:"*other-units-tbl-b-01*" T:"*mult-prefix*" T:"*sd" T:"*unit-symbol-en->dim*" T:"*dim->unit-symbol-en-loaded*" T:"*nd-si-main-units*" T:"*nd-si-derived-units-tbl-02*" T:"*angstrom" T:"*nm-vl-ru->en-loaded*" T:"*dim->unit-symbol-ru-loaded*" T:"*m-coeff-ru*" T:"*not-si-units-tbl-05*" T:"*dim->quantity-name-en*" T:"*s" T:"*vd-language*" T:"*nd-other-units-tbl-b-01*" T:"*unit-symbol-ru->dim*" T:"*unit-symbol-en->dim-loaded*" T:"+vd-names-ru+" T:"*nm-vl-en->ru-loaded*" T:"*m" T:"*tbl-g1*" T:"*m-coeff-en*" T:"*nd-list*" T:"*si-main-units*" T:"*nd-si-derived-units-tbl-04*" T:"*nd-not-si-units-tbl-07*" T:"*si-derived-units-tbl-02*" )
-: ((T:"help"->T:"help") (T:"k->c"->T:"k") (T:"vd"->T:"k") (T:"k->m"->T:"k") (T:"dimensionp"->T:"*nm-vl*") (T:"add-multiplid-values"->T:"*nm-vl*") (T:"load-nm-vl"->T:"*nm-vl*") (T:"vd-convert"->T:"*nm-vl*") (T:"c->k"->T:"c") (T:"load-nm-vl-en->ru"->T:"*nm-vl-en->ru*") (T:"print-object"->T:"v") (T:"vd"->T:"s") (T:"print-hash-table"->T:"s") (T:"load-nm-vl-ru->en"->T:"*nm-vl-ru->en*") (T:"vd"->T:"a") (T:"vd-names"->T:"+vd-names-en+") (T:"load-nm-vl"->T:"*nd-not-si-units-tbl-05*") (T:"load-quantity-name-en->dim"->T:"*quantity-name-en->dim-loaded*") (T:"unit-name"->T:"*dim->unit-symbol-en*") (T:"dim->unit-symbol"->T:"*dim->unit-symbol-en*") (T:"load-dim->unit-symbol-en"->T:"*dim->unit-symbol-en*") (T:"dim-string-by-dim-name"->T:"*si-derived-units-tbl-03*") (T:"dim-name-list"->T:"*si-derived-units-tbl-03*") (T:"load-nm-vl-en->ru"->T:"*si-derived-units-tbl-03*") (T:"load-nm-vl-ru->en"->T:"*si-derived-units-tbl-03*") (T:"load-dim->quantity-name-en"->T:"*dim->quantity-name-en-loaded*") (T:"load-nm-vl"->T:"*nd-si-derived-units-tbl-03*") (T:"load-quantity-name-en->dim"->T:"*nd-si-derived-units-tbl-03*") (T:"load-dim->quantity-name-en"->T:"*nd-si-derived-units-tbl-03*") (T:"load-unit-symbol-en->dim"->T:"*nd-si-derived-units-tbl-03*") (T:"load-dim->unit-symbol-ru"->T:"*nd-si-derived-units-tbl-03*") (T:"load-dim->unit-symbol-en"->T:"*nd-si-derived-units-tbl-03*") (T:"load-unit-symbol-ru->dim"->T:"*nd-si-derived-units-tbl-03*") (T:"load-unit-symbol-ru->dim"->T:"*unit-symbol-ru->dim-loaded*") (T:"dim-string-by-dim-name"->T:"*si-derived-units-tbl-04*") (T:"dim-name-list"->T:"*si-derived-units-tbl-04*") (T:"load-quantity-name-en->dim"->T:"*quantity-name-en->dim*") (T:"load-nm-vl"->T:"*nm-vl-loaded*") (T:"unit-name"->T:"*dim->unit-symbol-ru*") (T:"dim->unit-symbol"->T:"*dim->unit-symbol-ru*") (T:"load-dim->unit-symbol-ru"->T:"*dim->unit-symbol-ru*") (T:"load-unit-symbol-en->dim"->T:"*unit-symbol-en->dim*") (T:"load-dim->unit-symbol-en"->T:"*dim->unit-symbol-en-loaded*") (T:"load-nm-vl"->T:"*nd-si-main-units*") (T:"load-quantity-name-en->dim"->T:"*nd-si-main-units*") (T:"load-dim->quantity-name-en"->T:"*nd-si-main-units*") (T:"load-unit-symbol-en->dim"->T:"*nd-si-main-units*") (T:"load-dim->unit-symbol-ru"->T:"*nd-si-main-units*") (T:"load-dim->unit-symbol-en"->T:"*nd-si-main-units*") (T:"load-unit-symbol-ru->dim"->T:"*nd-si-main-units*") (T:"load-quantity-name-en->dim"->T:"*nd-si-derived-units-tbl-02*") (T:"load-dim->quantity-name-en"->T:"*nd-si-derived-units-tbl-02*") (T:"load-unit-symbol-en->dim"->T:"*nd-si-derived-units-tbl-02*") (T:"load-dim->unit-symbol-ru"->T:"*nd-si-derived-units-tbl-02*") (T:"load-dim->unit-symbol-en"->T:"*nd-si-derived-units-tbl-02*") (T:"load-unit-symbol-ru->dim"->T:"*nd-si-derived-units-tbl-02*") (T:"load-nm-vl-ru->en"->T:"*nm-vl-ru->en-loaded*") (T:"load-dim->unit-symbol-ru"->T:"*dim->unit-symbol-ru-loaded*") (T:"dim-string-by-dim-name"->T:"*not-si-units-tbl-05*") (T:"dim-name-list"->T:"*not-si-units-tbl-05*") (T:"load-dim->quantity-name-en"->T:"*dim->quantity-name-en*") (T:"quantity-name"->T:"*vd-language*") (T:"unit-name"->T:"*vd-language*") (T:"dim->unit-symbol"->T:"*vd-language*") (T:"vd-names"->T:"*vd-language*") (T:"load-nm-vl"->T:"*nd-other-units-tbl-b-01*") (T:"load-unit-symbol-ru->dim"->T:"*unit-symbol-ru->dim*") (T:"load-unit-symbol-en->dim"->T:"*unit-symbol-en->dim-loaded*") (T:"vd-names"->T:"+vd-names-ru+") (T:"load-nm-vl-en->ru"->T:"*nm-vl-en->ru-loaded*") (T:"add-multiplid-values"->T:"*m-coeff-en*") (T:"prefix-from->to"->T:"*m-coeff-en*") (T:"quantity-name"->T:"*nd-list*") (T:"dim-string-by-dim-name"->T:"*si-main-units*") (T:"dim-name-list"->T:"*si-main-units*") (T:"load-nm-vl-en->ru"->T:"*si-main-units*") (T:"load-nm-vl-ru->en"->T:"*si-main-units*") (T:"load-quantity-name-en->dim"->T:"*nd-si-derived-units-tbl-04*") (T:"load-dim->quantity-name-en"->T:"*nd-si-derived-units-tbl-04*") (T:"load-unit-symbol-en->dim"->T:"*nd-si-derived-units-tbl-04*") (T:"load-dim->unit-symbol-ru"->T:"*nd-si-derived-units-tbl-04*") (T:"load-dim->unit-symbol-en"->T:"*nd-si-derived-units-tbl-04*") (T:"load-unit-symbol-ru->dim"->T:"*nd-si-derived-units-tbl-04*") (T:"load-nm-vl"->T:"*nd-not-si-units-tbl-07*") (T:"dim-string-by-dim-name"->T:"*si-derived-units-tbl-02*") (T:"dim-name-list"->T:"*si-derived-units-tbl-02*") ))
 
 * Публикация
 #+name: publish
-#+BEGIN_SRC shell :var make-graph=make-graph
+#+BEGIN_SRC shell :var make-html=make-html
+  mkdir -p "$HOME/public_html/Common-Lisp-Programs/"
+  CDIR=`basename $PWD`
+  rsync -Pavzh ./docs/build/$CDIR/html/* $HOME/public_html/Common-Lisp-Programs/$CDIR 
   if [[ `hostname` == "mnasoft-00" ]]
   then
       echo "mnasoft-00"
-      mkdir -p "$HOME/public_html/Common-Lisp-Programs/"
-      CDIR=`basename $PWD`
-      rm -rf "$HOME/public_html/Common-Lisp-Programs/$CDIR/"
-      cp -rf ./docs/build/* "$HOME/public_html/Common-Lisp-Programs/"
   fi
-  if [[ `hostname` == "ko11-118383" ]]
+  if [[ `hostname` == "N118383" ]]
   then
-      CDIR=`basename $PWD`
-      rm -rf "\\\\n133619\\home\\_namatv\\public_html\\Site\\Development\\Common-Lisp-Programs\\$CDIR\\";
-      sleep 5;
-      cp -rf "./docs/build/$CDIR" "\\\\n133619\\home\\_namatv\\public_html\\Site\\Development\\Common-Lisp-Programs\\";
+      echo "N118383"
+      mkdir -p //n133619/home/_namatv/public_html/Site/Development/Common-Lisp-Programs/$CDIR
+      rsync -Pavzh ./docs/build/$CDIR/html/* //n133619/home/_namatv/public_html/Site/Development/Common-Lisp-Programs/$CDIR
    fi
 #+END_SRC
-
-#+RESULTS: publish
-
-
