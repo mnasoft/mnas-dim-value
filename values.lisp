@@ -2,8 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
 (defun quantity-from-string-not-eval (str)
   (let* ((o-b "(") (c-b ")") (dig "°") (s-q "'") (d-q "\"") (sps " ") (s-^ "^") (s-/ "/") (s-* "*") (s-- "-") (s-+ "+")
 	 (o-lst (list o-b c-b s-^ s-/ s-* s-- s-+))
@@ -54,13 +52,13 @@
 
 ;;(str:unwords '("1" "234" "235"))
 
-@export
+(export 'quantity-from-string )
 (defun quantity-from-string (str)
   (eval (quantity-from-string-not-eval str)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-@export
+(export 'prompt-read-line )
 (defun prompt-read-line ()
   (format t "Введите выражение:")
   (force-output t)
@@ -104,8 +102,8 @@ flip  - меняет местами регистры X1 и Χ2
        (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
    '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
 
-@export
-@annot.doc:doc
+(export 'quantity-interactive )
+(defun quantity-interactive ()
 "@b(Описание:) функция запускает интерактивный калькулятор.
 
  @b(Пример использования:)
@@ -113,7 +111,6 @@ flip  - меняет местами регистры X1 и Χ2
  (quantity-interactive)
 @end(code)
 "
-(defun quantity-interactive ()
   (do* ((rez-lst  nil)
 	(rez      nil)
 	(str-lst  nil (push str str-lst))
@@ -159,8 +156,7 @@ flip  - меняет местами регистры X1 и Χ2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-@export
-@annot.doc:doc
+(export 'qi )
+(defun qi ()
 "Запускает интерактивный калькулятор короткой командой"
-(defun qi () (quantity-interactive))
-
+ (quantity-interactive))

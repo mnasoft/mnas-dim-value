@@ -2,8 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
 (defparameter *mult-prefix*
   '(
     (24  "йотта" "Yotta" "И"  "Y")

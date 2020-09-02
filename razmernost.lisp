@@ -2,8 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *aaa*

@@ -2,8 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
 ;;@intern
 (defparameter *not-si-units-tbl-05*
   (list
