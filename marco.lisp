@@ -2,9 +2,7 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
-@annot.doc:doc
+(defun op-exclude (op lst func-op)
 "@b(Описание:) Функция op-exclude выполняет исключение первого вхождения 
 бинарной операции op из списка lst, заменяя ее на функцию func-op.
 
@@ -13,8 +11,6 @@
  (op-exclude :+ '(1 :+ 3 :+ 4 :- 6 :+ 7) 'vd+) => ((VD+ 1 3) :+ 4 :- 6 :+ 7)
 @end(code)
 "
-(defun op-exclude (op lst func-op)
-  
   (let ((op-poz (position op lst)))   
     (when op-poz
       (setf lst (append
@@ -23,7 +19,7 @@
 		 (subseq lst (+ op-poz 2)))))
     lst))
 
-@annot.doc:doc
+(defun m-op-exclude (op lst func-op)
 "@b(Описание:) Функция m-op-exclude выполняет множественое исключение 
 бинарной операции op из списка lst, заменяя ее на функцию func-op.
 
@@ -32,12 +28,11 @@
  (m-op-exclude :+ '(1 :+ 3 :+ 4 :- 6 :+ 7) 'vd+) => ((VD+ (VD+ 1 3) 4) :- (VD+ 6 7)) 
 @end(code)
 "
-(defun m-op-exclude (op lst func-op)
   (do ((p-data lst data)
      (data (op-exclude op lst func-op) (op-exclude op data func-op)))
       ((equal p-data data) data)))
 
-@annot.doc:doc
+(defun operatorp (x)
 "@b(Описание:) Функция operatorp выполняет проверку, 
 является-ли символ бинарным оператором.
 
@@ -50,16 +45,14 @@
  (operatorp :-) => T 
 @end(code)
 "
-(defun operatorp (x) (if (member x '(:^ :* :/ :+ :- )) t nil))
-
-@annot.doc:doc
+ (if (member x '(:^ :* :/ :+ :- )) t nil))
+(defun not-operatorp (x)
 " @b(Описание:) Функция not-operatorp выполняет проверку, 
 не является-ли символ бинарным оператором.
 "
-(defun not-operatorp (x)
   (not (operatorp x)))
 
-@annot.doc:doc
+(defun add-asterix (lst)
 "@b(Описание:) функция add-asterix добавляет звезды между символами, 
 которые не являются операторами.
 
@@ -71,7 +64,6 @@
 
  @b(Примечание:) функция не является рекурсивной.
 "
-(defun add-asterix (lst)
   (let ((rez nil) (prev nil) (curr nil))
     (dolist (i lst)
       (setf curr (not-operatorp i))
@@ -80,7 +72,7 @@
       (setf prev curr))
     (reverse rez)))
 
-@annot.doc:doc
+(defun vd-quantity (data)
 "@b(Описание:) функция vd-quantity выполняет последовательное исключение 
 символов бинарных операций из списка data с их заменой вызовами соответствующих функций.
 
@@ -91,7 +83,6 @@
  (mdv::vd-quantity '(\"V\" \"A\" )) => (VD* \"V\" \"A\") 
 @end(code)
 "
-(defun vd-quantity (data)
   (let ((rez (add-asterix data)))
     (setf rez (m-op-exclude :^ rez 'vd-expt))
     (setf rez (m-op-exclude :/ rez 'vd/))
@@ -100,7 +91,7 @@
     (setf rez (m-op-exclude :+ rez 'vd+))
     (first rez)))
 
-@annot.doc:doc
+(defun rec-quantity (data)
 "@b(Описание:) функция rec-quantity  выполняет рекурсивное
 исключение символов бинарных операций из списка data  
 с их заменой вызовами соответствующих функций.
@@ -115,7 +106,6 @@
  6.7303224e7 [Pa]
 @end(code)
 "
-(defun rec-quantity (data)
   (let ((rez nil))
     (dolist (i data)
       (if (atom i)
@@ -123,8 +113,8 @@
 	  (push (rec-quantity i) rez)))
     (vd-quantity (reverse rez))))
 
-@export
-@annot.doc:doc
+(export 'quantity )
+(defmacro quantity (x &rest y )
 "@b(Описание:) макрос quantity выполняет разбор и вычисление выражения, 
 имеющего в своем составе размерные величины.
 
@@ -173,5 +163,4 @@
   (list (mnas-dim-value:quantity 1 \"d\" :+ 15 \"h\" 20 :+ \"min\" :+ 30.5 \"s\")))
 @end(code)
 "
-(defmacro quantity (x &rest y )
   (eval (list 'rec-quantity  (list 'quote (append (list x) y)))))

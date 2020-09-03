@@ -2,17 +2,13 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
-@annot.doc:doc
+(defun print-hash-table (ht &optional (s t))
 "@b(Описание:) функция print-hash-table выполняет вывод содержимого таблицы в поток s.
 @begin[lang=lisp](code)
  (print-hash-table *nm-vl*)
 @end(code)
 "
-(defun print-hash-table (ht &optional (s t))
   (maphash #'(lambda (key val) (format s "~S ~S~%" key val)) ht))
-
 (defun hash-table->list (ht)
   (let ((rez nil))
     (maphash #'(lambda (key val) (push (list key val) rez) ) ht)
@@ -22,7 +18,7 @@
 
 (defparameter *nm-vl-loaded* nil)
 
-@annot.doc:doc
+(defun is-in-range (val r-list)
 " @b(Описание:) функция is-in-range служит для определения того
 может-ли использоваться та или иная множительная приставка 
 системы SI для данной единицы измерения.
@@ -48,7 +44,6 @@
  (is-in-range 1000 '((0 2) (4 6))) => NIL
 @end(code)
 "
-(defun is-in-range (val r-list)
     (eval (append (list 'or)
 	  (mapcar
 	   #'(lambda (range)

@@ -2,93 +2,89 @@
 
 (in-package #:mnas-dim-value)
 
-(annot:enable-annot-syntax)
-
-@export
+(export '|m|   )
 (defparameter |m|   (vd 1 :m   1)           "метр")
 
-@export
+(export '|kg|  )
 (defparameter |kg|  (vd 1 :kg  1)           "килограмм")
 
-@export
+(export '|s|   )
 (defparameter |s|   (vd 1 :s   1)           "секунда")
 
-@export
+(export '|A|   )
 (defparameter |A|   (vd 1 :A   1)           "ампер")
 
-@export
+(export '|K|   )
 (defparameter |K|   (vd 1 :K   1)           "кельвин")
 
-@export
+(export '|cd|  )
 (defparameter |cd|  (vd 1 :cd  1)           "кандела")
 
-@export
+(export '|mol| )
 (defparameter |mol| (vd 1 :mol 1)           "моль")
 
-@export
+(export '|rad| )
 (defparameter |rad| (vd 1 :rad 1)           "радиан")
 
-@export
+(export '|sr|  )
 (defparameter |sr|  (vd 1 :sr  1)           "стерадиан")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-@export
+(export '|Hz|  )
 (defparameter |Hz|  (vd/ |s|)               "герц")
 
-@export
+(export '|N|   )
 (defparameter |N|   (vd 1 :m 1 :kg 1 :s -2) "ньютон")
 
-@export
+(export '|Pa|  )
 (defparameter |Pa|  (vd/ |N| |m| |m|)       "паскаль")
 
-@export
+(export '|J|   )
 (defparameter |J|   (vd* |N| |m|)           "джоуль")
 
-@export
+(export '|W|   )
 (defparameter |W|   (vd/ |J| |s|)           "ватт")
 
-@export
+(export '|C|   )
 (defparameter |C|   (vd* |A| |s|)           "кулон")
 
-@export
+(export '|V|   )
 (defparameter |V|   (vd/ |W| |A|)           "вольт")
 
-@export
+(export '|F|   )
 (defparameter |F|   (vd/ |C| |V|)           "фарад")
 
-@export
+(export '|Ω|   )
 (defparameter |Ω|   (vd/ |V| |A|)           "ом")
 
-@export
+(export '|S|   )
 (defparameter |S|   (vd/ |Ω|)               "сименс")
 
-@export
+(export '|Wb|  )
 (defparameter |Wb|  (vd* |V| |s|)           "вебер")
 
-@export
+(export '|Τ|   )
 (defparameter |Τ|   (vd/ |Wb| |m| |m|)      "тесла. Примечание для избежания конфликта вместо t используется τ верхнего регистра.")
 
-@export
+(export '|H|   )
 (defparameter |H|   (vd/ |Wb| |A|)          "генри")
 
-@export
+(export '|lm|  )
 (defparameter |lm|  (vd* |cd| |sr|)         "люмен")
 
-@export
+(export '|lx|  )
 (defparameter |lx|  (vd/ |lm| |m| |m|)      "люкс")
 
-@export
+(export '|Bq|)
 (defparameter |Bq|  |Hz|                    "беккерель")
 
-@export
+(export '|Gy|  )
 (defparameter |Gy|  (vd/ |J| |kg|)          "грэй")
 
-@export
+(export '|Sv|  )
 (defparameter |Sv|  (vd/ |J| |kg|)          "зиверст")
 
-@export
+(export '|kat| )
 (defparameter |kat| (vd/ |mol| |s|)         "катал")
-
-
