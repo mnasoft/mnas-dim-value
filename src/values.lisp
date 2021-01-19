@@ -9,7 +9,7 @@
     (labels ((string-add-brackets&quotes (str)
 	       (concatenate 'string o-b sps str sps c-b))
 	     (add-space-around-sym (sym str)
-	       (mnas-string:string-replace-all
+	       (mnas-string:replace-all
 		str sym (concatenate 'string sps sym sps )))
 	     (add-space (str)
 	       (let ((rez str))
