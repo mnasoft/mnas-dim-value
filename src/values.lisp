@@ -40,7 +40,7 @@
 				   (str:concat d-q el d-q))
 				  ((string= d-q el)
 				   (str:concat d-q "\\" el d-q))
-				  ((mnas-string:read-from-string-number el nil) el)
+				  ((mnas-string:read-number el nil) el)
 				  (t (str:concat d-q el d-q))))
 			    (add-space str)))))
 		 (format t "~S~%" rez)
