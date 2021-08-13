@@ -11,7 +11,7 @@
   (loop
     :for i :in
     '(
-      (:mnas-dim-value)
+      (:mnas-dim-value nil)
       )
     :do (apply #'mnas-package:document i)))
 
