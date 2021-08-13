@@ -1,92 +1,25 @@
-@begin(section) @title(Обзор)
-
-This is where you explain what your project does.
+@begin(section) @title(MNAS-DIM-VALUE)
 
 @begin(section)
- @title(Графы)
- @begin(list)
-  @item(system-graph @image[src=./system-graph.gv.png]())
-  @item(call-graph   @image[src=./call-graph.gv.png]())
-  @item(symbol-graph @image[src=./symbol-graph.gv.png]())
-  @item(class-graph  @image[src=./class-graph.gv.png]())
- @end(list)
+ @title(Переменные)
+ @cl:with-package[name="MNAS-DIM-VALUE"](
+  @cl:doc(variable τ))
 @end(section)
-
 @begin(section)
-  @title(Переменные)
- 
- @begin(section)
-  @title(si-main-units)
-  @cl:with-package[name="mnas-dim-value"](
-   @cl:doc(variable *si-main-units*)
-   @cl:doc(variable *nd-si-main-units*)
- )
- @end(section)
-
- @begin(section)
-  @title(si-derived-units) 
-  @cl:with-package[name="mnas-dim-value"](
-    @cl:doc(variable *si-derived-units-tbl-02*)
-    @cl:doc(variable *si-derived-units-tbl-03*)
-    @cl:doc(variable *si-derived-units-tbl-04*)
-    @cl:doc(variable *nd-si-derived-units-tbl-02*)
-    @cl:doc(variable *nd-si-derived-units-tbl-03*)
-    @cl:doc(variable *nd-si-derived-units-tbl-04*)
-    )
- @end(section)
-
- @begin(section)
-  @title(si-units)
-   @cl:with-package[name="mnas-dim-value"](
-   @cl:doc(variable *not-si-units-tbl-05*)
-   @cl:doc(variable *not-si-units-tbl-07*)
-   @cl:doc(variable *other-units-tbl-b-01*)
-   @cl:doc(variable *nd-not-si-units-tbl-05*)
-   @cl:doc(variable *nd-not-si-units-tbl-07*)
-   @cl:doc(variable *nd-other-units-tbl-b-01*)
-   @cl:doc(variable *tbl-g1*)
- )
- @end(section)
-@end(section)
-
-@begin(section)
- @title(Макросы_-_macro.lisp)
- @cl:with-package[name="mnas-dim-value"](
+ @title(Макросы)
+ @cl:with-package[name="MNAS-DIM-VALUE"](
   @cl:doc(macro quantity))
- @end(section)
-
-@begin(section)
- @title(Классы)
- @cl:with-package[name="mnas-dim-value"](
-  @cl:doc(class vd)
-  @cl:doc(class nd)
-  )
 @end(section)
-
 @begin(section)
- @title(Функции-внутренние)
- @cl:with-package[name="mnas-dim-value"](
-   @cl:doc(function is-in-range )
-  )
- @begin(section)
-  @title(Функции-macro.lisp)
-  @cl:with-package[name="mnas-dim-value"](
-    @cl:doc(function op-exclude )
-    @cl:doc(function m-op-exclude )
-    @cl:doc(function operatorp )
-    @cl:doc(function not-operatorp )
-    @cl:doc(function add-asterix )
-    @cl:doc(function vd-quantity )
-    @cl:doc(function rec-quantity )
-   )
- @end(section)  
+ @title(Функции)
+ @cl:with-package[name="MNAS-DIM-VALUE"](
+  @cl:doc(function dim-name-list)
+  @cl:doc(function dim-string-by-dim-name)
+  @cl:doc(function dimensionp)
+  @cl:doc(function quantity-interactive)
+  @cl:doc(function quantity-name)
+  @cl:doc(function unuse-mnas-dim-value)
+  @cl:doc(function use-mnas-dim-value)
+  @cl:doc(function vd))
 @end(section)
-
-
-@begin(section)
-  @title(Функции интерактивные)
-  @cl:with-package[name="mnas-dim-value"](
-   @cl:doc(function quantity-interactive)
-   @cl:doc(function qi)
-   )
 @end(section)
