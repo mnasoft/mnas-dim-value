@@ -1,6 +1,6 @@
 (defpackage #:mnas-dim-value/docs
   (:use #:cl ) 
-  (:nicknames "MSPR/DOCS")
+  (:nicknames "MDV/DOCS")
   (:export make-all)
   (:documentation "Пакет @b(mnas-dim-value/docs) содержит функции
   генерирования и публикации документации."))
@@ -34,6 +34,7 @@
  Пакет документации формируется в каталоге
 ~/public_html/Common-Lisp-Programs/mnas-dim-value.
 "
+  (mnas-package:make-html-path :mnas-dim-value/docs)
   (make-document)
   (make-graphs)
   (mnas-package:make-mainfest-lisp
