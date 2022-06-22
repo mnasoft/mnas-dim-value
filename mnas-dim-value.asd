@@ -2,7 +2,7 @@
 
 (defsystem "mnas-dim-value"
   :description "Describe mnas-dim-value here"
-  :author "Nick Matvyeyev <mnasoft@gmail.com>"
+  :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
   :serial nil
   :depends-on (#:str #:mnas-string ) ;;;; #:cl-ppcre
@@ -45,7 +45,7 @@
 
 (defsystem "mnas-dim-value/docs"
   :description "Зависимости для сборки документации"
-  :author "Nick Matvyeyev <mnasoft@gmail.com>"
+  :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"  
   ;; :depends-on ("mnas-string" "mnas-package")
   :depends-on ("mnas-dim-value" "codex" "mnas-package")

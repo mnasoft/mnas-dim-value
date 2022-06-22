@@ -40,7 +40,7 @@
   (mnas-package:make-mainfest-lisp
    '(:mnas-dim-value :mnas-dim-value/docs)
    "Mnas-Dim-Value"
-   '("Nick Matvyeyev")
+   '("Mykola Matvyeyev")
    (mnas-package:find-sources "mnas-dim-value")
    :output-format of)
   (codex:document :mnas-dim-value)
