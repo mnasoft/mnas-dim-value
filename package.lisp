@@ -1,89 +1,49 @@
 ;;;; package.lisp
 
-(defpackage #:mnas-dim-value)
-
-(defpackage   #:mnas-dim-value
+(defpackage #:mnas-dim-value
   (:nicknames "MDV")
   (:use       #:cl )
-  (:export
-   VD-VAL
-   QUANTITY
-   QI
-   VD-
-   *NM-VL-EN->RU*
-   *NM-VL*
-   F
-   UNIT-NAME
-   C->K
-   K
-   A
-   *F*
-   S
-   *C-0*
-   VD-DIMS
-   *V-0*
-   *R-0*
-   PROMPT-READ-LINE
-   N
-   QUANTITY-FROM-STRING
-   V
-   HELP
-   J
-   VD+
-   H
-   K->C
-   C
-   DIMENSIONP
-   VD/
-   W
-   *NM-VL-RU->EN*
-   DIM-STRING-BY-DIM-NAME
-   Ω
-   VD-SQRT
-   VD*
-   DIM-NAME-LIST
-   M->K
-   QUANTITY-INTERACTIVE
-   Τ
-   K->M
-   VD-EXPT
-   UNUSE-MNAS-DIM-VALUE
-   VD
-   KGS/CM2->PA
-   USE-MNAS-DIM-VALUE
-   PA->KGS/CM2
-   QUANTITY-NAME
-   )
-  (:export 
-   |*μ-0*|
-   |*g*|
-   |*k*|
-   |*h*|
-   |*a-e-m*|
-   |*No*|
-   |Sv|
-   |*Na*|
-   |lx|
-   |Pa|
-   |rad|
-   |m|
-   |sr|
-   |Bq|
-   |mol|
-   |*e*|
-   |kat|
-   |s|
-   |Wb|
-   |Hz|
-   |lm|
-   |*c*|
-   |cd|
-   |*ε-0*|
-   |kg|
-   |*Gn*|
-   |*m-e*|
-   |Gy|
-   )
-  )
+  (:export vd
+           vd-val
+           vd-dims)
+  (:export vd+ vd- vd* vd/
+           vd-expt vd-sqrt
+           )
+  (:export |m| |kg| |s| |A| |K| |cd| |mol|
+           |rad| |sr|
+           )
+  (:export |Hz| |N| |Pa| |J| |W|
+           |C| |V| |F| |Ω| |S| |Wb|
+           |Τ| |H| |lm| |lx| |Bq|
+           |Gy| |Sv| |kat|
+           )
+  (:export |*g*| |*Gn*| |*C-0*| |*V-0*|
+           |*R-0*| |*Na*| |*No*|
+           |*k*| |*a-e-m*|
+           |*m-e*| |*e*|
+           |*F*| |*h*| |*c*| |*μ-0*| |*ε-0*|
+           )
+  (:export C->K K->C)
+  (:export M->K K->M)
+  (:export QUANTITY
+           qi
+           *NM-VL-EN->RU*
+           *NM-VL*
+           UNIT-NAME)
+  (:export PROMPT-READ-LINE
+           QUANTITY-FROM-STRING
+           HELP
+           DIMENSIONP
+           *NM-VL-RU->EN*
+           DIM-STRING-BY-DIM-NAME
+           DIM-NAME-LIST
+           QUANTITY-INTERACTIVE
+           UNUSE-MNAS-DIM-VALUE
+           KGS/CM2->PA
+           USE-MNAS-DIM-VALUE
+           PA->KGS/CM2
+           QUANTITY-NAME))
 
-;;;; (declaim (optimize (compilation-speed 0) (debug 3) (safety 0) (space 0) (speed 0)))
+(in-package #:mnas-dim-value)
+
+

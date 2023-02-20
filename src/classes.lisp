@@ -2,14 +2,6 @@
 
 (in-package #:mnas-dim-value)
 
-;;; "mnas-dim-value" goes here. Hacks and glory await!
-
-;;;;m kg s A K cd mol rad sr
-
-
-(export 'vd)
-(export 'vd-val)
-(export 'vd-dims)
 
 (defclass vd ()
   ((val      :accessor vd-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
