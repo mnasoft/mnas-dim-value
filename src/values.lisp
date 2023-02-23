@@ -52,13 +52,11 @@
 
 ;;(str:unwords '("1" "234" "235"))
 
-(export 'quantity-from-string )
 (defun quantity-from-string (str)
   (eval (quantity-from-string-not-eval str)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(export 'prompt-read-line )
 (defun prompt-read-line ()
   (format t "Введите выражение:")
   (force-output t)
@@ -102,7 +100,6 @@ flip  - меняет местами регистры X1 и Χ2
        (format t "~8A = ~A~%" el (documentation el 'VARIABLE)))
    '(*g* *Gn* *C-0* *V-0* *R-0* *Na* *No* *k* *a-e-m* *m-e* *e* *F* *h* *c* *μ-0* *ε-0*)))
 
-(export 'quantity-interactive )
 (defun quantity-interactive ()
 "@b(Описание:) функция запускает интерактивный калькулятор.
 
@@ -156,7 +153,6 @@ flip  - меняет местами регистры X1 и Χ2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(export 'qi )
 (defun qi ()
 "Запускает интерактивный калькулятор короткой командой"
  (quantity-interactive))

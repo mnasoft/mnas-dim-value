@@ -86,7 +86,7 @@
 	 "tex"              "текс"                (vd 1/1000000 :kg 1 :m -1)   nil)
    (list "velocity"         "скорость"            nil
 	 "knot"             "узел"
-	 "kn"               "уз"                  (vd/ |m| (vd/ 3600 1852 |s|))   nil)
+	 "kn"               "уз"                  (vd/ (vd* 1852.0 |m|) (vd* 3600.0  |s|))   nil)
    (list "acceleration"     "ускорение"           nil
 	 ""                 "гал"
 	 "Gal"              "Гал"                 (vd 1/100 :m 1 :s -2)   nil)

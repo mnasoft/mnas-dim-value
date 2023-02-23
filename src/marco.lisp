@@ -113,7 +113,6 @@
 	  (push (rec-quantity i) rez)))
     (vd-quantity (reverse rez))))
 
-(export 'quantity )
 (defmacro quantity (x &rest y )
 "@b(Описание:) макрос quantity выполняет разбор и вычисление выражения, 
 имеющего в своем составе размерные величины.
