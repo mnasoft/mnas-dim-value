@@ -54,9 +54,10 @@
            USE-MNAS-DIM-VALUE
            PA->KGS/CM2
            QUANTITY-NAME
-           
+           quantity-by-dimension-string
            )
   (:intern quantity-from-string-not-eval
+           
            print-stack
            print-stack-clean
            constants-help)

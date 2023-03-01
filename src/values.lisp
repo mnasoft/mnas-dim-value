@@ -55,6 +55,19 @@
 (defun quantity-from-string (str)
   (eval (quantity-from-string-not-eval str)))
 
+(defun quantity-by-dimension-string (str)
+  "@b(Описание:) функция @b(quantity-by-dimension-string) возвращает ЧсР
+ по строке обозначающей размерность.
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+ (quantity-by-dimension-string \"kg/cm^2\")
+ (quantity-by-dimension-string \"kg/s\")
+ (quantity-by-dimension-string \"mm^3\")
+@end(code)
+"
+  (quantity-from-string (concatenate 'string "1" " " str)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun prompt-read-line ()
