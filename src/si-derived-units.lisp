@@ -1,6 +1,6 @@
 ;;;; si-units-derived.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 ;;@intern
 (defparameter *si-derived-units-tbl-02*

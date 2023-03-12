@@ -1,6 +1,6 @@
 ;;;; methods.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defparameter *vd-language* :en "Язык (member :en :ru)")
 

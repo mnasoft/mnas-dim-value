@@ -1,6 +1,6 @@
 ;;;; constants.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defparameter |*g*|    (vd 9.8065d0 :m 1 :s -2)                "Ускорение свободного падения")
 (defparameter |*Gn*|   (vd 6.6740831d-11 :m 3 :kg -1 :s -2)    "Гравитационная постоянная")

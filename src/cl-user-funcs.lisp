@@ -1,6 +1,6 @@
 ;;;; cl-user-funcs.lisp
 
-(in-package #:mnas-dim-value )
+(in-package :mnas-dim-value )
 
 (export 'use-mnas-dim-value )
 

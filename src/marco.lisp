@@ -1,6 +1,6 @@
 ;;;; marco.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defun op-exclude (op lst func-op)
 "@b(Описание:) Функция op-exclude выполняет исключение первого вхождения 

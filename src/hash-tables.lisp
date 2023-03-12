@@ -1,6 +1,6 @@
 ;;;; hash-tables.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defun print-hash-table (ht &optional (s t))
 "@b(Описание:) функция print-hash-table выполняет вывод содержимого таблицы в поток s.

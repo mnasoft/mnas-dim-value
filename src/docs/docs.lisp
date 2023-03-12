@@ -1,4 +1,4 @@
-(defpackage #:mnas-dim-value/docs
+(defpackage :mnas-dim-value/docs
   (:use #:cl ) 
   (:nicknames "MDV/DOCS")
   (:export make-all)

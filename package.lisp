@@ -1,6 +1,6 @@
 ;;;; package.lisp
 
-(defpackage #:mnas-dim-value
+(defpackage :mnas-dim-value
   (:nicknames "MDV")
   (:use       #:cl )
   (:export vd
@@ -63,4 +63,4 @@
            constants-help)
   )
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)

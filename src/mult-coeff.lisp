@@ -1,6 +1,6 @@
 ;;;; mult-coeff.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defparameter *mult-prefix*
   '(

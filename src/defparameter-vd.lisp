@@ -1,6 +1,6 @@
 ;;;; defparameter-vd.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 (defparameter |m|   (vd 1 :m   1)           "метр")
 (defparameter |kg|  (vd 1 :kg  1)           "килограмм")

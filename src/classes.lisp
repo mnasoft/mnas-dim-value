@@ -1,6 +1,6 @@
 ;;;; mnas-dim-value.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 
 (defclass vd ()

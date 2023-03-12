@@ -1,6 +1,6 @@
 ;;;; defparameter.lisp
 
-(in-package #:mnas-dim-value)
+(in-package :mnas-dim-value)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
