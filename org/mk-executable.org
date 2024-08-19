@@ -1,0 +1,26 @@
+* Способ сборки выполняемого файла
+Для сборки выполняемого файла необходимо выполнить в консоли msys2
+следующую команду:
+ 
+#+begin_src sh
+  sbcl --eval '(ql:quickload :mnas-dim-value)' \
+       --eval '(push :deploy-console *features*)' \
+       --eval '(asdf:make :mnas-dim-value)'
+#+end_src
+
+Здесь выполняется:
+- загрузка системы mnas-dim-value в память
+  #+begin_src lisp
+    (ql:quickload :mnas-dim-value)
+  #+end_src
+   
+- добавление символа :deploy-consoleв переменную *features*, что
+  обеспечивает функционирование приложения как консольного
+  #+begin_src lisp
+    (push :deploy-console *features*)
+  #+end_src
+- сборка выполняемого файла, помещение его и необходимых ему библиотек в
+  каталог bin
+  #+begin_src lisp
+    (asdf:make :mnas-dim-value)
+  #+end_src

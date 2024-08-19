@@ -12,7 +12,6 @@
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 26.3 (Org mode 9.1.9)
 
-
 * Примеры использования
 ** Первый
 #+BEGIN_SRC lisp

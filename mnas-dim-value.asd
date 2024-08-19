@@ -4,6 +4,12 @@
   :description "Describe mnas-dim-value here"
   :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
+  
+  :defsystem-depends-on ("deploy")
+  :build-operation "deploy-op"
+  :build-pathname "deploy-qi"
+  :entry-point "mnas-dim-value:qi"
+
   :serial nil
   :depends-on (#:str #:mnas-string ) ;;;; #:cl-ppcre
   :components
