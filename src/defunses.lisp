@@ -13,7 +13,6 @@
     *nd-not-si-units-tbl-07*
     )))
 
-(export 'quantity-name )
 (defun quantity-name (value &key (vd-language *vd-language*))
   "Возвращает наименование величины.
 Пример использования:

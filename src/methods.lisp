@@ -50,7 +50,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(export 'dimensionp )
 (defun dimensionp (str)
 "@b(Описание:) функция dimensionp 
 @begin[lang=lisp](code)
@@ -64,7 +63,6 @@
   (multiple-value-bind (val find) (gethash str *nm-vl*)
     (if find val nil)))
 
-(export 'vd )
 (defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
 "@b(Описание:) функция vd создает число с размерностью (ЧсР)
 
@@ -89,8 +87,20 @@
 
 (defmethod vd-convert ((x number)) (vd x))
 
-(defmethod vd-convert ((x string)) (gethash x *nm-vl*)) 
+(defmethod vd-convert ((x string))
+  (multiple-value-bind (val find) (gethash x *nm-vl*)
+    (if find
+        val
+        (progn
+          (format t "~&Размерность ~S неизвестна: заменяю ~S -> ~S~%"
+                  x x (make-instance 'vd :val 1.0))
+          (make-instance 'vd :val 1.0)))))
 
+(defmethod vd-convert ((x null))
+  (progn
+    (format t "~&Размерность ~S неизвестна: заменяю ~S -> ~S~%"
+            x x (make-instance 'vd :val 1.0))
+    (make-instance 'vd :val 0.0)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -100,7 +110,6 @@
 	  (vd-dims rez) (mapcar #'+ (vd-dims x) (vd-dims y)))
     rez))
 
-(export 'vd* )
 (defun vd* (x &rest args)
 "Перемножение чисел с размерностью."
   (let ((rez (vd-convert x)))
@@ -116,7 +125,6 @@
 	  (vd-dims rez) (mapcar #'- (vd-dims x) (vd-dims y)))
     rez))
 
-(export 'vd/ )
 (defun vd/ (x &rest args)
 "Деление чисел с размерностью."
   (if args
@@ -134,7 +142,6 @@
 	  (vd-dims rez) (vd-dims x))
     rez))
 
-(export 'vd+ )
 (defun vd+ (x &rest args)
 "Сложение чисел с размерностью."
   (let ((rez (vd-convert x)))
@@ -150,7 +157,6 @@
 	  (vd-dims rez) (vd-dims x))
     rez))
 
-(export 'vd- )
 (defun vd- (x  &rest args)
 "Вычитание чисел с размерностью."
   (if args
@@ -162,7 +168,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(export 'vd-expt )
 (defmethod vd-expt (val (p number))
 "Возведение числа с размерностью в степень."
   (let ((x (vd-convert val)))
@@ -171,7 +176,6 @@
    :val (expt (vd-val x) p)
    :dims (mapcar  #'(lambda (el) (* el p)) (vd-dims x)))))
 
-(export 'vd-sqrt )
 (defmethod vd-sqrt ((x vd))
 "Извлечение из числа с размерностью квадратного корня."
   (make-instance
@@ -181,7 +185,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(export 'unit-name )
 (defmethod unit-name ((x vd) o-s)
   (multiple-value-bind (dimens find)
       (gethash (vd-dims x) (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)

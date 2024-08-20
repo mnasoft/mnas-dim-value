@@ -2,7 +2,6 @@
 
 (in-package :mnas-dim-value)
 
-
 (defclass vd ()
   ((val      :accessor vd-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
    (dims     :accessor vd-dims     :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))

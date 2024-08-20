@@ -39,7 +39,6 @@
            add-asterix       
            vd-quantity
            rec-quantity
-          
            )
   (:export prompt-read-line
 
