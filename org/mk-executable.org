@@ -3,9 +3,9 @@
 следующую команду:
  
 #+begin_src sh
-  sbcl --eval '(ql:quickload :mnas-dim-value)' \
+  sbcl --eval '(ql:quickload :mnas-dim-value/calc)' \
        --eval '(push :deploy-console *features*)' \
-       --eval '(asdf:make :mnas-dim-value)'
+       --eval '(asdf:make :mnas-dim-value/calc)'
 #+end_src
 
 Здесь выполняется:
