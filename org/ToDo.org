@@ -1,35 +1,10 @@
-#    -*- mode: org -*-
+* [1/3] ToDo
+1. [ ] Переименовать класс nd -> <nd>.
+2. [ ] Переименовать аксессор vd-val -> <vd>-val. 
+3. [X] Переименовать аксессор <vd>-dims -> <vd>-dims. 
 
-
-Archived entries from file /home/namatv/quicklisp/local-projects/mnas/mnas-dim-value/README.org
-
-
-* defparameter
-  :PROPERTIES:
-  :ARCHIVE_TIME: 2019-03-29 Пт 20:04
-  :ARCHIVE_FILE: ~/quicklisp/local-projects/mnas/mnas-dim-value/README.org
-  :ARCHIVE_CATEGORY: README
-  :END:
-#+BEGIN_SRC lisp
-  '(   mdv:*C-0* 	mdv:*F*
-     mdv:*ND-NOT-SI-UNITS-TBL-05* 	mdv:*ND-NOT-SI-UNITS-TBL-07*
-     mdv:*ND-SI-DERIVED-UNITS-TBL-02* 	mdv:*ND-SI-DERIVED-UNITS-TBL-03*
-     mdv:*ND-SI-DERIVED-UNITS-TBL-04* 	mdv:*ND-SI-MAIN-UNITS*
-     mdv:*NM-VL* 	mdv:*NM-VL-EN->RU*
-     mdv:*NM-VL-RU->EN* 	mdv:*NOT-SI-UNITS-TBL-05*
-     mdv:*NOT-SI-UNITS-TBL-07* 	mdv:*OTHER-UNITS-TBL-B-01*
-     mdv:*R-0* 	mdv:*SI-DERIVED-UNITS-TBL-02*
-     mdv:*SI-DERIVED-UNITS-TBL-03* 	mdv:*SI-DERIVED-UNITS-TBL-04*
-	  mdv:*V-0*)
-
-  (mapcar
-   #'(lambda (el)
-       (list el (documentation el 'variable)))
-   '(mdv:*SI-MAIN-UNITS*
-     ))
-#+END_SRC
-
-#+RESULTS:
-| MNAS-DIM-VALUE:*SI-MAIN-UNITS* | si-main-units |
-
-
+* DoNe   
+1. [X] Переименовать класс vd -> <vd>.
+2. [X] Переименовать аксессор vd-val -> <vd>-val. 
+3. [X] Переименовать аксессор <vd>-dims -> <vd>-dims. 
+   

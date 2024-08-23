@@ -4,51 +4,79 @@
   :description "Describe mnas-dim-value here"
   :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
+
   :serial nil
-  :depends-on (#:str #:mnas-string ) ;;;; #:cl-ppcre
-  :defsystem-depends-on ("deploy")
-  :build-operation "deploy-op"
-  :build-pathname
-  #+sbcl "mnas-dim-value-qi-sbcl"
-  #+ccl  "mnas-dim-value-qi-ccl"
-  :entry-point "mnas-dim-value:qi"
+  :depends-on ("str" "mnas-string" ) ;;;; #:cl-ppcre
 
   :components
-  ((:file "package")
-   (:module "src" :depends-on ("package")
+  ((:module "src"
     :serial nil
     :components
-    ((:file "razmernost" )
-     (:file "marco"            :depends-on ("methods"))
-     (:file "hash-tables"      :depends-on ("classes" "defparameter" "mult-coeff" "methods"
-						      "defparameter-vd" "si-main-units"
-						      "si-derived-units" "constants" "si-units"))
-     (:file "mult-coeff"       :depends-on ("classes" "methods"))
-     (:file "si-units"         :depends-on ("classes" "methods"))
-     (:file "constants"        :depends-on ("classes" "methods"))
-     (:file "si-derived-units" :depends-on ("classes" "methods"))
-     (:file "si-main-units"    :depends-on ("classes"))
-     (:file "defparameter-vd"  :depends-on ("classes"))
-     (:file "methods"          :depends-on ("classes"))
-     (:file "defparameter"     )	       
-     (:file "classes"          )
-     (:file "mnas-dim-value"
-      :depends-on ("razmernost" "marco" "classes" "defparameter" "methods"
-				"mult-coeff" "defparameter-vd"
-				"si-main-units" "si-derived-units" "constants" "si-units" "hash-tables"))
-     (:file "values"
-      :depends-on ("razmernost" "marco" "classes" "defparameter" "methods"
-				"mult-coeff" "defparameter-vd"
-				"si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))
-     (:file "defunses"
-      :depends-on ("razmernost" "marco" "classes" "defparameter" "methods"
-				"mult-coeff" "defparameter-vd"
-				"si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))
-     (:file "cl-user-funcs"
-      :depends-on ("razmernost" "marco" "classes" "defparameter" "methods"
-				"mult-coeff" "defparameter-vd"
-				"si-main-units" "si-derived-units" "constants" "si-units" "hash-tables" "mnas-dim-value"))))))
+    ((:file "package")
+     (:file "generic"          :depends-on ("package"))
+     (:file "razmernost"       :depends-on ("package"))
+     (:file "macro"            :depends-on ("method"))
+     (:file "hash-tables"      :depends-on ("class"
+                                            "defparameter"
+                                            "mult-coeff"
+                                            "method"
+					    "defparameter-vd"
+                                            "si-main-units"
+					    "si-derived-units"
+                                            "constants"
+                                            "si-units"))
+     (:file "mult-coeff"       :depends-on ("class"
+                                            "method"))
+     (:file "si-units"         :depends-on ("class"
+                                            "method"))
+     (:file "constants"        :depends-on ("class"
+                                            "method"))
+     (:file "si-derived-units" :depends-on ("class"
+                                            "method"))
+     (:file "si-main-units"    :depends-on ("class"))
+     (:file "defparameter-vd"  :depends-on ("class"))
+     (:file "method"           :depends-on ("class" "generic"))
+     (:file "defparameter"     :depends-on ("package"))	       
+     (:file "class"            :depends-on ("package"))
+     (:file "mnas-dim-value"   :depends-on ("razmernost"
+                                            "macro"
+                                            "class"
+                                            "defparameter"
+                                            "method"
+                                            "mult-coeff"
+                                            "defparameter-vd"
+                                            "si-main-units"
+                                            "si-derived-units"
+                                            "constants"
+                                            "si-units"
+                                            "hash-tables"))
 
+     (:file "defunses"         :depends-on ("razmernost"
+                                            "macro"
+                                            "class"
+                                            "defparameter"
+                                            "method"
+                                            "mult-coeff"
+                                            "defparameter-vd"
+                                            "si-main-units"
+                                            "si-derived-units"
+                                            "constants"
+                                            "si-units"
+                                            "hash-tables"
+                                            "mnas-dim-value"))
+     (:file "cl-user-funcs"    :depends-on ("razmernost"
+                                            "macro"
+                                            "class"
+                                            "defparameter"
+                                            "method"
+                                            "mult-coeff"
+                                            "defparameter-vd"
+                                            "si-main-units"
+                                            "si-derived-units"
+                                            "constants"
+                                            "si-units"
+                                            "hash-tables"
+                                            "mnas-dim-value"))))))
 
 (defsystem "mnas-dim-value/docs"
   :description "Зависимости для сборки документации"
@@ -58,5 +86,20 @@
   :depends-on ("mnas-dim-value" "codex" "mnas-package")
   :components ((:module "src/docs"
 		:serial nil
-                :components ((:file "docs"))))
-  )
+                :components ((:file "docs")))))
+
+(defsystem "mnas-dim-value/calc"
+  :description "Describe mnas-dim-value here"
+  :author "Mykola Matvyeyev <mnasoft@gmail.com>"
+  :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
+  
+  :defsystem-depends-on ("deploy")
+  :build-operation "deploy-op"
+  :build-pathname "q-calc"
+  :entry-point "mnas-dim-value/calc:start"
+
+  :serial nil
+  :depends-on ("mnas-dim-value")
+    :components ((:module "src/calc"
+		:serial nil
+                :components ((:file "calc")))))

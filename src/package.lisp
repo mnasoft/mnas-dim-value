@@ -4,8 +4,9 @@
   (:nicknames "MDV")
   (:use       #:cl )
   (:export vd
-           vd-val
-           vd-dims)
+           <vd>
+           <vd>-val
+           <vd>-dims)
   (:export vd+ vd- vd* vd/
            vd-expt vd-sqrt
            )
@@ -39,7 +40,6 @@
            add-asterix       
            vd-quantity
            rec-quantity
-          
            )
   (:export prompt-read-line
 

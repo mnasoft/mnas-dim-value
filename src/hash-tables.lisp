@@ -54,13 +54,13 @@
 	   r-list))))
 
 (defun add-multiplid-values (var)
-  (setf (gethash (nd-unit-symbol-en var) *nm-vl*)
-	(nd-value var))
+  (setf (gethash (<nd>-unit-symbol-en var) *nm-vl*)
+	(<nd>-value var))
   (mapcar
    #'(lambda (el)
-       (when (is-in-range (second el) (nd-coeff var))
-	 (setf (gethash (concatenate 'string (first el) (nd-unit-symbol-en var)) *nm-vl*)
-	       (vd* (second el) (nd-value var)))))
+       (when (is-in-range (second el) (<nd>-coeff var))
+	 (setf (gethash (concatenate 'string (first el) (<nd>-unit-symbol-en var)) *nm-vl*)
+	       (vd* (second el) (<nd>-value var)))))
    (hash-table->list *m-coeff-en*)))
 
 (defun load-nm-vl ()
@@ -98,7 +98,7 @@
 
 (defun load-dim->unit-symbol-en ()
   (unless *dim->unit-symbol-en-loaded*
-    (flet ((dimension->string (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->unit-symbol-en*) (nd-unit-symbol-en el))) (reverse tbl))))
+    (flet ((dimension->string (tbl) (mapc #'(lambda (el) (setf (gethash (<vd>-dims (<nd>-value el)) *dim->unit-symbol-en*) (<nd>-unit-symbol-en el))) (reverse tbl))))
       (mapc #'(lambda (el) (dimension->string el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
       (setf (gethash '(0 1 0 0 0 0 0 0 0) *dim->unit-symbol-en*) "kg"))
     (print-hash-table *dim->unit-symbol-en*)
@@ -108,7 +108,7 @@
 
 (defun load-unit-symbol-en->dim ()
   (unless *unit-symbol-en->dim-loaded*
-    (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-unit-symbol-en el) *unit-symbol-en->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (<nd>-unit-symbol-en el) *unit-symbol-en->dim*) (<vd>-dims (<nd>-value el)))) (reverse tbl))))
       (mapc #'(lambda (el) (string->dimension el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
       (remhash "g" *unit-symbol-en->dim*)
       (setf (gethash "kg" *unit-symbol-en->dim*)  '(0 1 0 0 0 0 0 0 0)))
@@ -121,7 +121,7 @@
 
 (defun load-dim->unit-symbol-ru ()
   (unless *dim->unit-symbol-ru-loaded*
-    (flet ((dimension->string-ru (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->unit-symbol-ru*) (nd-unit-symbol-ru el))) (reverse tbl))))
+    (flet ((dimension->string-ru (tbl) (mapc #'(lambda (el) (setf (gethash (<vd>-dims (<nd>-value el)) *dim->unit-symbol-ru*) (<nd>-unit-symbol-ru el))) (reverse tbl))))
       (mapc #'(lambda (el) (dimension->string-ru el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
       (setf (gethash '(0 1 0 0 0 0 0 0 0) *dim->unit-symbol-ru*) "кг"))
     (print-hash-table *dim->unit-symbol-ru*)
@@ -131,7 +131,7 @@
 
 (defun load-unit-symbol-ru->dim ()
   (unless *unit-symbol-ru->dim-loaded*
-    (flet ((string->dimension-ru (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-unit-symbol-ru el) *unit-symbol-ru->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (flet ((string->dimension-ru (tbl) (mapc #'(lambda (el) (setf (gethash  (<nd>-unit-symbol-ru el) *unit-symbol-ru->dim*) (<vd>-dims (<nd>-value el)))) (reverse tbl))))
       (mapc #'(lambda (el) (string->dimension-ru el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*))
       (remhash "г" *unit-symbol-ru->dim*)
       (setf (gethash "кг" *unit-symbol-ru->dim*)  '(0 1 0 0 0 0 0 0 0)))
@@ -144,7 +144,7 @@
 
 (defun load-dim->quantity-name-en ()
   (unless *dim->quantity-name-en-loaded*
-    (flet ((dim->quantity-name-en (tbl) (mapc #'(lambda (el) (setf (gethash (vd-dims (nd-value el)) *dim->quantity-name-en*) (nd-quantity-name-en el))) (reverse tbl))))
+    (flet ((dim->quantity-name-en (tbl) (mapc #'(lambda (el) (setf (gethash (<vd>-dims (<nd>-value el)) *dim->quantity-name-en*) (<nd>-quantity-name-en el))) (reverse tbl))))
       (mapc #'(lambda (el) (dim->quantity-name-en el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*)))
     (print-hash-table *dim->quantity-name-en*)
     (setf *dim->quantity-name-en-loaded* t)))
@@ -153,7 +153,7 @@
 
 (defun load-quantity-name-en->dim ()
   (unless *quantity-name-en->dim-loaded*
-    (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (nd-quantity-name-en el) *quantity-name-en->dim*) (vd-dims (nd-value el)))) (reverse tbl))))
+    (flet ((string->dimension (tbl) (mapc #'(lambda (el) (setf (gethash  (<nd>-quantity-name-en el) *quantity-name-en->dim*) (<vd>-dims (<nd>-value el)))) (reverse tbl))))
       (mapc #'(lambda (el) (string->dimension el)) (list *nd-si-derived-units-tbl-04* *nd-si-derived-units-tbl-03* *nd-si-derived-units-tbl-02* *nd-si-main-units*)))
     (print-hash-table *quantity-name-en->dim*)
     (setf *quantity-name-en->dim-loaded* t)))
