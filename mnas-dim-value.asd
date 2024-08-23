@@ -6,6 +6,13 @@
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
   :serial nil
   :depends-on (#:str #:mnas-string ) ;;;; #:cl-ppcre
+  :defsystem-depends-on ("deploy")
+  :build-operation "deploy-op"
+  :build-pathname
+  #+sbcl "mnas-dim-value-qi-sbcl"
+  #+ccl  "mnas-dim-value-qi-ccl"
+  :entry-point "mnas-dim-value:qi"
+
   :components
   ((:file "package")
    (:module "src" :depends-on ("package")
