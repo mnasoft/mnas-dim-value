@@ -9,6 +9,7 @@ build
 
 docs/*.scr
 docs/*.lisp
+docs/**.*
 
 README.pdf
 README.tex
