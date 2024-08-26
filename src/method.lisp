@@ -2,13 +2,7 @@
 
 (in-package :mnas-dim-value)
 
-(defparameter *vd-language* :en
-  "Язык (member :en :ru)")
 
-(defun vd-names ()
-  (cond
-    ((eq *vd-language* :ru) +vd-names-ru+)
-    (t                      +vd-names-en+)))
 
 (defun dim->unit-symbol ()
     (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
@@ -63,17 +57,7 @@
   (multiple-value-bind (val find) (gethash str *nm-vl*)
     (if find val nil)))
 
-(defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
-"@b(Описание:) функция vd создает число с размерностью (ЧсР)
 
- @b(Пример использования:)
-@begin[lang=lisp](code)
-
-@end(code)
-"
-  (make-instance '<vd>
-                 :val x
-                 :dims (list m kg s A K cd mol rad sr) ))
 
 (defmethod vd-print ((x <vd>) &optional (o-stream t) )
   (format o-stream "~S ~S" (<vd>-val x) (<vd>-dims x)))

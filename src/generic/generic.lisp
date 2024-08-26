@@ -1,4 +1,20 @@
-(in-package :mnas-dim-value)
+(defpackage :mnas-dim-value/generic
+  (:use       #:cl )
+  (:export    vd-convert
+              vd-print
+              same-dimension
+              vd-convert
+              mult
+              div
+              sum
+              diff
+              vd-expt
+              vd-sqrt
+              unit-name
+              quantity-name 
+              ))
+
+(in-package :mnas-dim-value/generic)
 
 (defgeneric vd-convert (obj))
 
@@ -35,7 +51,6 @@
 (defgeneric quantity-name (x &key vd-language)
   (:documentation
    "Возвращает список наименований величин, которым соответствует
-размерность числа x (\"acceleration\").")
-  )
+размерность числа x (\"acceleration\")."))
 
 

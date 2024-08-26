@@ -6,7 +6,7 @@
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
 
   :serial nil
-  :depends-on ("str" "mnas-string" ) ;;;; #:cl-ppcre
+  :depends-on ("str" "mnas-string" "mnas-dim-value/generic" ) ;;;; #:cl-ppcre
 
   :components
   ((:module "src"
@@ -88,10 +88,44 @@
 		:serial nil
                 :components ((:file "docs")))))
 
+(defsystem "mnas-dim-value/tbl"
+  :description "Describe mnas-dim-value here"
+
+  :serial nil
+  :depends-on ("mnas-dim-value/class" "mnas-dim-value/mk-class")
+    :components ((:module "src/tbl"
+		:serial nil
+                  :components ((:file "tbl")))))
+
+(defsystem "mnas-dim-value/generic"
+  :description "Система определяет обобщеннын функции"
+  
+  :serial nil
+  ;;;; :depends-on ()
+  :components ((:module "src/generic"
+		:serial nil
+                :components ((:file "generic")))))
+
+(defsystem "mnas-dim-value/class"
+  :description "Система определяет классы"
+  
+  :serial nil
+  ;;;; :depends-on ()
+  :components ((:module "src/class"
+		:serial nil
+                :components ((:file "class")))))
+
+(defsystem "mnas-dim-value/mk-class"
+  :description "Система определяет классы"
+  
+  :serial nil
+  :depends-on ("mnas-dim-value/class")
+  :components ((:module "src/mk-class"
+		:serial nil
+                :components ((:file "mk-class")))))
+
 (defsystem "mnas-dim-value/calc"
   :description "Describe mnas-dim-value here"
-  :author "Mykola Matvyeyev <mnasoft@gmail.com>"
-  :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
   
   :defsystem-depends-on ("deploy")
   :build-operation "deploy-op"

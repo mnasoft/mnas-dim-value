@@ -27,10 +27,7 @@
   (:export C->K K->C)
   (:export M->K K->M)
   (:export quantity
-           quantity-from-string
-           qi
-           qi-sample
-           quantity-interactive
+           
            *NM-VL-EN->RU*
            *NM-VL*
            UNIT-NAME)
@@ -41,27 +38,19 @@
            vd-quantity
            rec-quantity
            )
-  (:export prompt-read-line
+  (:export 
+   HELP
+   DIMENSIONP
+   *NM-VL-RU->EN*
+   DIM-STRING-BY-DIM-NAME
+   DIM-NAME-LIST
 
-           HELP
-           DIMENSIONP
-           *NM-VL-RU->EN*
-           DIM-STRING-BY-DIM-NAME
-           DIM-NAME-LIST
-
-           UNUSE-MNAS-DIM-VALUE
-           KGS/CM2->PA
-           USE-MNAS-DIM-VALUE
-           PA->KGS/CM2
-           QUANTITY-NAME
-           quantity-by-dimension-string
-           )
-  (:intern quantity-from-string-not-eval
-           
-           print-stack
-           print-stack-clean
-           constants-help)
-  )
+   UNUSE-MNAS-DIM-VALUE
+   KGS/CM2->PA
+   USE-MNAS-DIM-VALUE
+   PA->KGS/CM2
+   QUANTITY-NAME
+   ))
 
 (in-package :mnas-dim-value)
 
