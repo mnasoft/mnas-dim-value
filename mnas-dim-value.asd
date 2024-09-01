@@ -92,7 +92,9 @@
   :description "Describe mnas-dim-value here"
 
   :serial nil
-  :depends-on ("mnas-dim-value/class" "mnas-dim-value/mk-class")
+  :depends-on ("mnas-dim-value/class"
+               "mnas-dim-value/mk-class"
+               "mnas-dim-value/ht")
     :components ((:module "src/tbl"
 		:serial nil
                   :components ((:file "tbl")))))
@@ -114,6 +116,26 @@
   :components ((:module "src/class"
 		:serial nil
                 :components ((:file "class")))))
+
+(defsystem "mnas-dim-value/func"
+  :description "Система определяет вспомогательные функции"
+  
+  :serial nil
+  ;;;; :depends-on ()
+  :components ((:module "src/func"
+		:serial nil
+                :components ((:file "func")))))
+
+(defsystem "mnas-dim-value/ht"
+  :description "Система определяет классы"
+  
+  :serial nil
+  :depends-on ("mnas-dim-value/class")
+  :components ((:module "src/ht"
+		:serial nil
+                :components ((:file "ht")))))
+
+
 
 (defsystem "mnas-dim-value/mk-class"
   :description "Система определяет классы"

@@ -2,56 +2,11 @@
 
 (in-package :mnas-dim-value)
 
-(defun print-hash-table (ht &optional (s t))
-"@b(Описание:) функция print-hash-table выполняет вывод содержимого таблицы в поток s.
-@begin[lang=lisp](code)
- (print-hash-table *nm-vl*)
-@end(code)
-"
-  (maphash #'(lambda (key val) (format s "~S ~S~%" key val)) ht))
-(defun hash-table->list (ht)
-  (let ((rez nil))
-    (maphash #'(lambda (key val) (push (list key val) rez) ) ht)
-    rez))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *nm-vl-loaded* nil)
 
-(defun is-in-range (val r-list)
-" @b(Описание:) функция is-in-range служит для определения того
-может-ли использоваться та или иная множительная приставка 
-системы SI для данной единицы измерения.
-
- @b(Переменые:)
-@begin(list)
- @item(val - множитель, определяемый формулой val=10@sup(n), где n - целое число;)
- @item(r-list - список, содержащий списки диапазонов. 
-Диапазон - упорядоченый список двух целых - (n@sub(1) n@sub(2)).
-Для n@sub(1) и n@sub(2) должно выполняться следующее неравенство n@sub(1) <= n@sub(2).)
-@end(list)
-
- Функция возвращает T, если для одного из диапазонов выполняется следующее неравенство:
-10@sup(n@sub(1)) <= val <= 10@sup(n@sub(2))
-
- @b(Пример использования:)
-@begin[lang=lisp](code)
- (is-in-range 1/10 '((0 2))) => nil
- (is-in-range 1    '((0 2))) => T
- (is-in-range 10   '((0 2))) => T
- (is-in-range 100  '((0 2))) => T
- (is-in-range 1000 '((0 2))) => NIL
- (is-in-range 1000 '((0 2) (4 6))) => NIL
-@end(code)
-"
-    (eval (append (list 'or)
-	  (mapcar
-	   #'(lambda (range)
-	       (let ((r-rez
-		      (mapcar
-		       #'(lambda (el) (expt 10 el)) range)))
-		 (list '<= (first r-rez) val (second r-rez) )))
-	   r-list))))
 
 (defun add-multiplid-values (var)
   (setf (gethash (<nd>-unit-symbol-en var) *nm-vl*)
@@ -74,16 +29,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *nm-vl-ru->en-loaded* nil)
-
 (defun load-nm-vl-ru->en ()
   (unless *nm-vl-ru->en-loaded*
     (mapc #'(lambda (el) (setf (gethash (seventh el) *nm-vl-ru->en*) (sixth el))) *si-main-units*)
     (mapc #'(lambda (el) (setf (gethash (seventh el) *nm-vl-ru->en*) (sixth el))) *si-derived-units-tbl-03*)
     (print-hash-table *nm-vl-ru->en* )
     (setf *nm-vl-ru->en-loaded* t)))
-
-(defparameter *nm-vl-en->ru-loaded* nil)
 
 (defun load-nm-vl-en->ru ()
   (unless *nm-vl-en->ru-loaded*
@@ -94,7 +45,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *dim->unit-symbol-en-loaded* nil)
+
 
 (defun load-dim->unit-symbol-en ()
   (unless *dim->unit-symbol-en-loaded*
@@ -104,7 +55,7 @@
     (print-hash-table *dim->unit-symbol-en*)
     (setf *dim->unit-symbol-en-loaded* t)))
 
-(defparameter *unit-symbol-en->dim-loaded* nil)
+
 
 (defun load-unit-symbol-en->dim ()
   (unless *unit-symbol-en->dim-loaded*
@@ -117,7 +68,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *dim->unit-symbol-ru-loaded* nil)
+
 
 (defun load-dim->unit-symbol-ru ()
   (unless *dim->unit-symbol-ru-loaded*
@@ -127,7 +78,7 @@
     (print-hash-table *dim->unit-symbol-ru*)
     (setf *dim->unit-symbol-ru-loaded* t)))
 
-(defparameter *unit-symbol-ru->dim-loaded* nil)
+
 
 (defun load-unit-symbol-ru->dim ()
   (unless *unit-symbol-ru->dim-loaded*
@@ -140,8 +91,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *dim->quantity-name-en-loaded* nil)
-
 (defun load-dim->quantity-name-en ()
   (unless *dim->quantity-name-en-loaded*
     (flet ((dim->quantity-name-en (tbl) (mapc #'(lambda (el) (setf (gethash (<vd>-dims (<nd>-value el)) *dim->quantity-name-en*) (<nd>-quantity-name-en el))) (reverse tbl))))
@@ -149,7 +98,7 @@
     (print-hash-table *dim->quantity-name-en*)
     (setf *dim->quantity-name-en-loaded* t)))
 
-(defparameter *quantity-name-en->dim-loaded* nil)
+
 
 (defun load-quantity-name-en->dim ()
   (unless *quantity-name-en->dim-loaded*
