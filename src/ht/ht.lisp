@@ -3,7 +3,10 @@
 (defpackage :mnas-dim-value/ht
   (:use #:cl
         #:mnas-dim-value/func
-        #:mnas-dim-value/class)
+        #:mnas-dim-value/class
+        #:mnas-dim-value/tbl
+        )
+  (:export *nd-list*)
   (:export *m-coeff-en*
            *m-coeff-ru*)
   (:export prefix-from->to)
@@ -27,6 +30,16 @@
            *quantity-name-en->dim-loaded* ))
 
 (in-package :mnas-dim-value/ht)
+
+(defparameter *nd-list*
+  (reverse
+   (append
+    *nd-table-2-si-base-units*
+    *nd-table-4-the-22-si-units-with-special-names-and-symbols*
+    *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units*
+    *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
+    *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
+    )))
 
 (defvar *m-coeff-en* (make-hash-table :test 'equal)
   "Хеш- таблица *m-coeff-en* содержит международные множителные приставки
@@ -115,3 +128,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+;;;; Наполняем хеш таблицы *m-coeff-en* *m-coeff-ru*
+(loop :for (power nm-ru nm-en s-ru s-en) :in *table-7-si-prefixes*
+      :do
+         (setf (gethash s-en *m-coeff-en*) (expt 10 power))
+         (setf (gethash s-ru *m-coeff-ru*) (expt 10 power)))

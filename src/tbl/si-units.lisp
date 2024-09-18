@@ -2,18 +2,6 @@
 
 (in-package :mnas-dim-value)
 
-(defparameter *nd-not-si-units-tbl-05*  (make-nd-form-list-el *not-si-units-tbl-05*) "Внесистемные единицы, допустимые к применению наравне с единицами СИ")
-(setf (documentation  '*nd-not-si-units-tbl-05* 'variable) (documentation  '*not-si-units-tbl-05* 'variable))
-
-;;@intern
-(defparameter *nd-not-si-units-tbl-07*  (make-nd-form-list-el *not-si-units-tbl-07*) "Внесистемные единицы, временно допустимые к применению")
-
-(setf (documentation  '*nd-not-si-units-tbl-07* 'variable) (documentation  '*not-si-units-tbl-07* 'variable))
-
-;;@intern
-(defparameter *nd-other-units-tbl-b-01* (make-nd-form-list-el *other-units-tbl-b-01*) "Соотношение некоторых внесистемных единиц с единицами СИ")
-(setf (documentation  '*nd-other-units-tbl-b-01* 'variable) (documentation  '*other-units-tbl-b-01* 'variable))
-
 (defun check-is-si-table-good (tbl)
   (let ((rez t))
     (mapc

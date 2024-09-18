@@ -2,6 +2,8 @@
 
 (in-package :mnas-dim-value/tbl)
 
+
+
 (defparameter *not-si-units-tbl-07*
   `(("length" "длина"
               nil

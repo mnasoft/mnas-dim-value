@@ -2,40 +2,27 @@
   (:use #:cl
         #:mnas-dim-value/class
         #:mnas-dim-value/mk-class
-        #:mnas-dim-value/ht)
-  (:export *mult-prefix*
-           *si-defining-constants*
-           *si-main-units*
-           *si-derived-units-tbl-02*
-           *si-derived-units-tbl-03*
-           *si-derived-units-tbl-04*
-           *not-si-units-tbl-05*
-           *not-si-units-tbl-07*
-           *other-units-tbl-b-01*)
-  (:export *nd-si-base-units*
-           *nd-si-main-units*
-           *nd-si-derived-units-tbl-02*
-           *nd-si-derived-units-tbl-03*
-           *nd-si-derived-units-tbl-04*
-           *nd-not-si-units-tbl-05*
-           *nd-not-si-units-tbl-07*
-           *nd-list*
+        )
+  (:export *table-1-the-seven-defining-constants-of-the-si-and-the-seven-corresponding-units-they-define*
+           *nd-table-2-si-base-units*
+           *nd-table-4-the-22-si-units-with-special-names-and-symbols*
+           *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units*
+           *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
+           *table-7-si-prefixes*
+           *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
            ))
 
 (in-package :mnas-dim-value/tbl)
 
-(defparameter *nd-si-base-units*)
-(defparameter *nd-si-main-units*           nil)
-(defparameter *nd-si-derived-units-tbl-02* nil)
-(defparameter *nd-si-derived-units-tbl-03* nil)
-(defparameter *nd-si-derived-units-tbl-04* nil)
-(defparameter *nd-not-si-units-tbl-05*     nil)
-(defparameter *nd-not-si-units-tbl-07*     nil)
-(defparameter *nd-list*                    nil)
+(defparameter *nd-table-2-si-base-units*           nil)
+(defparameter *nd-table-4-the-22-si-units-with-special-names-and-symbols* nil)
+(defparameter *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* nil)
+(defparameter *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* nil)
+(defparameter *nd-table-8-non-si-units-accepted-for-use-with-the-si-units* nil)
 
-(defparameter *mult-prefix*
-  '((30  "кветта" "quetta" "Кв"  "Q")
-    (27  "ронна"  "ronna"  "Рн"  "R")
+(defparameter *table-7-si-prefixes* ; *mult-prefix*
+  '((30  "кветта" "quetta" "Кв" "Q")
+    (27  "ронна"  "ronna"  "Рн" "R")
     (24  "йотта"  "yotta"  "И"  "Y")
     (21  "зетта"  "zetta"  "З"  "Z")
     (18  "экса"   "exa"    "Э"  "E")
@@ -60,7 +47,7 @@
     (-27 "ронто"  "ronto"  "рн" "r")
     (-30 "квекто" "quecto" "кв" "q")
     )
-  "*mult-prefix* содержит множителные приставки;
+  "*table-7-si-prefixes* содержит множителные приставки;
 Каждый подсписок содержит описание одной множительной приставки в
 следующем формате:
 
@@ -70,12 +57,7 @@
 4 - s-ru  - обозначение множителя русское;
 5 - s-en  - обозначение множителя международное.")
 
-;;;; Наполняем хеш таблицы *m-coeff-en* *m-coeff-ru*
-(loop :for (power nm-ru nm-en s-ru s-en) :in *mult-prefix* :do
-  (setf (gethash s-en *m-coeff-en*) (expt 10 power))
-  (setf (gethash s-ru *m-coeff-ru*) (expt 10 power)))
-
-(defparameter *si-defining-constants*
+(defparameter *table-1-the-seven-defining-constants-of-the-si-and-the-seven-corresponding-units-they-define* ; *si-defining-constants*
   `(("Defining constant"                    "Symbol"   "Numerical value" "Unit")
     ("hyperfine transition frequency of Cs" "Δv_{Cs}"  9192631770        ,(vd 1 :s -1))
     ("speed of light in vacuum"             "c"        299792458         ,(vd 1 :m 1  :s -1))
@@ -86,7 +68,7 @@
     ("luminous efficacy"                    "Kcd"      683               ,(vd 1 :cd 1 :sr 1 :m -2 :kg -1 :s 3))
     )
   "Table 1. The seven defining constants of the SI and the seven
-corresponding units they define.")
+corresponding units they define")
 
 (defparameter *si-base-units*
   `(
@@ -102,7 +84,7 @@ corresponding units they define.")
 
   )
 
-(block si-base-units
+(block table-2-si-base-units ; si-base-units
   (nd-clear)
   (nd "unitless"            "безразмерный"                  "U"   "ul"      "бр"      "ul"     "бр"     (vd 1             )  nil)
   (nd "length"              "длина"	                    "L"   "meter"   "метр"    "m"      "м"      (vd 1       :m   1) )
@@ -112,129 +94,128 @@ corresponding units they define.")
   (nd "temperature"         "температура термодинамическая" "Θ"   "kelvin"  "кельвин" "K"      "К"      (vd 1       :K   1) )
   (nd "amount of substance" "количество вещества"           "N"   "mole"    "моль"    "mol"    "моль"   (vd 1       :mol 1) )
   (nd "luminous intensity"  "сила света"                    "J"   "candela" "кандела" "cd"     "кд"     (vd 1       :cd  1) )
-  (setf *nd-si-base-units* (nd-get))
-  (setf (documentation  '*nd-si-base-units* 'variable)
+  (setf *nd-table-2-si-base-units* (nd-get))
+  (setf (documentation  '*nd-table-2-si-base-units* 'variable) 
         "Задает основные единицы измерения системы SI.
 
 (см. Таблица 1, ГОСТ 8.417-2002; Table 2. SI base units)"))
 
-
-(block si-named-units
+(block table-4-the-22-si-units-with-special-names-and-symbols
   (nd-clear)
   (nd "plane angle" "плоский угол" "L/L"
       "radian" "радиан" "rad" "рад"
-      (vd 1 :rad 1) )        ; "rad=m/m"
+      (vd 1 :rad 1) )                   ; "rad=m/m"
   (nd "solid angle" "телесный угол" "L^2/L^2"
       "steradian" "стерадиан" "sr" "ср"
-      (vd 1 :sr 1))          ; "sr=m^2/m^2"
+      (vd 1 :sr 1))                     ; "sr=m^2/m^2"
   (nd "frequency" "частота" "1/T"
       "hertz" "герц" "Hz" "Гц"
-      (vd 1 :s -1) )         ; "Hz=s^-1"
+      (vd 1 :s -1) )                    ; "Hz=s^-1"
   (nd "force" "сила" nil
       "newton" "ньютон" "N" "Н"
-      (vd 1 :m 1 :kg 1 :s -2) ) ; "N=kg*m*s^-2"
+      (vd 1 :m 1 :kg 1 :s -2) )         ; "N=kg*m*s^-2"
   (nd "pressure, stress" "давление" nil
       "pascal" "паскаль" "Pa" "Па"
-      (vd 1 :m -1 :kg 1 :s -2) ) ; "Pa=kg*m^−1*s^−2=N/m^2"
+      (vd 1 :m -1 :kg 1 :s -2) )        ; "Pa=kg*m^−1*s^−2=N/m^2"
   (nd "energy, work, quantity of heat" "энергия, работа, количество теплоты" nil
       "joule" "джоуль" "J" "Дж"
-      (vd 1 :m 2 :kg 1 :s -2) ) ; "J=kg*m^2*s^-2=N*m"
+      (vd 1 :m 2 :kg 1 :s -2) )         ; "J=kg*m^2*s^-2=N*m"
   (nd "power, radiant flux" "мощность, поток излучения" nil
       "watt" "ватт" "W" "Вт"
-      (vd 1 :m 2 :kg 1 :s -3) ) ; "W=kg*m^2*s^−3=J/s"
+      (vd 1 :m 2 :kg 1 :s -3) )         ; "W=kg*m^2*s^−3=J/s"
   (nd "electric charge, quantity of electricity" "электрический заряд, количество электричества" nil
       "coulomb" "кулон" "C" "Кл"
-      (vd 1 :s 1 :A 1) )     ; "C=A*s"
+      (vd 1 :s 1 :A 1) )                ; "C=A*s"
   (nd "electric potential difference, electromotive force" "электрическое напряжение, электродвижущая сила" nil
       "volt" "вольт" "V" "В" 
-      (vd 1 :m 2 :kg 1 :s -3 :A -1) ) ; "V=kg*m^2*s^−3*A^−1=W/A"
+      (vd 1 :m 2 :kg 1 :s -3 :A -1) )   ; "V=kg*m^2*s^−3*A^−1=W/A"
   (nd "capacitance" "электрическая ёмкость" nil
       "farad" "фарад"  "F" "Ф"
-      (vd 1 :m -2 :kg -1 :s 4 :A 2)  ) ; "F=kg−1 m−2 s4 A2=C/V"
+      (vd 1 :m -2 :kg -1 :s 4 :A 2)  )  ; "F=kg−1 m−2 s4 A2=C/V"
   (nd "electric resistance" "электрическое сопротивление" nil
       "ohm" "ом" "Ω" "Ом" (vd 1 :kg 1 :m 2  :s -3 :A -2) ) ; "Ω = kg m2 s−3 A−2=V/A"
   (nd "electric conductance" "электрическая проводимость" nil
       "siemens" "сименс" "S" "См" 
-      (vd 1 :m -2 :kg -1 :s 3 :A 2) ) ; "S = kg−1 m−2 s3 A2=A/V"
+      (vd 1 :m -2 :kg -1 :s 3 :A 2) )   ; "S = kg−1 m−2 s3 A2=A/V"
   (nd "magnetic flux" "магнитный поток" nil
       "weber" "вебер" "Wb" "Вб" 
-      (vd 1 :m 2 :kg 1 :s -2 :A -1) ) ; "Wb = kg m2 s−2 A−1=V s"
+      (vd 1 :m 2 :kg 1 :s -2 :A -1) )   ; "Wb = kg m2 s−2 A−1=V s"
   (nd "magnetic flux density" "магнитная индукция" nil
       "tesla" "тесла" "T" "Тл" 
-      (vd 1 :kg 1 :s -2 :A -1) ) ; "T = kg s−2 A−1 Wb/m2"
+      (vd 1 :kg 1 :s -2 :A -1) )        ; "T = kg s−2 A−1 Wb/m2"
   (nd "inductance" "индуктивность" nil
       "henry" "генри" "H" "Гн" 
-      (vd 1 :m 2 :kg 1 :s -2 :A -2) ) ; "H = kg m2 s−2 A−2=Wb/A"
+      (vd 1 :m 2 :kg 1 :s -2 :A -2) )   ; "H = kg m2 s−2 A−2=Wb/A"
   (nd "Celsius temperature" "температура по Цельсию" nil
       "degree Celsius" "градус Цельсия" "°С" "°С" 
       (vd 1 :K 1) nil)                  ; "°С=K"
   (nd "luminous flux" "световой поток" nil
       "lumen" "люмен" "lm" "лм" 
-      (vd 1 :cd 1 :sr 1) )   ; "lm = cd sr = cd sr"
+      (vd 1 :cd 1 :sr 1) )              ; "lm = cd sr = cd sr"
   (nd "illuminance" "освещенность" nil
       "lux" "люкс" "lx" "лк" 
-      (vd 1 :cd 1 :sr 1 :m -2) ) ; "lx = cd sr m−2=lm/m2"
+      (vd 1 :cd 1 :sr 1 :m -2) )        ; "lx = cd sr m−2=lm/m2"
   (nd "activity referred to a radionuclide" "активность радионуклида" nil
       "becquerel" "беккерель" "Bq" "Бк" 
-      (vd 1 :s -1) )         ; "Bq = s−1"
+      (vd 1 :s -1) )                    ; "Bq = s−1"
   (nd "absorbed dose, kerma"
       "поглощенная доза излучения, керма" nil
       "gray" "грей" "Gy" "Гр" 
-      (vd 1 :m 2 :s -2) )    ; "Gy = m2 s−2 J/kg"
+      (vd 1 :m 2 :s -2) )               ; "Gy = m2 s−2 J/kg"
   (nd "dose equivalent" "эквивалентная доза ионизирующего излучения" nil
       "sievert" "зиверт" "Sv" "Зв" 
-      (vd 1 :m 2 :s -2) )    ; "Sv = m2 s−2=J/kg"
+      (vd 1 :m 2 :s -2) )               ; "Sv = m2 s−2=J/kg"
   
   (nd "catalytic activity" "активность катализатора" nil
       "katal" "катал" "kat" "кат" 
-      (vd 1 :s -1 :mol 1) )  ; "kat = mol s−1"
-  (setf *nd-si-named-units* (nd-get))
-  (setf (documentation  '*nd-si-named-units* 'variable)
+      (vd 1 :s -1 :mol 1) )             ; "kat = mol s−1"
+  (setf *nd-table-4-the-22-si-units-with-special-names-and-symbols* (nd-get))
+  (setf (documentation  '*nd-table-4-the-22-si-units-with-special-names-and-symbols* 'variable)
         "Задает производные единицы СИ, имеющие специальные наименование и обозначения.
 
 (см. Таблица 3, ГОСТ 8.417-2002; Table 4. The 22 SI units with special names and symbols)"))
 
-(block si-derived-units-tbl-05
+(block table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units 
   (nd-clear)
   (nd "area" "площадь" nil
       "square meter" "квадратный метр" "m^2" "м^2"
-      (vd 1 :m 2) ) ; "m2"
+      (vd 1 :m 2) )                     ; "m2"
   (nd "volume" "объём" nil
       "cubic meter" "кубический метр" "m^3" "м^3"
-      (vd 1 :m 3)  ) ; "m3"
+      (vd 1 :m 3)  )                    ; "m3"
   (nd "speed, velocity" "скорость" nil
       "meter per second" "метр в секунду" "m/s" "м/с"
-      (vd 1 :m 1 :s -1) ) ; "m s−1"
+      (vd 1 :m 1 :s -1) )               ; "m s−1"
   (nd "acceleration" "ускорение"   nil
       "meter per second in a square" "метр на секунду в квадрате" "m/s^2" "м/с^2"
-      (vd 1 :m 1 :s -2) ) ; "m s−2"
+      (vd 1 :m 1 :s -2) )               ; "m s−2"
   (nd "wavenumber" "волновое число" nil
       "one per meter" "единица на метр" "1/m" "1/м"
-      (vd 1 :m -1) nil) ; "m−1"
+      (vd 1 :m -1) nil)                 ; "m−1"
   (nd "density, mass density" "плотность" nil
       "kilogram per cubic meter" "килограмм на кубический метр" "kg/m^3" "кг/м^3"
-      (vd 1 :kg 1 :m -3) ) ; "kg m−3"
+      (vd 1 :kg 1 :m -3) )              ; "kg m−3"
   (nd "surface density" "поверхностная плотность" nil
       "kilogram per square meter" "килограмм на квадратный метр" "kg/m^2" "кг/м^2"
-      (vd 1 :kg 1 :m -2) ) ; "kg m−2"
+      (vd 1 :kg 1 :m -2) )              ; "kg m−2"
   (nd "specific volume" "удельный объём" nil
       "cubic meter per kilogram" "кубический метр на килограмм" "m^3/kg" "м^3/кг"
-      (vd 1 :m 3 :kg -1) ) ; "m3 kg−1"
+      (vd 1 :m 3 :kg -1) )              ; "m3 kg−1"
   (nd "current density" "плотность электрического тока" nil
       "ampere per square meter" "ампер на квадратный метр" "A/m^2" "А/м^2"
-      (vd 1 :A 1 :m -2) ) ; "A m−2"
+      (vd 1 :A 1 :m -2) )               ; "A m−2"
   (nd "magnetic field strength" "напряжённость магнитного поля" nil
       "ampere per meter" "ампер на метр" "A/m" "А/м"
-      (vd 1 :A 1 :m -1) ) ; "A m−1"
+      (vd 1 :A 1 :m -1) )               ; "A m−1"
   (nd "amount of substance concentration" "молярная концентрация компонента" nil
       "mole per cubic meter" "моль на кубический метр" "mol/m^3" "моль/м^3"
-      (vd 1 :mol 1 :m -3) ) ; "mol m−3"
+      (vd 1 :mol 1 :m -3) )             ; "mol m−3"
   (nd "mass concentration" "массовая концентрация"  nil
       "kilogram per cubic meter" "килограмм на кубический метр" "kg/m^3" "кг/м^3"
-      (vd 1 :kg -1 :m 3) ) ; "kg m−3"
+      (vd 1 :kg -1 :m 3) )              ; "kg m−3"
   (nd "luminance" "яркость" nil
       "candela per square meter" "кандела на квадратный метр" "cd/m^2" "кд/м^2"
-      (vd 1 :cd 1 :m -2) ) ; "cd m−2"
+      (vd 1 :cd 1 :m -2) )  ; "cd m−2"
 ;;;; Дополнительные примеры величин начало
   (nd "momentum" "импульс, количество движения" nil
       "kilogram meter per second" "килограмм-метр на секунду" "kg*m/s" "кг*м/с"
@@ -256,19 +237,19 @@ corresponding units they define.")
       "mole per second" "моль в секунду" "mol/s"  "моль/с"
       (vd 1 :mol 1 :s -1))
   (nd "molar weight" "молекулярный вес" nil
-      "kilogram per mole" "килограмм на моль" "kg/mol"
+      "kilogram per mole" "килограмм на моль" "kg/mol" "кг/моль"
       (vd 1 :kg 1 :mol -1))
 ;;;; Дополнительные примеры величин конец
-  (setf *nd-si-derived-units-tbl-05* (nd-get))
-  (setf (documentation  '*nd-si-derived-units-tbl-05* 'variable)
+  (setf *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* (nd-get))
+  (setf (documentation '*nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* 'variable)
         "Производные единицы СИ, наименования и обозначения которых
  образованы с использованием наименований и обозначений основных
  единиц СИ.
 
-(см. Таблица 2, ГОСТ 8.417-2002; Table 5; Examples of coherent derived
+(см. Таблица 2, ГОСТ 8.417-2002; Table 5. Examples of coherent derived
 units in the SI expressed in terms of base units)"))
 
-(block si-derived-units-tbl-06
+(block table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols ; si-derived-units-tbl-06
   (nd-clear)
   (nd "dynamic viscosity" "динамическая вязкость" nil
       "pascal second" "паскаль-секунда" "Pa*s" "Па*с"
@@ -347,10 +328,10 @@ units in the SI expressed in terms of base units)"))
 ;;;; Дополнительные примеры начало  
   (nd "force impulse" "импульс силы" nil
       "newton second" "ньютон-секунда" "N*s" "Н*с"
-      (vd 1 :kg :m 1 :s -1))         ; "N s=kg*m*s^-1"
+      (vd 1 :kg 1 :m 1 :s -1))         ; "N s=kg*m*s^-1"
 ;;;; Дополнительные примеры конец
-  (setf *nd-si-derived-units-tbl-06* (nd-get))
-  (setf (documentation  '*nd-si-derived-units-tbl-06* 'variable)
+  (setf *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* (nd-get))
+  (setf (documentation  '*nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* 'variable)
         "Производные единицы СИ, наименования и обозначения
 которых образованы с использованием специальных наименований и
 обозначений.
@@ -359,7 +340,7 @@ units in the SI expressed in terms of base units)"))
 derived units whose names and symbols include SI coherent derived
 units with special names and symbols"))
 
-(block non-si-units-accepted
+(block table-8-non-si-units-accepted-for-use-with-the-si-units
   (nd-clear)
   (nd "time" "время" nil "minute" "минута" "min" "мин"
       (vd 60 :s 1) nil)
@@ -414,19 +395,11 @@ units with special names and symbols"))
    (nd "electric charge" "электрический заряд" nil "ampere hour" "ампер-час" "A*h" "А*ч"
        (vd (* 36/10 1000) :s 1 :A 1) nil)
 ;;;; Дополнительные величины конец
-     (setf *nd-non-si-units-accepted* (nd-get))
-     (setf (documentation  '*nd-si-derived-units-tbl-06* 'variable)
+     (setf *nd-table-8-non-si-units-accepted-for-use-with-the-si-units* (nd-get))
+     (setf (documentation  '*nd-stable-8-non-si-units-accepted-for-use-with-the-si-units* 'variable)
            "Внесистемные единицы, допустимые к применению наравне с единицами СИ"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defparameter *nd-list*
-  (reverse
-   (append
-    *nd-si-main-units*
-    *nd-si-derived-units-tbl-02*
-    *nd-si-derived-units-tbl-03*
-    *nd-si-derived-units-tbl-04*
-    *nd-not-si-units-tbl-05*
-    *nd-not-si-units-tbl-07*
-    )))
+
+
