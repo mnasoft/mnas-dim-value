@@ -1,0 +1,1608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-19 Чт 09:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *nm-vl*)
+</pre>
+</div>
+
+<pre class="example" id="org0e060c6">
+"rad" 1 [rad]
+"yrad" 1/1000000000000000000000000 [rad]
+"zrad" 1/1000000000000000000000 [rad]
+"arad" 1/1000000000000000000 [rad]
+"frad" 1/1000000000000000 [rad]
+"prad" 1/1000000000000 [rad]
+"nrad" 1/1000000000 [rad]
+"μrad" 1/1000000 [rad]
+"mrad" 1/1000 [rad]
+"crad" 1/100 [rad]
+"drad" 1/10 [rad]
+"darad" 10 [rad]
+"hrad" 100 [rad]
+"krad" 1000 [rad]
+"Mrad" 1000000 [rad]
+"Grad" 1000000000 [rad]
+"Trad" 1000000000000 [rad]
+"Prad" 1000000000000000 [rad]
+"Erad" 1000000000000000000 [rad]
+"Zrad" 1000000000000000000000 [rad]
+"Yrad" 1000000000000000000000000 [rad]
+"sr" 1 [sr]
+"ysr" 1/1000000000000000000000000 [sr]
+"zsr" 1/1000000000000000000000 [sr]
+"asr" 1/1000000000000000000 [sr]
+"fsr" 1/1000000000000000 [sr]
+"psr" 1/1000000000000 [sr]
+"nsr" 1/1000000000 [sr]
+"μsr" 1/1000000 [sr]
+"msr" 1/1000 [sr]
+"csr" 1/100 [sr]
+"dsr" 1/10 [sr]
+"dasr" 10 [sr]
+"hsr" 100 [sr]
+"ksr" 1000 [sr]
+"Msr" 1000000 [sr]
+"Gsr" 1000000000 [sr]
+"Tsr" 1000000000000 [sr]
+"Psr" 1000000000000000 [sr]
+"Esr" 1000000000000000000 [sr]
+"Zsr" 1000000000000000000000 [sr]
+"Ysr" 1000000000000000000000000 [sr]
+"Hz" 1 [Hz]
+"yHz" 1/1000000000000000000000000 [Hz]
+"zHz" 1/1000000000000000000000 [Hz]
+"aHz" 1/1000000000000000000 [Hz]
+"fHz" 1/1000000000000000 [Hz]
+"pHz" 1/1000000000000 [Hz]
+"nHz" 1/1000000000 [Hz]
+"μHz" 1/1000000 [Hz]
+"mHz" 1/1000 [Hz]
+"cHz" 1/100 [Hz]
+"dHz" 1/10 [Hz]
+"daHz" 10 [Hz]
+"hHz" 100 [Hz]
+"kHz" 1000 [Hz]
+"MHz" 1000000 [Hz]
+"GHz" 1000000000 [Hz]
+"THz" 1000000000000 [Hz]
+"PHz" 1000000000000000 [Hz]
+"EHz" 1000000000000000000 [Hz]
+"ZHz" 1000000000000000000000 [Hz]
+"YHz" 1000000000000000000000000 [Hz]
+"N" 1 [N]
+"yN" 1/1000000000000000000000000 [N]
+"zN" 1/1000000000000000000000 [N]
+"aN" 1/1000000000000000000 [N]
+"fN" 1/1000000000000000 [N]
+"pN" 1/1000000000000 [N]
+"nN" 1/1000000000 [N]
+"μN" 1/1000000 [N]
+"mN" 1/1000 [N]
+"cN" 1/100 [N]
+"dN" 1/10 [N]
+"daN" 10 [N]
+"hN" 100 [N]
+"kN" 1000 [N]
+"MN" 1000000 [N]
+"GN" 1000000000 [N]
+"TN" 1000000000000 [N]
+"PN" 1000000000000000 [N]
+"EN" 1000000000000000000 [N]
+"ZN" 1000000000000000000000 [N]
+"YN" 1000000000000000000000000 [N]
+"Pa" 1 [Pa]
+"yPa" 1/1000000000000000000000000 [Pa]
+"zPa" 1/1000000000000000000000 [Pa]
+"aPa" 1/1000000000000000000 [Pa]
+"fPa" 1/1000000000000000 [Pa]
+"pPa" 1/1000000000000 [Pa]
+"nPa" 1/1000000000 [Pa]
+"μPa" 1/1000000 [Pa]
+"mPa" 1/1000 [Pa]
+"cPa" 1/100 [Pa]
+"dPa" 1/10 [Pa]
+"daPa" 10 [Pa]
+"hPa" 100 [Pa]
+"kPa" 1000 [Pa]
+"MPa" 1000000 [Pa]
+"GPa" 1000000000 [Pa]
+"TPa" 1000000000000 [Pa]
+"PPa" 1000000000000000 [Pa]
+"EPa" 1000000000000000000 [Pa]
+"ZPa" 1000000000000000000000 [Pa]
+"YPa" 1000000000000000000000000 [Pa]
+"J" 1 [J]
+"yJ" 1/1000000000000000000000000 [J]
+"zJ" 1/1000000000000000000000 [J]
+"aJ" 1/1000000000000000000 [J]
+"fJ" 1/1000000000000000 [J]
+"pJ" 1/1000000000000 [J]
+"nJ" 1/1000000000 [J]
+"μJ" 1/1000000 [J]
+"mJ" 1/1000 [J]
+"cJ" 1/100 [J]
+"dJ" 1/10 [J]
+"daJ" 10 [J]
+"hJ" 100 [J]
+"kJ" 1000 [J]
+"MJ" 1000000 [J]
+"GJ" 1000000000 [J]
+"TJ" 1000000000000 [J]
+"PJ" 1000000000000000 [J]
+"EJ" 1000000000000000000 [J]
+"ZJ" 1000000000000000000000 [J]
+"YJ" 1000000000000000000000000 [J]
+"W" 1 [W]
+"yW" 1/1000000000000000000000000 [W]
+"zW" 1/1000000000000000000000 [W]
+"aW" 1/1000000000000000000 [W]
+"fW" 1/1000000000000000 [W]
+"pW" 1/1000000000000 [W]
+"nW" 1/1000000000 [W]
+"μW" 1/1000000 [W]
+"mW" 1/1000 [W]
+"cW" 1/100 [W]
+"dW" 1/10 [W]
+"daW" 10 [W]
+"hW" 100 [W]
+"kW" 1000 [W]
+"MW" 1000000 [W]
+"GW" 1000000000 [W]
+"TW" 1000000000000 [W]
+"PW" 1000000000000000 [W]
+"EW" 1000000000000000000 [W]
+"ZW" 1000000000000000000000 [W]
+"YW" 1000000000000000000000000 [W]
+"C" 1 [C]
+"yC" 1/1000000000000000000000000 [C]
+"zC" 1/1000000000000000000000 [C]
+"aC" 1/1000000000000000000 [C]
+"fC" 1/1000000000000000 [C]
+"pC" 1/1000000000000 [C]
+"nC" 1/1000000000 [C]
+"μC" 1/1000000 [C]
+"mC" 1/1000 [C]
+"cC" 1/100 [C]
+"dC" 1/10 [C]
+"daC" 10 [C]
+"hC" 100 [C]
+"kC" 1000 [C]
+"MC" 1000000 [C]
+"GC" 1000000000 [C]
+"TC" 1000000000000 [C]
+"PC" 1000000000000000 [C]
+"EC" 1000000000000000000 [C]
+"ZC" 1000000000000000000000 [C]
+"YC" 1000000000000000000000000 [C]
+"V" 1 [V]
+"yV" 1/1000000000000000000000000 [V]
+"zV" 1/1000000000000000000000 [V]
+"aV" 1/1000000000000000000 [V]
+"fV" 1/1000000000000000 [V]
+"pV" 1/1000000000000 [V]
+"nV" 1/1000000000 [V]
+"μV" 1/1000000 [V]
+"mV" 1/1000 [V]
+"cV" 1/100 [V]
+"dV" 1/10 [V]
+"daV" 10 [V]
+"hV" 100 [V]
+"kV" 1000 [V]
+"MV" 1000000 [V]
+"GV" 1000000000 [V]
+"TV" 1000000000000 [V]
+"PV" 1000000000000000 [V]
+"EV" 1000000000000000000 [V]
+"ZV" 1000000000000000000000 [V]
+"YV" 1000000000000000000000000 [V]
+"F" 1 [F]
+"yF" 1/1000000000000000000000000 [F]
+"zF" 1/1000000000000000000000 [F]
+"aF" 1/1000000000000000000 [F]
+"fF" 1/1000000000000000 [F]
+"pF" 1/1000000000000 [F]
+"nF" 1/1000000000 [F]
+"μF" 1/1000000 [F]
+"mF" 1/1000 [F]
+"cF" 1/100 [F]
+"dF" 1/10 [F]
+"daF" 10 [F]
+"hF" 100 [F]
+"kF" 1000 [F]
+"MF" 1000000 [F]
+"GF" 1000000000 [F]
+"TF" 1000000000000 [F]
+"PF" 1000000000000000 [F]
+"EF" 1000000000000000000 [F]
+"ZF" 1000000000000000000000 [F]
+"YF" 1000000000000000000000000 [F]
+"Ω" 1 [Ω]
+"yΩ" 1/1000000000000000000000000 [Ω]
+"zΩ" 1/1000000000000000000000 [Ω]
+"aΩ" 1/1000000000000000000 [Ω]
+"fΩ" 1/1000000000000000 [Ω]
+"pΩ" 1/1000000000000 [Ω]
+"nΩ" 1/1000000000 [Ω]
+"μΩ" 1/1000000 [Ω]
+"mΩ" 1/1000 [Ω]
+"cΩ" 1/100 [Ω]
+"dΩ" 1/10 [Ω]
+"daΩ" 10 [Ω]
+"hΩ" 100 [Ω]
+"kΩ" 1000 [Ω]
+"MΩ" 1000000 [Ω]
+"GΩ" 1000000000 [Ω]
+"TΩ" 1000000000000 [Ω]
+"PΩ" 1000000000000000 [Ω]
+"EΩ" 1000000000000000000 [Ω]
+"ZΩ" 1000000000000000000000 [Ω]
+"YΩ" 1000000000000000000000000 [Ω]
+"S" 1 [S]
+"yS" 1/1000000000000000000000000 [S]
+"zS" 1/1000000000000000000000 [S]
+"aS" 1/1000000000000000000 [S]
+"fS" 1/1000000000000000 [S]
+"pS" 1/1000000000000 [S]
+"nS" 1/1000000000 [S]
+"μS" 1/1000000 [S]
+"mS" 1/1000 [S]
+"cS" 1/100 [S]
+"dS" 1/10 [S]
+"daS" 10 [S]
+"hS" 100 [S]
+"kS" 1000 [S]
+"MS" 1000000 [S]
+"GS" 1000000000 [S]
+"TS" 1000000000000 [S]
+"PS" 1000000000000000 [S]
+"ES" 1000000000000000000 [S]
+"ZS" 1000000000000000000000 [S]
+"YS" 1000000000000000000000000 [S]
+"Wb" 1 [Wb]
+"yWb" 1/1000000000000000000000000 [Wb]
+"zWb" 1/1000000000000000000000 [Wb]
+"aWb" 1/1000000000000000000 [Wb]
+"fWb" 1/1000000000000000 [Wb]
+"pWb" 1/1000000000000 [Wb]
+"nWb" 1/1000000000 [Wb]
+"μWb" 1/1000000 [Wb]
+"mWb" 1/1000 [Wb]
+"cWb" 1/100 [Wb]
+"dWb" 1/10 [Wb]
+"daWb" 10 [Wb]
+"hWb" 100 [Wb]
+"kWb" 1000 [Wb]
+"MWb" 1000000 [Wb]
+"GWb" 1000000000 [Wb]
+"TWb" 1000000000000 [Wb]
+"PWb" 1000000000000000 [Wb]
+"EWb" 1000000000000000000 [Wb]
+"ZWb" 1000000000000000000000 [Wb]
+"YWb" 1000000000000000000000000 [Wb]
+"T" 1 [T]
+"yT" 1/1000000000000000000000000 [T]
+"zT" 1/1000000000000000000000 [T]
+"aT" 1/1000000000000000000 [T]
+"fT" 1/1000000000000000 [T]
+"pT" 1/1000000000000 [T]
+"nT" 1/1000000000 [T]
+"μT" 1/1000000 [T]
+"mT" 1/1000 [T]
+"cT" 1/100 [T]
+"dT" 1/10 [T]
+"daT" 10 [T]
+"hT" 100 [T]
+"kT" 1000 [T]
+"MT" 1000000 [T]
+"GT" 1000000000 [T]
+"TT" 1000000000000 [T]
+"PT" 1000000000000000 [T]
+"ET" 1000000000000000000 [T]
+"ZT" 1000000000000000000000 [T]
+"YT" 1000000000000000000000000 [T]
+"H" 1 [H]
+"yH" 1/1000000000000000000000000 [H]
+"zH" 1/1000000000000000000000 [H]
+"aH" 1/1000000000000000000 [H]
+"fH" 1/1000000000000000 [H]
+"pH" 1/1000000000000 [H]
+"nH" 1/1000000000 [H]
+"μH" 1/1000000 [H]
+"mH" 1/1000 [H]
+"cH" 1/100 [H]
+"dH" 1/10 [H]
+"daH" 10 [H]
+"hH" 100 [H]
+"kH" 1000 [H]
+"MH" 1000000 [H]
+"GH" 1000000000 [H]
+"TH" 1000000000000 [H]
+"PH" 1000000000000000 [H]
+"EH" 1000000000000000000 [H]
+"ZH" 1000000000000000000000 [H]
+"YH" 1000000000000000000000000 [H]
+"°C" 1 [K]
+"y°C" 1/1000000000000000000000000 [K]
+"z°C" 1/1000000000000000000000 [K]
+"a°C" 1/1000000000000000000 [K]
+"f°C" 1/1000000000000000 [K]
+"p°C" 1/1000000000000 [K]
+"n°C" 1/1000000000 [K]
+"μ°C" 1/1000000 [K]
+"m°C" 1/1000 [K]
+"c°C" 1/100 [K]
+"d°C" 1/10 [K]
+"da°C" 10 [K]
+"h°C" 100 [K]
+"k°C" 1000 [K]
+"M°C" 1000000 [K]
+"G°C" 1000000000 [K]
+"T°C" 1000000000000 [K]
+"P°C" 1000000000000000 [K]
+"E°C" 1000000000000000000 [K]
+"Z°C" 1000000000000000000000 [K]
+"Y°C" 1000000000000000000000000 [K]
+"lm" 1 [lm]
+"ylm" 1/1000000000000000000000000 [lm]
+"zlm" 1/1000000000000000000000 [lm]
+"alm" 1/1000000000000000000 [lm]
+"flm" 1/1000000000000000 [lm]
+"plm" 1/1000000000000 [lm]
+"nlm" 1/1000000000 [lm]
+"μlm" 1/1000000 [lm]
+"mlm" 1/1000 [lm]
+"clm" 1/100 [lm]
+"dlm" 1/10 [lm]
+"dalm" 10 [lm]
+"hlm" 100 [lm]
+"klm" 1000 [lm]
+"Mlm" 1000000 [lm]
+"Glm" 1000000000 [lm]
+"Tlm" 1000000000000 [lm]
+"Plm" 1000000000000000 [lm]
+"Elm" 1000000000000000000 [lm]
+"Zlm" 1000000000000000000000 [lm]
+"Ylm" 1000000000000000000000000 [lm]
+"lx" 1 [lx]
+"ylx" 1/1000000000000000000000000 [lx]
+"zlx" 1/1000000000000000000000 [lx]
+"alx" 1/1000000000000000000 [lx]
+"flx" 1/1000000000000000 [lx]
+"plx" 1/1000000000000 [lx]
+"nlx" 1/1000000000 [lx]
+"μlx" 1/1000000 [lx]
+"mlx" 1/1000 [lx]
+"clx" 1/100 [lx]
+"dlx" 1/10 [lx]
+"dalx" 10 [lx]
+"hlx" 100 [lx]
+"klx" 1000 [lx]
+"Mlx" 1000000 [lx]
+"Glx" 1000000000 [lx]
+"Tlx" 1000000000000 [lx]
+"Plx" 1000000000000000 [lx]
+"Elx" 1000000000000000000 [lx]
+"Zlx" 1000000000000000000000 [lx]
+"Ylx" 1000000000000000000000000 [lx]
+"Bq" 1 [Hz]
+"yBq" 1/1000000000000000000000000 [Hz]
+"zBq" 1/1000000000000000000000 [Hz]
+"aBq" 1/1000000000000000000 [Hz]
+"fBq" 1/1000000000000000 [Hz]
+"pBq" 1/1000000000000 [Hz]
+"nBq" 1/1000000000 [Hz]
+"μBq" 1/1000000 [Hz]
+"mBq" 1/1000 [Hz]
+"cBq" 1/100 [Hz]
+"dBq" 1/10 [Hz]
+"daBq" 10 [Hz]
+"hBq" 100 [Hz]
+"kBq" 1000 [Hz]
+"MBq" 1000000 [Hz]
+"GBq" 1000000000 [Hz]
+"TBq" 1000000000000 [Hz]
+"PBq" 1000000000000000 [Hz]
+"EBq" 1000000000000000000 [Hz]
+"ZBq" 1000000000000000000000 [Hz]
+"YBq" 1000000000000000000000000 [Hz]
+"Gy" 1 [Gy]
+"yGy" 1/1000000000000000000000000 [Gy]
+"zGy" 1/1000000000000000000000 [Gy]
+"aGy" 1/1000000000000000000 [Gy]
+"fGy" 1/1000000000000000 [Gy]
+"pGy" 1/1000000000000 [Gy]
+"nGy" 1/1000000000 [Gy]
+"μGy" 1/1000000 [Gy]
+"mGy" 1/1000 [Gy]
+"cGy" 1/100 [Gy]
+"dGy" 1/10 [Gy]
+"daGy" 10 [Gy]
+"hGy" 100 [Gy]
+"kGy" 1000 [Gy]
+"MGy" 1000000 [Gy]
+"GGy" 1000000000 [Gy]
+"TGy" 1000000000000 [Gy]
+"PGy" 1000000000000000 [Gy]
+"EGy" 1000000000000000000 [Gy]
+"ZGy" 1000000000000000000000 [Gy]
+"YGy" 1000000000000000000000000 [Gy]
+"Sv" 1 [Gy]
+"ySv" 1/1000000000000000000000000 [Gy]
+"zSv" 1/1000000000000000000000 [Gy]
+"aSv" 1/1000000000000000000 [Gy]
+"fSv" 1/1000000000000000 [Gy]
+"pSv" 1/1000000000000 [Gy]
+"nSv" 1/1000000000 [Gy]
+"μSv" 1/1000000 [Gy]
+"mSv" 1/1000 [Gy]
+"cSv" 1/100 [Gy]
+"dSv" 1/10 [Gy]
+"daSv" 10 [Gy]
+"hSv" 100 [Gy]
+"kSv" 1000 [Gy]
+"MSv" 1000000 [Gy]
+"GSv" 1000000000 [Gy]
+"TSv" 1000000000000 [Gy]
+"PSv" 1000000000000000 [Gy]
+"ESv" 1000000000000000000 [Gy]
+"ZSv" 1000000000000000000000 [Gy]
+"YSv" 1000000000000000000000000 [Gy]
+"kat" 1 [kat]
+"ykat" 1/1000000000000000000000000 [kat]
+"zkat" 1/1000000000000000000000 [kat]
+"akat" 1/1000000000000000000 [kat]
+"fkat" 1/1000000000000000 [kat]
+"pkat" 1/1000000000000 [kat]
+"nkat" 1/1000000000 [kat]
+"μkat" 1/1000000 [kat]
+"mkat" 1/1000 [kat]
+"ckat" 1/100 [kat]
+"dkat" 1/10 [kat]
+"dakat" 10 [kat]
+"hkat" 100 [kat]
+"kkat" 1000 [kat]
+"Mkat" 1000000 [kat]
+"Gkat" 1000000000 [kat]
+"Tkat" 1000000000000 [kat]
+"Pkat" 1000000000000000 [kat]
+"Ekat" 1000000000000000000 [kat]
+"Zkat" 1000000000000000000000 [kat]
+"Ykat" 1000000000000000000000000 [kat]
+"ul" 1 [ul]
+"yul" 1/1000000000000000000000000 [ul]
+"zul" 1/1000000000000000000000 [ul]
+"aul" 1/1000000000000000000 [ul]
+"ful" 1/1000000000000000 [ul]
+"pul" 1/1000000000000 [ul]
+"nul" 1/1000000000 [ul]
+"μul" 1/1000000 [ul]
+"mul" 1/1000 [ul]
+"cul" 1/100 [ul]
+"dul" 1/10 [ul]
+"daul" 10 [ul]
+"hul" 100 [ul]
+"kul" 1000 [ul]
+"Mul" 1000000 [ul]
+"Gul" 1000000000 [ul]
+"Tul" 1000000000000 [ul]
+"Pul" 1000000000000000 [ul]
+"Eul" 1000000000000000000 [ul]
+"Zul" 1000000000000000000000 [ul]
+"Yul" 1000000000000000000000000 [ul]
+"m" 1 [m]
+"ym" 1/1000000000000000000000000 [m]
+"zm" 1/1000000000000000000000 [m]
+"am" 1/1000000000000000000 [m]
+"fm" 1/1000000000000000 [m]
+"pm" 1/1000000000000 [m]
+"nm" 1/1000000000 [m]
+"μm" 1/1000000 [m]
+"mm" 1/1000 [m]
+"cm" 1/100 [m]
+"dm" 1/10 [m]
+"dam" 10 [m]
+"hm" 100 [m]
+"km" 1000 [m]
+"Mm" 1000000 [m]
+"Gm" 1000000000 [m]
+"Tm" 1000000000000 [m]
+"Pm" 1000000000000000 [m]
+"Em" 1000000000000000000 [m]
+"Zm" 1000000000000000000000 [m]
+"Ym" 1000000000000000000000000 [m]
+"g" 1/1000 [kg]
+"yg" 1/1000000000000000000000000000 [kg]
+"zg" 1/1000000000000000000000000 [kg]
+"ag" 1/1000000000000000000000 [kg]
+"fg" 1/1000000000000000000 [kg]
+"pg" 1/1000000000000000 [kg]
+"ng" 1/1000000000000 [kg]
+"μg" 1/1000000000 [kg]
+"mg" 1/1000000 [kg]
+"cg" 1/100000 [kg]
+"dg" 1/10000 [kg]
+"dag" 1/100 [kg]
+"hg" 1/10 [kg]
+"kg" 1 [kg]
+"Mg" 1000 [kg]
+"Gg" 1000000 [kg]
+"Tg" 1000000000 [kg]
+"Pg" 1000000000000 [kg]
+"Eg" 1000000000000000 [kg]
+"Zg" 1000000000000000000 [kg]
+"Yg" 1000000000000000000000 [kg]
+"s" 1 [s]
+"ys" 1/1000000000000000000000000 [s]
+"zs" 1/1000000000000000000000 [s]
+"as" 1/1000000000000000000 [s]
+"fs" 1/1000000000000000 [s]
+"ps" 1/1000000000000 [s]
+"ns" 1/1000000000 [s]
+"μs" 1/1000000 [s]
+"ms" 1/1000 [s]
+"cs" 1/100 [s]
+"ds" 1/10 [s]
+"das" 10 [s]
+"hs" 100 [s]
+"ks" 1000 [s]
+"Ms" 1000000 [s]
+"Gs" 1000000000 [s]
+"Ts" 1000000000000 [s]
+"Ps" 1000000000000000 [s]
+"Es" 1000000000000000000 [s]
+"Zs" 1000000000000000000000 [s]
+"Ys" 1000000000000000000000000 [s]
+"A" 1 [A]
+"yA" 1/1000000000000000000000000 [A]
+"zA" 1/1000000000000000000000 [A]
+"aA" 1/1000000000000000000 [A]
+"fA" 1/1000000000000000 [A]
+"pA" 1/1000000000000 [A]
+"nA" 1/1000000000 [A]
+"μA" 1/1000000 [A]
+"mA" 1/1000 [A]
+"cA" 1/100 [A]
+"dA" 1/10 [A]
+"daA" 10 [A]
+"hA" 100 [A]
+"kA" 1000 [A]
+"MA" 1000000 [A]
+"GA" 1000000000 [A]
+"TA" 1000000000000 [A]
+"PA" 1000000000000000 [A]
+"EA" 1000000000000000000 [A]
+"ZA" 1000000000000000000000 [A]
+"YA" 1000000000000000000000000 [A]
+"K" 1 [K]
+"yK" 1/1000000000000000000000000 [K]
+"zK" 1/1000000000000000000000 [K]
+"aK" 1/1000000000000000000 [K]
+"fK" 1/1000000000000000 [K]
+"pK" 1/1000000000000 [K]
+"nK" 1/1000000000 [K]
+"μK" 1/1000000 [K]
+"mK" 1/1000 [K]
+"cK" 1/100 [K]
+"dK" 1/10 [K]
+"daK" 10 [K]
+"hK" 100 [K]
+"kK" 1000 [K]
+"MK" 1000000 [K]
+"GK" 1000000000 [K]
+"TK" 1000000000000 [K]
+"PK" 1000000000000000 [K]
+"EK" 1000000000000000000 [K]
+"ZK" 1000000000000000000000 [K]
+"YK" 1000000000000000000000000 [K]
+"mol" 1 [mol]
+"ymol" 1/1000000000000000000000000 [mol]
+"zmol" 1/1000000000000000000000 [mol]
+"amol" 1/1000000000000000000 [mol]
+"fmol" 1/1000000000000000 [mol]
+"pmol" 1/1000000000000 [mol]
+"nmol" 1/1000000000 [mol]
+"μmol" 1/1000000 [mol]
+"mmol" 1/1000 [mol]
+"cmol" 1/100 [mol]
+"dmol" 1/10 [mol]
+"damol" 10 [mol]
+"hmol" 100 [mol]
+"kmol" 1000 [mol]
+"Mmol" 1000000 [mol]
+"Gmol" 1000000000 [mol]
+"Tmol" 1000000000000 [mol]
+"Pmol" 1000000000000000 [mol]
+"Emol" 1000000000000000000 [mol]
+"Zmol" 1000000000000000000000 [mol]
+"Ymol" 1000000000000000000000000 [mol]
+"cd" 1 [cd]
+"ycd" 1/1000000000000000000000000 [cd]
+"zcd" 1/1000000000000000000000 [cd]
+"acd" 1/1000000000000000000 [cd]
+"fcd" 1/1000000000000000 [cd]
+"pcd" 1/1000000000000 [cd]
+"ncd" 1/1000000000 [cd]
+"μcd" 1/1000000 [cd]
+"mcd" 1/1000 [cd]
+"ccd" 1/100 [cd]
+"dcd" 1/10 [cd]
+"dacd" 10 [cd]
+"hcd" 100 [cd]
+"kcd" 1000 [cd]
+"Mcd" 1000000 [cd]
+"Gcd" 1000000000 [cd]
+"Tcd" 1000000000000 [cd]
+"Pcd" 1000000000000000 [cd]
+"Ecd" 1000000000000000000 [cd]
+"Zcd" 1000000000000000000000 [cd]
+"Ycd" 1000000000000000000000000 [cd]
+"nmi" 1852 [m]
+"кар" 1/5000 [kg]
+"tex" 1/1000000 [kg/m]
+"kn" 0.5144445 [m/s]
+"Gal" 1/100 [m/s^2]
+"r/s" 6.283185307179586d0 [rad/s]
+"r/min" 0.10471975511965977d0 [rad/s]
+"bar" 100000 [Pa]
+"t" 1000 [kg]
+"dat" 10000 [kg]
+"ht" 100000 [kg]
+"kt" 1000000 [kg]
+"Mt" 1000000000 [kg]
+"Gt" 1000000000000 [kg]
+"Tt" 1000000000000000 [kg]
+"Pt" 1000000000000000000 [kg]
+"Et" 1000000000000000000000 [kg]
+"Zt" 1000000000000000000000000 [kg]
+"Yt" 1000000000000000000000000000 [kg]
+"u" 1.66054021d-27 [kg]
+"yu" 1.6605402100000002d-51 [kg]
+"zu" 1.66054021d-48 [kg]
+"au" 1.6605402100000003d-45 [kg]
+"fu" 1.6605402100000004d-42 [kg]
+"pu" 1.6605402100000002d-39 [kg]
+"nu" 1.6605402100000003d-36 [kg]
+"μu" 1.66054021d-33 [kg]
+"mu" 1.6605402100000003d-30 [kg]
+"cu" 1.6605402100000002d-29 [kg]
+"du" 1.6605402100000003d-28 [kg]
+"dau" 1.6605402100000002d-26 [kg]
+"hu" 1.6605402100000002d-25 [kg]
+"ku" 1.66054021d-24 [kg]
+"Mu" 1.6605402100000001d-21 [kg]
+"Gu" 1.6605402100000002d-18 [kg]
+"Tu" 1.6605402100000001d-15 [kg]
+"Pu" 1.6605402100000001d-12 [kg]
+"Eu" 1.6605402100000002d-9 [kg]
+"Zu" 1.6605402100000002d-6 [kg]
+"Yu" 0.00166054021d0 [kg]
+"min" 60 [s]
+"h" 3600 [s]
+"d" 86400 [s]
+"°" 0.017453292519943295d0 [rad]
+"'" 2.908882086657216d-4 [rad]
+"\"" 4.84813681109536d-6 [rad]
+"gon" 0.015707963267948967d0 [rad]
+"l" 1/1000 [m^3]
+"ml" 1/1000000 [m^3]
+"dal" 1/100 [m^3]
+"hl" 1/10 [m^3]
+"kl" 1 [m^3]
+"ua" 1.495978706916d11 [m]
+"ly" 9.4607304725808d15 [m]
+"pc" 3.0856776d16 [m]
+"дптр" 1 [1/m]
+"ha" 10000 [m^2]
+"a" 100 [m^2]
+"eV" 1.60217733d-19 [J]
+"kW*h" 3600000 [J]
+"V*A" 1 [W]
+"var" 1 [W]
+"A*h" 3600 [C]
+"Å" 1.0d-10 [m]
+"b" 1.0d-28 [m^2]
+"q" 100 [kg]
+"□˚" 3.0461741978670857d-4 [sr]
+"dyn" 1/100000 [N]
+"kgf" 9.8065d0 [N]
+"kp" 9806.5d0 [N]
+"gf" 0.0098065d0 [N]
+"ygf" 9.806499999999999d-27 [N]
+"zgf" 9.806499999999998d-24 [N]
+"agf" 9.8065d-21 [N]
+"fgf" 9.8065d-18 [N]
+"pgf" 9.806499999999999d-15 [N]
+"ngf" 9.8065d-12 [N]
+"μgf" 9.806499999999999d-9 [N]
+"mgf" 9.8065d-6 [N]
+"cgf" 9.806499999999999d-5 [N]
+"dgf" 9.8065d-4 [N]
+"dagf" 0.09806499999999999d0 [N]
+"hgf" 0.9806499999999999d0 [N]
+"p" 9.8065d0 [N]
+"yp" 9.806499999999998d-24 [N]
+"zp" 9.806499999999999d-21 [N]
+"ap" 9.806500000000001d-18 [N]
+"fp" 9.8065d-15 [N]
+"pp" 9.8065d-12 [N]
+"np" 9.8065d-9 [N]
+"μp" 9.8065d-6 [N]
+"mp" 0.0098065d0 [N]
+"cp" 0.098065d0 [N]
+"dp" 0.98065d0 [N]
+"dap" 98.065d0 [N]
+"hp" 735.4875d0 [W]
+"Mp" 9806500.0d0 [N]
+"Gp" 9.8065d9 [N]
+"Tp" 9.8065d12 [N]
+"Pp" 9.8065d15 [N]
+"Ep" 9.8065d18 [N]
+"Zp" 9.8065d21 [N]
+"Yp" 9.8065d24 [N]
+"tf" 9806.5d0 [N]
+"datf" 98065.0d0 [N]
+"htf" 980650.0d0 [N]
+"ktf" 9806500.0d0 [N]
+"Mtf" 9.8065d9 [N]
+"Gtf" 9.8065d12 [N]
+"Ttf" 9.8065d15 [N]
+"Ptf" 9.8065d18 [N]
+"Etf" 9.8065d21 [N]
+"Ztf" 9.8065d24 [N]
+"Ytf" 9.8065d27 [N]
+"kgf/cm^2" 98065.0d0 [Pa]
+"kp/cm^2" 98065.0d0 [Pa]
+"m_H2O" 9806.65 [Pa]
+"mm_H2O" 9.806651 [Pa]
+"cm_H2O" 98.066505 [Pa]
+"dm_H2O" 980.66504 [Pa]
+"dam_H2O" 98066.5 [Pa]
+"hm_H2O" 980665.06 [Pa]
+"km_H2O" 9806650.0 [Pa]
+"Mm_H2O" 9.80665e9 [Pa]
+"Gm_H2O" 9.806651e12 [Pa]
+"Tm_H2O" 9.80665e15 [Pa]
+"Pm_H2O" 9.80665e18 [Pa]
+"Em_H2O" 9.80665e21 [Pa]
+"Zm_H2O" 9.80665e24 [Pa]
+"Ym_H2O" 9.8066504e27 [Pa]
+"m_Hg" 133322.0d0 [Pa]
+"mm_Hg" 133.322d0 [Pa]
+"cm_Hg" 1333.22d0 [Pa]
+"dm_Hg" 13332.2d0 [Pa]
+"dam_Hg" 1333220.0d0 [Pa]
+"hm_Hg" 1.33322d7 [Pa]
+"km_Hg" 1.33322d8 [Pa]
+"Mm_Hg" 1.33322d11 [Pa]
+"Gm_Hg" 1.33322d14 [Pa]
+"Tm_Hg" 1.33322d17 [Pa]
+"Pm_Hg" 1.33322d20 [Pa]
+"Em_Hg" 1.33322d23 [Pa]
+"Zm_Hg" 1.33322d26 [Pa]
+"Ym_Hg" 1.33322d29 [Pa]
+"Torr" 133.322d0 [Pa]
+"yTorr" 1.3332199999999998d-22 [Pa]
+"zTorr" 1.33322d-19 [Pa]
+"aTorr" 1.3332200000000002d-16 [Pa]
+"fTorr" 1.3332200000000003d-13 [Pa]
+"pTorr" 1.33322d-10 [Pa]
+"nTorr" 1.33322d-7 [Pa]
+"μTorr" 1.33322d-4 [Pa]
+"mTorr" 0.133322d0 [Pa]
+"cTorr" 1.33322d0 [Pa]
+"dTorr" 13.3322d0 [Pa]
+"daTorr" 1333.22d0 [Pa]
+"hTorr" 13332.2d0 [Pa]
+"kTorr" 133322.0d0 [Pa]
+"MTorr" 1.33322d8 [Pa]
+"GTorr" 1.33322d11 [Pa]
+"TTorr" 1.33322d14 [Pa]
+"PTorr" 1.33322d17 [Pa]
+"ETorr" 1.33322d20 [Pa]
+"ZTorr" 1.33322d23 [Pa]
+"YTorr" 1.33322d26 [Pa]
+"kgf/mm^2" 9806500.0d0 [Pa]
+"kp/mm^2" 9806500.0d0 [Pa]
+"erg" 1/10000000 [J]
+"yerg" 1/10000000000000000000000000000000 [J]
+"zerg" 1/10000000000000000000000000000 [J]
+"aerg" 1/10000000000000000000000000 [J]
+"ferg" 1/10000000000000000000000 [J]
+"perg" 1/10000000000000000000 [J]
+"nerg" 1/10000000000000000 [J]
+"μerg" 1/10000000000000 [J]
+"merg" 1/10000000000 [J]
+"cerg" 1/1000000000 [J]
+"derg" 1/100000000 [J]
+"daerg" 1/1000000 [J]
+"herg" 1/100000 [J]
+"kerg" 1/10000 [J]
+"Merg" 1/10 [J]
+"Gerg" 100 [J]
+"Terg" 100000 [J]
+"Perg" 100000000 [J]
+"Eerg" 100000000000 [J]
+"Zerg" 100000000000000 [J]
+"Yerg" 100000000000000000 [J]
+"P" 1/10 [Pa*s]
+"yP" 1/10000000000000000000000000 [Pa*s]
+"zP" 1/10000000000000000000000 [Pa*s]
+"aP" 1/10000000000000000000 [Pa*s]
+"fP" 1/10000000000000000 [Pa*s]
+"pP" 1/10000000000000 [Pa*s]
+"nP" 1/10000000000 [Pa*s]
+"μP" 1/10000000 [Pa*s]
+"mP" 1/10000 [Pa*s]
+"cP" 1/1000 [Pa*s]
+"dP" 1/100 [Pa*s]
+"daP" 1 [Pa*s]
+"hP" 10 [Pa*s]
+"kP" 100 [Pa*s]
+"MP" 100000 [Pa*s]
+"GP" 100000000 [Pa*s]
+"TP" 100000000000 [Pa*s]
+"PP" 100000000000000 [Pa*s]
+"EP" 100000000000000000 [Pa*s]
+"ZP" 100000000000000000000 [Pa*s]
+"YP" 100000000000000000000000 [Pa*s]
+"St" 1/10000 [m^2/s]
+"YSt" 100000000000000000000 [m^2/s]
+"cal" 4.1868 [J]
+"ycal" 4.1868e-24 [J]
+"zcal" 4.1867997e-21 [J]
+"acal" 4.1868003e-18 [J]
+"fcal" 4.1868e-15 [J]
+"pcal" 4.1867998e-12 [J]
+"ncal" 4.1868e-9 [J]
+"μcal" 4.1868e-6 [J]
+"mcal" 0.0041868 [J]
+"ccal" 0.041867997 [J]
+"dcal" 0.41868 [J]
+"dacal" 41.868 [J]
+"hcal" 418.68 [J]
+"kcal" 4186.8 [J]
+"Mcal" 4186800.0 [J]
+"Gcal" 4.1868e9 [J]
+"Tcal" 4.1867999e12 [J]
+"Pcal" 4.1868e15 [J]
+"Ecal" 4.1867998e18 [J]
+"Zcal" 4.1868e21 [J]
+"Ycal" 4.1868001e24 [J]
+"cal_{th}" 4.184 [J]
+"ycal_{th}" 4.184e-24 [J]
+"zcal_{th}" 4.184e-21 [J]
+"acal_{th}" 4.1840003e-18 [J]
+"fcal_{th}" 4.184e-15 [J]
+"pcal_{th}" 4.184e-12 [J]
+"ncal_{th}" 4.184e-9 [J]
+"μcal_{th}" 4.184e-6 [J]
+"mcal_{th}" 0.004184 [J]
+"ccal_{th}" 0.04184 [J]
+"dcal_{th}" 0.41840002 [J]
+"dacal_{th}" 41.84 [J]
+"hcal_{th}" 418.4 [J]
+"kcal_{th}" 4184.0 [J]
+"Mcal_{th}" 4184000.0 [J]
+"Gcal_{th}" 4.184e9 [J]
+"Tcal_{th}" 4.184e12 [J]
+"Pcal_{th}" 4.1839998e15 [J]
+"Ecal_{th}" 4.184e18 [J]
+"Zcal_{th}" 4.184e21 [J]
+"Ycal_{th}" 4.184e24 [J]
+"cal_{15}" 4.1855 [J]
+"ycal_{15}" 4.1855003e-24 [J]
+"zcal_{15}" 4.1855e-21 [J]
+"acal_{15}" 4.1855004e-18 [J]
+"fcal_{15}" 4.1855002e-15 [J]
+"pcal_{15}" 4.1855e-12 [J]
+"ncal_{15}" 4.1855e-9 [J]
+"μcal_{15}" 4.1855e-6 [J]
+"mcal_{15}" 0.0041855006 [J]
+"ccal_{15}" 0.041855 [J]
+"dcal_{15}" 0.41855 [J]
+"dacal_{15}" 41.855003 [J]
+"hcal_{15}" 418.55002 [J]
+"kcal_{15}" 4185.5 [J]
+"Mcal_{15}" 4185500.3 [J]
+"Gcal_{15}" 4.1855002e9 [J]
+"Tcal_{15}" 4.1855002e12 [J]
+"Pcal_{15}" 4.1855e15 [J]
+"Ecal_{15}" 4.1855002e18 [J]
+"Zcal_{15}" 4.1855003e21 [J]
+"Ycal_{15}" 4.1855002e24 [J]
+"μ" 1/1000000 [m]
+"r" 6.283185307179586d0 [rad]
+"daa" 1000 [m^2]
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *nm-vl-ru-&gt;en* )
+</pre>
+</div>
+
+<pre class="example" id="org05bed46">
+"бр" "ul"
+"м" "m"
+"г" "g"
+"с" "s"
+"А" "A"
+"К" "K"
+"моль" "mol"
+"кд" "cd"
+"рад" "rad"
+"ср" "sr"
+"Гц" "Hz"
+"Н" "N"
+"Па" "Pa"
+"Дж" "J"
+"Вт" "W"
+"Кл" "C"
+"В" "V"
+"Ф" "F"
+"Ом" "Ω"
+"См" "S"
+"Вб" "Wb"
+"Тл" "T"
+"Гн" "H"
+"°С" "°C"
+"лм" "lm"
+"лк" "lx"
+"Бк" "Bq"
+"Гр" "Gy"
+"Зв" "Sv"
+"кат" "kat"
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *nm-vl-en-&gt;ru*)
+</pre>
+</div>
+
+<pre class="example" id="org82558a4">
+"ul" "бр"
+"m" "м"
+"g" "г"
+"s" "с"
+"A" "А"
+"K" "К"
+"mol" "моль"
+"cd" "кд"
+"rad" "рад"
+"sr" "ср"
+"Hz" "Гц"
+"N" "Н"
+"Pa" "Па"
+"J" "Дж"
+"W" "Вт"
+"C" "Кл"
+"V" "В"
+"F" "Ф"
+"Ω" "Ом"
+"S" "См"
+"Wb" "Вб"
+"T" "Тл"
+"H" "Гн"
+"°C" "°С"
+"lm" "лм"
+"lx" "лк"
+"Bq" "Бк"
+"Gy" "Гр"
+"Sv" "Зв"
+"kat" "кат"
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *dim-&gt;unit-symbol-en*)
+</pre>
+</div>
+
+<pre class="example" id="org20d945b">
+(0 1 -3 0 0 0 0 0 -1) "W/(sr*m^2)"
+(2 1 -3 0 0 0 0 0 -1) "W/sr"
+(0 0 -2 0 0 0 0 1 0) "rad/s^2"
+(0 0 -1 0 0 0 0 1 0) "rad/s"
+(2 0 -3 0 0 0 0 0 0) "Gy/s"
+(0 -1 1 1 0 0 0 0 0) "C/kg"
+(2 1 -2 0 -1 0 -1 0 0) "J/(mol*K)"
+(2 1 -2 0 0 0 -1 0 0) "J/mol"
+(1 1 -3 0 -1 0 0 0 0) "W/(m*K)"
+(0 1 -3 0 0 0 0 0 0) "W/m^2"
+(2 0 -2 0 -1 0 0 0 0) "J/(kg*K)"
+(2 1 -2 0 -1 0 0 0 0) "J/K"
+(2 0 -2 0 0 0 0 0 0) "Gy"
+(1 1 -2 -2 0 0 0 0 0) "H/m"
+(-3 -1 4 2 0 0 0 0 0) "F/m"
+(1 1 -3 -1 0 0 0 0 0) "V/m"
+(-2 0 1 1 0 0 0 0 0) "C/m^2"
+(-3 0 1 1 0 0 0 0 0) "C/m^3"
+(-1 1 -1 0 0 0 0 0 0) "Pa*s"
+(0 1 -2 0 0 0 0 0 0) "N/m"
+(2 1 -2 0 0 0 0 0 0) "J"
+(0 0 -1 0 0 0 1 0 0) "kat"
+(0 0 -1 0 0 0 0 0 0) "Hz"
+(-2 0 0 0 0 1 0 0 1) "lx"
+(0 0 0 0 0 1 0 0 1) "lm"
+(0 0 0 0 1 0 0 0 0) "K"
+(2 1 -2 -2 0 0 0 0 0) "H"
+(0 1 -2 -1 0 0 0 0 0) "T"
+(2 1 -2 -1 0 0 0 0 0) "Wb"
+(-2 -1 3 2 0 0 0 0 0) "S"
+(2 1 -3 -2 0 0 0 0 0) "Ω"
+(-2 -1 4 2 0 0 0 0 0) "F"
+(2 1 -3 -1 0 0 0 0 0) "V"
+(0 0 1 1 0 0 0 0 0) "C"
+(2 1 -3 0 0 0 0 0 0) "W"
+(-1 1 -2 0 0 0 0 0 0) "Pa"
+(1 1 -2 0 0 0 0 0 0) "N"
+(0 0 0 0 0 0 0 0 1) "sr"
+(0 0 0 0 0 0 0 1 0) "rad"
+(-2 0 0 0 0 1 0 0 0) "cd/m^2"
+(-3 0 0 0 0 0 1 0 0) "mol/m^3"
+(-1 0 0 1 0 0 0 0 0) "A/m"
+(-2 0 0 1 0 0 0 0 0) "A/m^2"
+(3 -1 0 0 0 0 0 0 0) "m^3/kg"
+(-3 1 0 0 0 0 0 0 0) "kg/m^3"
+(-1 0 0 0 0 0 0 0 0) "1/m"
+(1 0 -2 0 0 0 0 0 0) "m/s^2"
+(1 0 -1 0 0 0 0 0 0) "m/s"
+(3 0 0 0 0 0 0 0 0) "m^3"
+(2 0 0 0 0 0 0 0 0) "m^2"
+(0 0 0 0 0 1 0 0 0) "cd"
+(0 0 0 0 0 0 1 0 0) "mol"
+(0 0 0 1 0 0 0 0 0) "A"
+(0 0 1 0 0 0 0 0 0) "s"
+(0 1 0 0 0 0 0 0 0) "kg"
+(1 0 0 0 0 0 0 0 0) "m"
+(0 0 0 0 0 0 0 0 0) "ul"
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+  (print-hash-table *unit-symbol-en-&gt;dim*)
+</pre>
+</div>
+
+<pre class="example" id="orgdc6d6c5">
+"W/(sr*m^2)" (0 1 -3 0 0 0 0 0 -1)
+"W/sr" (2 1 -3 0 0 0 0 0 -1)
+"rad/s^2" (0 0 -2 0 0 0 0 1 0)
+"rad/s" (0 0 -1 0 0 0 0 1 0)
+"Gy/s" (2 0 -3 0 0 0 0 0 0)
+"C/kg" (0 -1 1 1 0 0 0 0 0)
+"J/(mol*K)" (2 1 -2 0 -1 0 -1 0 0)
+"J/mol" (2 1 -2 0 0 0 -1 0 0)
+"W/(m*K)" (1 1 -3 0 -1 0 0 0 0)
+"W/m^2" (0 1 -3 0 0 0 0 0 0)
+"J/(kg*K)" (2 0 -2 0 -1 0 0 0 0)
+"J/K" (2 1 -2 0 -1 0 0 0 0)
+"J/kg" (2 0 -2 0 0 0 0 0 0)
+"H/m" (1 1 -2 -2 0 0 0 0 0)
+"F/m" (-3 -1 4 2 0 0 0 0 0)
+"V/m" (1 1 -3 -1 0 0 0 0 0)
+"C/m^2" (-2 0 1 1 0 0 0 0 0)
+"C/m^3" (-3 0 1 1 0 0 0 0 0)
+"Pa*s" (-1 1 -1 0 0 0 0 0 0)
+"N/m" (0 1 -2 0 0 0 0 0 0)
+"N*m" (2 1 -2 0 0 0 0 0 0)
+"kat" (0 0 -1 0 0 0 1 0 0)
+"Sv" (2 0 -2 0 0 0 0 0 0)
+"Gy" (2 0 -2 0 0 0 0 0 0)
+"Bq" (0 0 -1 0 0 0 0 0 0)
+"lx" (-2 0 0 0 0 1 0 0 1)
+"lm" (0 0 0 0 0 1 0 0 1)
+"°C" (0 0 0 0 1 0 0 0 0)
+"H" (2 1 -2 -2 0 0 0 0 0)
+"T" (0 1 -2 -1 0 0 0 0 0)
+"Wb" (2 1 -2 -1 0 0 0 0 0)
+"S" (-2 -1 3 2 0 0 0 0 0)
+"Ω" (2 1 -3 -2 0 0 0 0 0)
+"F" (-2 -1 4 2 0 0 0 0 0)
+"V" (2 1 -3 -1 0 0 0 0 0)
+"C" (0 0 1 1 0 0 0 0 0)
+"W" (2 1 -3 0 0 0 0 0 0)
+"J" (2 1 -2 0 0 0 0 0 0)
+"Pa" (-1 1 -2 0 0 0 0 0 0)
+"N" (1 1 -2 0 0 0 0 0 0)
+"Hz" (0 0 -1 0 0 0 0 0 0)
+"sr" (0 0 0 0 0 0 0 0 1)
+"rad" (0 0 0 0 0 0 0 1 0)
+"cd/m^2" (-2 0 0 0 0 1 0 0 0)
+"mol/m^3" (-3 0 0 0 0 0 1 0 0)
+"A/m" (-1 0 0 1 0 0 0 0 0)
+"A/m^2" (-2 0 0 1 0 0 0 0 0)
+"m^3/kg" (3 -1 0 0 0 0 0 0 0)
+"kg/m^3" (-3 1 0 0 0 0 0 0 0)
+"1/m" (-1 0 0 0 0 0 0 0 0)
+"m/s^2" (1 0 -2 0 0 0 0 0 0)
+"m/s" (1 0 -1 0 0 0 0 0 0)
+"m^3" (3 0 0 0 0 0 0 0 0)
+"m^2" (2 0 0 0 0 0 0 0 0)
+"cd" (0 0 0 0 0 1 0 0 0)
+"mol" (0 0 0 0 0 0 1 0 0)
+"K" (0 0 0 0 1 0 0 0 0)
+"A" (0 0 0 1 0 0 0 0 0)
+"s" (0 0 1 0 0 0 0 0 0)
+"kg" (0 1 0 0 0 0 0 0 0)
+"m" (1 0 0 0 0 0 0 0 0)
+"ul" (0 0 0 0 0 0 0 0 0)
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *dim-&gt;unit-symbol-ru*)
+</pre>
+</div>
+
+<pre class="example" id="org36db4e6">
+(0 1 -3 0 0 0 0 0 -1) "Вт/(ср*м^2)"
+(2 1 -3 0 0 0 0 0 -1) "Вт/ср"
+(0 0 -2 0 0 0 0 1 0) "рад/с^2"
+(0 0 -1 0 0 0 0 1 0) "рад/с"
+(2 0 -3 0 0 0 0 0 0) "Гр/с"
+(0 -1 1 1 0 0 0 0 0) "Кл/кг"
+(2 1 -2 0 -1 0 -1 0 0) "Дж/(моль*К)"
+(2 1 -2 0 0 0 -1 0 0) "Дж/моль"
+(1 1 -3 0 -1 0 0 0 0) "Вт/(м*К)"
+(0 1 -3 0 0 0 0 0 0) "Вт/м^2"
+(2 0 -2 0 -1 0 0 0 0) "Дж/(кг*К)"
+(2 1 -2 0 -1 0 0 0 0) "Дж/К"
+(2 0 -2 0 0 0 0 0 0) "Гр"
+(1 1 -2 -2 0 0 0 0 0) "Гн/м"
+(-3 -1 4 2 0 0 0 0 0) "Ф/м"
+(1 1 -3 -1 0 0 0 0 0) "В/м"
+(-2 0 1 1 0 0 0 0 0) "Кл/м^2"
+(-3 0 1 1 0 0 0 0 0) "Кл/м^3"
+(-1 1 -1 0 0 0 0 0 0) "Па*с"
+(0 1 -2 0 0 0 0 0 0) "Н*м"
+(2 1 -2 0 0 0 0 0 0) "Дж"
+(0 0 -1 0 0 0 1 0 0) "кат"
+(0 0 -1 0 0 0 0 0 0) "Гц"
+(-2 0 0 0 0 1 0 0 1) "лк"
+(0 0 0 0 0 1 0 0 1) "лм"
+(0 0 0 0 1 0 0 0 0) "К"
+(2 1 -2 -2 0 0 0 0 0) "Гн"
+(0 1 -2 -1 0 0 0 0 0) "Тл"
+(2 1 -2 -1 0 0 0 0 0) "Вб"
+(-2 -1 3 2 0 0 0 0 0) "См"
+(2 1 -3 -2 0 0 0 0 0) "Ом"
+(-2 -1 4 2 0 0 0 0 0) "Ф"
+(2 1 -3 -1 0 0 0 0 0) "В"
+(0 0 1 1 0 0 0 0 0) "Кл"
+(2 1 -3 0 0 0 0 0 0) "Вт"
+(-1 1 -2 0 0 0 0 0 0) "Па"
+(1 1 -2 0 0 0 0 0 0) "Н"
+(0 0 0 0 0 0 0 0 1) "ср"
+(0 0 0 0 0 0 0 1 0) "рад"
+(-2 0 0 0 0 1 0 0 0) "кд/м^2"
+(-3 0 0 0 0 0 1 0 0) "моль/м^3"
+(-1 0 0 1 0 0 0 0 0) "А/м"
+(-2 0 0 1 0 0 0 0 0) "А/м^2"
+(3 -1 0 0 0 0 0 0 0) "м^3/кг"
+(-3 1 0 0 0 0 0 0 0) "кг/м^3"
+(-1 0 0 0 0 0 0 0 0) "1/м"
+(1 0 -2 0 0 0 0 0 0) "м/с^2"
+(1 0 -1 0 0 0 0 0 0) "м/с"
+(3 0 0 0 0 0 0 0 0) "м^3"
+(2 0 0 0 0 0 0 0 0) "м^2"
+(0 0 0 0 0 1 0 0 0) "кд"
+(0 0 0 0 0 0 1 0 0) "моль"
+(0 0 0 1 0 0 0 0 0) "А"
+(0 0 1 0 0 0 0 0 0) "с"
+(0 1 0 0 0 0 0 0 0) "кг"
+(1 0 0 0 0 0 0 0 0) "м"
+(0 0 0 0 0 0 0 0 0) "бр"
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *unit-symbol-ru-&gt;dim*)
+</pre>
+</div>
+
+<pre class="example" id="orgc97ebd0">
+"Вт/(ср*м^2)" (0 1 -3 0 0 0 0 0 -1)
+"Вт/ср" (2 1 -3 0 0 0 0 0 -1)
+"рад/с^2" (0 0 -2 0 0 0 0 1 0)
+"рад/с" (0 0 -1 0 0 0 0 1 0)
+"Гр/с" (2 0 -3 0 0 0 0 0 0)
+"Кл/кг" (0 -1 1 1 0 0 0 0 0)
+"Дж/(моль*К)" (2 1 -2 0 -1 0 -1 0 0)
+"Дж/моль" (2 1 -2 0 0 0 -1 0 0)
+"Вт/(м*К)" (1 1 -3 0 -1 0 0 0 0)
+"Вт/м^2" (0 1 -3 0 0 0 0 0 0)
+"Дж/(кг*К)" (2 0 -2 0 -1 0 0 0 0)
+"Дж/К" (2 1 -2 0 -1 0 0 0 0)
+"Дж/кг" (2 0 -2 0 0 0 0 0 0)
+"Гн/м" (1 1 -2 -2 0 0 0 0 0)
+"Ф/м" (-3 -1 4 2 0 0 0 0 0)
+"В/м" (1 1 -3 -1 0 0 0 0 0)
+"Кл/м^2" (-2 0 1 1 0 0 0 0 0)
+"Кл/м^3" (-3 0 1 1 0 0 0 0 0)
+"Па*с" (-1 1 -1 0 0 0 0 0 0)
+"Н*м" (2 1 -2 0 0 0 0 0 0)
+"кат" (0 0 -1 0 0 0 1 0 0)
+"Зв" (2 0 -2 0 0 0 0 0 0)
+"Гр" (2 0 -2 0 0 0 0 0 0)
+"Бк" (0 0 -1 0 0 0 0 0 0)
+"лк" (-2 0 0 0 0 1 0 0 1)
+"лм" (0 0 0 0 0 1 0 0 1)
+"°С" (0 0 0 0 1 0 0 0 0)
+"Гн" (2 1 -2 -2 0 0 0 0 0)
+"Тл" (0 1 -2 -1 0 0 0 0 0)
+"Вб" (2 1 -2 -1 0 0 0 0 0)
+"См" (-2 -1 3 2 0 0 0 0 0)
+"Ом" (2 1 -3 -2 0 0 0 0 0)
+"Ф" (-2 -1 4 2 0 0 0 0 0)
+"В" (2 1 -3 -1 0 0 0 0 0)
+"Кл" (0 0 1 1 0 0 0 0 0)
+"Вт" (2 1 -3 0 0 0 0 0 0)
+"Дж" (2 1 -2 0 0 0 0 0 0)
+"Па" (-1 1 -2 0 0 0 0 0 0)
+"Н" (1 1 -2 0 0 0 0 0 0)
+"Гц" (0 0 -1 0 0 0 0 0 0)
+"ср" (0 0 0 0 0 0 0 0 1)
+"рад" (0 0 0 0 0 0 0 1 0)
+"кд/м^2" (-2 0 0 0 0 1 0 0 0)
+"моль/м^3" (-3 0 0 0 0 0 1 0 0)
+"А/м" (-1 0 0 1 0 0 0 0 0)
+"А/м^2" (-2 0 0 1 0 0 0 0 0)
+"м^3/кг" (3 -1 0 0 0 0 0 0 0)
+"кг/м^3" (-3 1 0 0 0 0 0 0 0)
+"1/м" (-1 0 0 0 0 0 0 0 0)
+"м/с^2" (1 0 -2 0 0 0 0 0 0)
+"м/с" (1 0 -1 0 0 0 0 0 0)
+"м^3" (3 0 0 0 0 0 0 0 0)
+"м^2" (2 0 0 0 0 0 0 0 0)
+"кд" (0 0 0 0 0 1 0 0 0)
+"моль" (0 0 0 0 0 0 1 0 0)
+"К" (0 0 0 0 1 0 0 0 0)
+"А" (0 0 0 1 0 0 0 0 0)
+"с" (0 0 1 0 0 0 0 0 0)
+"кг" (0 1 0 0 0 0 0 0 0)
+"м" (1 0 0 0 0 0 0 0 0)
+"бр" (0 0 0 0 0 0 0 0 0)
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *dim-&gt;quantity-name-en*)
+</pre>
+</div>
+
+<pre class="example" id="org25d675b">
+(0 1 -3 0 0 0 0 0 -1) "radiance"
+(2 1 -3 0 0 0 0 0 -1) "radiant intensity"
+(0 0 -2 0 0 0 0 1 0) "angular acceleration"
+(0 0 -1 0 0 0 0 1 0) "angular velocity"
+(2 0 -3 0 0 0 0 0 0) "absorbed dose rate"
+(0 -1 1 1 0 0 0 0 0) "exposure (x and γ rays)"
+(2 1 -2 0 -1 0 -1 0 0) ("molar entropy" "molar heat capacity")
+(2 1 -2 0 0 0 -1 0 0) "molar energy"
+(1 1 -3 0 -1 0 0 0 0) "thermal conductivity"
+(0 1 -3 0 0 0 0 0 0) ("heat flux density" "irradiance")
+(2 0 -2 0 -1 0 0 0 0) ("specific heat capacity" "specific entropy")
+(2 1 -2 0 -1 0 0 0 0) ("heat capacity" "entropy")
+(2 0 -2 0 0 0 0 0 0) ("absorbed dose" "specific energy (imparted)" "kerma")
+(1 1 -2 -2 0 0 0 0 0) "permeability"
+(-3 -1 4 2 0 0 0 0 0) "permittivity"
+(1 1 -3 -1 0 0 0 0 0) "electric field strength"
+(-2 0 1 1 0 0 0 0 0) "electric flux density"
+(-3 0 1 1 0 0 0 0 0) "electric charge density"
+(-1 1 -1 0 0 0 0 0 0) "dynamic viscosity"
+(0 1 -2 0 0 0 0 0 0) "surface tension"
+(2 1 -2 0 0 0 0 0 0) ("energy" "work" "quantity of heat")
+(0 0 -1 0 0 0 1 0 0) "catalytic activity"
+(0 0 -1 0 0 0 0 0 0) "frequency"
+(-2 0 0 0 0 1 0 0 1) "illuminance"
+(0 0 0 0 0 1 0 0 1) "luminous flux"
+(0 0 0 0 1 0 0 0 0) "temperature"
+(2 1 -2 -2 0 0 0 0 0) "inductance"
+(0 1 -2 -1 0 0 0 0 0) "magnetic flux density"
+(2 1 -2 -1 0 0 0 0 0) "magnetic flux"
+(-2 -1 3 2 0 0 0 0 0) "electric conductance"
+(2 1 -3 -2 0 0 0 0 0) "electric resistance"
+(-2 -1 4 2 0 0 0 0 0) "capacitance"
+(2 1 -3 -1 0 0 0 0 0) ("electric potential difference" "electromotive force")
+(0 0 1 1 0 0 0 0 0) ("electric charge" "quantity of electricity")
+(2 1 -3 0 0 0 0 0 0) ("power" "radiant flux")
+(-1 1 -2 0 0 0 0 0 0) "pressure"
+(1 1 -2 0 0 0 0 0 0) "force"
+(0 0 0 0 0 0 0 0 1) "solid angle"
+(0 0 0 0 0 0 0 1 0) "plane angle"
+(-2 0 0 0 0 1 0 0 0) "luminance"
+(-3 0 0 0 0 0 1 0 0) "molar concentration"
+(-1 0 0 1 0 0 0 0 0) "magnetic field strength"
+(-2 0 0 1 0 0 0 0 0) "current density"
+(3 -1 0 0 0 0 0 0 0) "specific volume"
+(-3 1 0 0 0 0 0 0 0) ("density" "mass density")
+(-1 0 0 0 0 0 0 0 0) "wave number"
+(1 0 -2 0 0 0 0 0 0) "acceleration"
+(1 0 -1 0 0 0 0 0 0) "velocity"
+(3 0 0 0 0 0 0 0 0) "volume"
+(2 0 0 0 0 0 0 0 0) "area"
+(0 0 0 0 0 1 0 0 0) "luminous intensity"
+(0 0 0 0 0 0 1 0 0) "amount of substance"
+(0 0 0 1 0 0 0 0 0) "electric current"
+(0 0 1 0 0 0 0 0 0) "time"
+(0 1 0 0 0 0 0 0 0) "mass"
+(1 0 0 0 0 0 0 0 0) "length"
+(0 0 0 0 0 0 0 0 0) "dimensionless"
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(<span style="color: #a020f0;">in-package</span> <span style="color: #483d8b;">:mnas-dim-value</span>)
+(print-hash-table *quantity-name-en-&gt;dim*)
+</pre>
+</div>
+
+<pre class="example" id="orga71fc1a">
+"radiance" (0 1 -3 0 0 0 0 0 -1)
+"radiant intensity" (2 1 -3 0 0 0 0 0 -1)
+"angular acceleration" (0 0 -2 0 0 0 0 1 0)
+"angular velocity" (0 0 -1 0 0 0 0 1 0)
+"absorbed dose rate" (2 0 -3 0 0 0 0 0 0)
+"exposure (x and γ rays)" (0 -1 1 1 0 0 0 0 0)
+("molar entropy" "molar heat capacity") (2 1 -2 0 -1 0 -1 0 0)
+"molar energy" (2 1 -2 0 0 0 -1 0 0)
+"thermal conductivity" (1 1 -3 0 -1 0 0 0 0)
+("heat flux density" "irradiance") (0 1 -3 0 0 0 0 0 0)
+("specific heat capacity" "specific entropy") (2 0 -2 0 -1 0 0 0 0)
+("heat capacity" "entropy") (2 1 -2 0 -1 0 0 0 0)
+"specific energy" (2 0 -2 0 0 0 0 0 0)
+"permeability" (1 1 -2 -2 0 0 0 0 0)
+"permittivity" (-3 -1 4 2 0 0 0 0 0)
+"electric field strength" (1 1 -3 -1 0 0 0 0 0)
+"electric flux density" (-2 0 1 1 0 0 0 0 0)
+"electric charge density" (-3 0 1 1 0 0 0 0 0)
+"dynamic viscosity" (-1 1 -1 0 0 0 0 0 0)
+"surface tension" (0 1 -2 0 0 0 0 0 0)
+"moment of force" (2 1 -2 0 0 0 0 0 0)
+"catalytic activity" (0 0 -1 0 0 0 1 0 0)
+("dose equivalent" "ambient dose equivalent" "directional dose equivalent"
+ "personal dose equivalent" "organ equivalent dose") (2 0 -2 0 0 0 0 0 0)
+("absorbed dose" "specific energy (imparted)" "kerma") (2 0 -2 0 0 0 0 0 0)
+"activity (referred to a radionuclide)" (0 0 -1 0 0 0 0 0 0)
+"illuminance" (-2 0 0 0 0 1 0 0 1)
+"luminous flux" (0 0 0 0 0 1 0 0 1)
+"Celsius temperature" (0 0 0 0 1 0 0 0 0)
+"inductance" (2 1 -2 -2 0 0 0 0 0)
+"magnetic flux density" (0 1 -2 -1 0 0 0 0 0)
+"magnetic flux" (2 1 -2 -1 0 0 0 0 0)
+"electric conductance" (-2 -1 3 2 0 0 0 0 0)
+"electric resistance" (2 1 -3 -2 0 0 0 0 0)
+"capacitance" (-2 -1 4 2 0 0 0 0 0)
+("electric potential difference" "electromotive force") (2 1 -3 -1 0 0 0 0 0)
+("electric charge" "quantity of electricity") (0 0 1 1 0 0 0 0 0)
+("power" "radiant flux") (2 1 -3 0 0 0 0 0 0)
+("energy" "work" "quantity of heat") (2 1 -2 0 0 0 0 0 0)
+"pressure" (-1 1 -2 0 0 0 0 0 0)
+"force" (1 1 -2 0 0 0 0 0 0)
+"frequency" (0 0 -1 0 0 0 0 0 0)
+"solid angle" (0 0 0 0 0 0 0 0 1)
+"plane angle" (0 0 0 0 0 0 0 1 0)
+"luminance" (-2 0 0 0 0 1 0 0 0)
+"molar concentration" (-3 0 0 0 0 0 1 0 0)
+"magnetic field strength" (-1 0 0 1 0 0 0 0 0)
+"current density" (-2 0 0 1 0 0 0 0 0)
+"specific volume" (3 -1 0 0 0 0 0 0 0)
+("density" "mass density") (-3 1 0 0 0 0 0 0 0)
+"wave number" (-1 0 0 0 0 0 0 0 0)
+"acceleration" (1 0 -2 0 0 0 0 0 0)
+"velocity" (1 0 -1 0 0 0 0 0 0)
+"volume" (3 0 0 0 0 0 0 0 0)
+"area" (2 0 0 0 0 0 0 0 0)
+"luminous intensity" (0 0 0 0 0 1 0 0 0)
+"amount of substance" (0 0 0 0 0 0 1 0 0)
+"temperature" (0 0 0 0 1 0 0 0 0)
+"electric current" (0 0 0 1 0 0 0 0 0)
+"time" (0 0 1 0 0 0 0 0 0)
+"mass" (0 1 0 0 0 0 0 0 0)
+"length" (1 0 0 0 0 0 0 0 0)
+"dimensionless" (0 0 0 0 0 0 0 0 0)
+</pre>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2024-09-19 Чт 09:06</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
