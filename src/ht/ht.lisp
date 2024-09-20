@@ -162,5 +162,39 @@
     (print-hash-table *nm-vl*)
     (setf *nm-vl-loaded* t)))
 
+(defun load-nm-vl-ru->en ()
+  (unless *nm-vl-ru->en-loaded*
+    (loop
+      :for nd
+        :in (list
+             *nd-table-2-si-base-units*
+             *nd-table-4-the-22-si-units-with-special-names-and-symbols*)
+      :do
+         (loop :for i :in nd :do
+           (setf
+            (gethash (<nd>-unit-symbol-ru i) *nm-vl-ru->en*)
+            (<nd>-unit-symbol-en i))))
+    (print-hash-table *nm-vl-ru->en*)
+    (setf *nm-vl-ru->en-loaded* t)))
+
+(defun load-nm-vl-en->ru ()
+  (unless *nm-vl-en->ru-loaded*
+    (loop
+      :for nd
+        :in (list
+             *nd-table-2-si-base-units*
+             *nd-table-4-the-22-si-units-with-special-names-and-symbols*)
+      :do
+         (loop :for i :in nd :do
+           (setf
+            (gethash (<nd>-unit-symbol-en i) *nm-vl-en->ru*)
+            (<nd>-unit-symbol-ru i))))
+    (print-hash-table *nm-vl-en->ru*)
+    (setf *nm-vl-en->ru-loaded* t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (populate-m-coeff-ht)
 (load-nm-vl)
+(load-nm-vl-ru->en)
+(load-nm-vl-en->ru)
