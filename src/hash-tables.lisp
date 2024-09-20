@@ -8,24 +8,9 @@
 
 
 
-(defun add-multiplid-values (var)
-  (setf (gethash (<nd>-unit-symbol-en var) *nm-vl*)
-	(<nd>-value var))
-  (mapcar
-   #'(lambda (el)
-       (when (is-in-range (second el) (<nd>-coeff var))
-	 (setf (gethash (concatenate 'string (first el) (<nd>-unit-symbol-en var)) *nm-vl*)
-	       (vd* (second el) (<nd>-value var)))))
-   (hash-table->list *m-coeff-en*)))
 
-(defun load-nm-vl ()
-  (unless *nm-vl-loaded*
-    (mapc #'add-multiplid-values
-	  (append *nd-si-derived-units-tbl-03* *nd-si-main-units*
-		  *nd-not-si-units-tbl-07* *nd-not-si-units-tbl-05*
-		  *nd-other-units-tbl-b-01*))
-    (print-hash-table *nm-vl*)
-    (setf *nm-vl-loaded* t)))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

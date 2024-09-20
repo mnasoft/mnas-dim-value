@@ -128,8 +128,39 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;;; Наполняем хеш таблицы *m-coeff-en* *m-coeff-ru*
-(loop :for (power nm-ru nm-en s-ru s-en) :in *table-7-si-prefixes*
-      :do
-         (setf (gethash s-en *m-coeff-en*) (expt 10 power))
-         (setf (gethash s-ru *m-coeff-ru*) (expt 10 power)))
+(defun populate-m-coeff-ht ()
+  "@b(Описание:) функция @b(populate-m-coeff-ht)
+наполняет хеш-таблицы *m-coeff-en* *m-coeff-ru*
+"
+  (loop :for (power nm-ru nm-en s-ru s-en) :in *table-7-si-prefixes*
+        :do
+           (setf (gethash s-en *m-coeff-en*) (expt 10 power))
+           (setf (gethash s-ru *m-coeff-ru*) (expt 10 power))))
+
+(defun add-multiplid-values (var)
+  (setf (gethash (<nd>-unit-symbol-en var) *nm-vl*)
+	(<nd>-value var))
+  (loop :for (prefix coeff) :in (hash-table->list *m-coeff-en*)
+        :collect
+        (when (is-in-range coeff (<nd>-coeff var))
+          (setf
+           (gethash (concatenate 'string
+                                 prefix
+                                 (<nd>-unit-symbol-en var))
+                    *nm-vl*)
+           (make-instance
+            '<vd>
+            :val (* (<vd>-val (<nd>-value var)) coeff)
+            :dims (<vd>-dims (<nd>-value var)))))))
+
+(defun load-nm-vl ()
+  (unless *nm-vl-loaded*
+    (mapc #'add-multiplid-values
+	  (append
+           *nd-table-2-si-base-units*
+           *nd-table-4-the-22-si-units-with-special-names-and-symbols*))
+    (print-hash-table *nm-vl*)
+    (setf *nm-vl-loaded* t)))
+
+(populate-m-coeff-ht)
+(load-nm-vl)
