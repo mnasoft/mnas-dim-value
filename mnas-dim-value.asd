@@ -138,7 +138,9 @@
                 :components ((:file "func")))))
 
 (defsystem "mnas-dim-value/tbl"
-  :description "Describe mnas-dim-value here"
+  :description "@b(Описание:) система @b(mnas-dim-value/tbl)
+опеделяет таблицы системы SI.
+"
   :serial nil
   :depends-on (
                "mnas-dim-value/class"
@@ -149,14 +151,46 @@
                 :components ((:file "tbl")))))
 
 (defsystem "mnas-dim-value/ht"
-  :description "Система определяет классы"
+  :description "@b(Описание:) система @b(mnas-dim-value/ht) определяет
+ хеш-таблицы."
   :serial nil
   :depends-on ("mnas-dim-value/class"
                "mnas-dim-value/func"
                "mnas-dim-value/tbl"
+               "mnas-hash-table"
                )
   :components ((:module "src/ht"
 		:serial nil
                 :components ((:file "ht")))))
+
+(defsystem "mnas-dim-value/method"
+  :description "Система определяет методы"
+  :serial nil
+  :depends-on ("mnas-dim-value/class"
+               "mnas-dim-value/func"
+               "mnas-dim-value/tbl"
+               "mnas-hash-table"
+               "mnas-dim-value/ht"
+               "mnas-dim-value/generic"               
+               )
+  :components ((:module "src/method" 
+		:serial nil
+                :components ((:file "method")))))
+
+(defsystem "mnas-dim-value/const"
+  :description "Система определяет методы"
+  :serial nil
+  :depends-on ("mnas-dim-value/class"
+               "mnas-dim-value/func"
+               "mnas-dim-value/tbl"
+               "mnas-hash-table"
+               "mnas-dim-value/ht"
+               "mnas-dim-value/generic"
+               "mnas-dim-value/method"               
+               )
+  :components ((:module "src/const" 
+		:serial nil
+                :components ((:file "const")))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

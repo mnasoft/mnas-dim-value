@@ -15,14 +15,14 @@
            <nd>-dimension-symbol
            <nd>-value
            <nd>-coeff 
-           ))
+           )
+  (:export *vd-language*
+           vd-names
+           +vd-names-en+
+           +vd-names-ru+
+  ))
 
 (in-package :mnas-dim-value/class)
-
-(defclass <vd> ()
-  ((val      :accessor <vd>-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
-   (dims     :accessor <vd>-dims     :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
-  (:documentation "Число с размерностью (ЧсР)."))
 
 (defparameter *vd-language* :en
   "Язык (member :en :ru)")
@@ -35,6 +35,11 @@
   (cond
     ((eq *vd-language* :ru) +vd-names-ru+)
     (t                      +vd-names-en+)))
+
+(defclass <vd> ()
+  ((val      :accessor <vd>-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
+   (dims     :accessor <vd>-dims     :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
+  (:documentation "Число с размерностью (ЧсР)."))
 
 (defmethod print-object ((x <vd>) o-s)
   (progn (format o-s "~S " (<vd>-val x))

@@ -5,6 +5,7 @@
         #:mnas-dim-value/func
         #:mnas-dim-value/class
         #:mnas-dim-value/tbl
+        #:mnas-hash-table
         )
   (:export *nd-named*
            *nd-list*)
@@ -141,7 +142,7 @@
 (defun add-multiplid-values (var)
   (setf (gethash (<nd>-unit-symbol-en var) *nm-vl*)
 	(<nd>-value var))
-  (loop :for (prefix coeff) :in (hash-table->list *m-coeff-en*)
+  (loop :for (prefix coeff) :in (to-list *m-coeff-en*)
         :collect
         (when (is-in-range coeff (<nd>-coeff var))
           (setf

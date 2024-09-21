@@ -2,10 +2,8 @@
 
 (defpackage :mnas-dim-value/func
   (:use #:cl)
-  (:export print-hash-table
-           hash-table->list)
-  (:export is-in-range
-           ))
+  (:export print-hash-table)
+  (:export is-in-range))
 
 (in-package :mnas-dim-value/func)
 
@@ -17,12 +15,10 @@
  (print-hash-table *nm-vl*)
 @end(code)
 "
-  (maphash #'(lambda (key val) (format s "~S ~S~%" key val)) ht))
-
-(defun hash-table->list (ht)
-  (let ((rez nil))
-    (maphash #'(lambda (key val) (push (list key val) rez) ) ht)
-    rez))
+  (maphash
+   #'(lambda (key val)
+       (format s "~S ~S~%" key val))
+   ht))
 
 (defun is-in-range (val r-list)
 " @b(Описание:) функция is-in-range служит для определения того

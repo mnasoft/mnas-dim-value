@@ -1,18 +1,20 @@
 (defpackage :mnas-dim-value/generic
-  (:use       #:cl )
-  (:export    vd-convert
-              vd-print
-              same-dimension
-              vd-convert
-              mult
-              div
-              sum
-              diff
-              vd-expt
-              vd-sqrt
-              unit-name
-              quantity-name 
-              ))
+  (:use
+   #:cl )
+  (:export vd-convert
+           vd-print
+           vd-expt
+           vd-sqrt)
+  (:export same-dimension
+              
+           mult
+           div
+           sum
+           diff
+
+           unit-name
+           quantity-name 
+           ))
 
 (in-package :mnas-dim-value/generic)
 
