@@ -192,5 +192,21 @@
 		:serial nil
                 :components ((:file "const")))))
 
+(defsystem "mnas-dim-value/macro"
+  :description "Система определяет методы"
+  :serial nil
+  :depends-on ("mnas-dim-value/class"
+               "mnas-dim-value/func"
+               "mnas-dim-value/tbl"
+               "mnas-hash-table"
+               "mnas-dim-value/ht"
+               "mnas-dim-value/generic"
+               "mnas-dim-value/method"
+               "mnas-dim-value/const" 
+               )
+  :components ((:module "src/macro" 
+		:serial nil
+                :components ((:file "macro")))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,6 +1,7 @@
 ;;;; constants.lisp
 
 (defpackage :mnas-dim-value/const
+  (:nicknames "MDV/CONST")
   (:use #:cl
         #:mnas-dim-value/func
         #:mnas-dim-value/class

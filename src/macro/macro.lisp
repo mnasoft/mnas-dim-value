@@ -1,6 +1,21 @@
-;;;; marco.lisp
+;;;; ./src/macro/macro.lisp
 
-(in-package :mnas-dim-value)
+(defpackage :mnas-dim-value/macro
+  (:nicknames "MDV/MC")
+  (:use #:cl
+        #:mnas-dim-value/func
+        #:mnas-dim-value/class
+        #:mnas-dim-value/mk-class
+        #:mnas-dim-value/tbl
+        #:mnas-hash-table
+        #:mnas-dim-value/ht
+        #:mnas-dim-value/generic
+        #:mnas-dim-value/method
+        #:mnas-dim-value/const
+        )
+  (:export quantity))
+
+(in-package :mnas-dim-value/macro)
 
 (defun op-exclude (op lst func-op)
 "@b(Описание:) Функция op-exclude выполняет исключение первого вхождения 
@@ -52,14 +67,14 @@
 "
   (not (operatorp x)))
 
-(defun add-asterix (lst)
+(defun add-asterix (lst) ;; todo sample
 "@b(Описание:) функция add-asterix добавляет звезды между символами, 
 которые не являются операторами.
 
  @b(Пример использования:)
 @begin[lang=lisp](code)
  (add-asterix '(1 (|kg| |m| ^ 2) 2 :+ 3)) => (1 :* (|kg| |m| ^ 2) :* 2 :+ 3)
- (add-asterix '(mdv:|kg| mdv:|m| :^ 2))   => (|kg| :* |m| :^ 2)
+ (add-asterix '(mdv/mc:|kg| mdv/mc:|m| :^ 2))   => (|kg| :* |m| :^ 2)
 @end(code)
 
  @b(Примечание:) функция не является рекурсивной.
@@ -79,8 +94,8 @@
  @b(Пример использования:)
 @begin[lang=lisp](code)
  (in-pacakge :cl-user)
- (mdv::vd-quantity '(10 :^ 2 mdv:|Pa| / mdv:|s|)) => (VD* (VD* (VD* (VD-EXPT 10 2) |Pa|) /) |s|)
- (mdv::vd-quantity '(\"V\" \"A\" )) => (VD* \"V\" \"A\") 
+ (mdv/mc::vd-quantity '(10 :^ 2 mdv/mc:|Pa| / mdv/mc:|s|)) => (VD* (VD* (VD* (VD-EXPT 10 2) |Pa|) /) |s|)
+ (mdv/mc::vd-quantity '(\"V\" \"A\" )) => (VD* \"V\" \"A\") 
 @end(code)
 "
   (let ((rez (add-asterix data)))
@@ -114,7 +129,7 @@
     (vd-quantity (reverse rez))))
 
 (defmacro quantity (x &rest y )
-"@b(Описание:) макрос quantity выполняет разбор и вычисление выражения, 
+  "@b(Описание:) макрос quantity выполняет разбор и вычисление выражения, 
 имеющего в своем составе размерные величины.
 
  Выражение может состоять из списков, чисел, размерных величин, символов бинарных операций.
@@ -131,35 +146,34 @@
  Перечень допустимых разменых величин определен в хеш-таблице *nm-vl*.
 Для ее просмотра используйте следующий код:
 @begin[lang=lisp](code)
- (mdv::print-hash-table mdv::*nm-vl*)
+ (mdv/mc::print-hash-table mdv/mc::*nm-vl*)
 @end(code)
  Размерные величины можно задавать в виде:
 @begin(list)
  @item(строки: например: \"Pa\", \"s\", \"mol\"; )
- @item(в виде констант пакета mnas-dim-value (mdv): например: mdv:|Pa|, mnas-dim-value:|s|, mdv:|mol|.)
+ @item(в виде констант пакета mnas-dim-value (mdv): например: mdv/mc:|Pa|, mnas-dim-value:|s|, mdv/mc:|mol|.)
 @end(list)
 
  @b(Пример использования:)
 @begin[lang=lisp](code)
  (progn
   (list
-  (list (mdv:quantity 220 \"V\" 15 \"A\"))
-  (list (mdv:quantity 220 :* \"V\" :* 15 :* \"A\"))
-  (list (mdv:quantity 20 \"kgf\" :/ \"cm\" :^ 2))))
+  (list (mdv/mc:quantity 220 \"V\" 15 \"A\"))
+  (list (mdv/mc:quantity 220 :* \"V\" :* 15 :* \"A\"))
+  (list (mdv/mc:quantity 20 \"kgf\" :/ \"cm\" :^ 2))))
 @end(code)
 
 @begin[lang=lisp](code)
  (progn
    (list
-     (mdv:quantity 101325 \"Pa\" :+ ( 2.0 mdv:|*g*| :/ (1 :* \"cm\" :* \"cm\")))
-     (mdv:quantity 101325 \"Pa\" :+ ( 2.0 mdv:|*g*| :/ (1 :* \"cm\" :^ 2))) 
+     (mdv/mc:quantity 101325 \"Pa\" :+ ( 2.0 mdv/const:|*g*| :/ (1 :* \"cm\" :* \"cm\")))
+     (mdv/mc:quantity 101325 \"Pa\" :+ ( 2.0 mdv/const:|*g*| :/ (1 :* \"cm\" :^ 2))) 
   ))
 @end(code)
 
 @begin[lang=lisp](code)
  (progn
-  (in-package :mnas-dim-value)
-  (list (mnas-dim-value:quantity 1 \"d\" :+ 15 \"h\" 20 :+ \"min\" :+ 30.5 \"s\")))
+  (list (mdv/mc:quantity 1 \"d\" :+ 15 \"h\" :+ 20 \"min\" :+ 30.5 \"s\")))
 @end(code)
 "
   (eval (list 'rec-quantity  (list 'quote (append (list x) y)))))
