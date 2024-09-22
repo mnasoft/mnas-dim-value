@@ -32,7 +32,8 @@
            *unit-symbol-ru->dim-loaded* 
            *dim->quantity-name-en-loaded* 
            *quantity-name-en->dim-loaded*)
-  (:export load-si-units
+  (:export load-units
+           reload-units
            ))
 
 (in-package :mnas-dim-value/ht)
@@ -40,7 +41,8 @@
 (defparameter *nd-named*
   (reverse
    (list *nd-table-2-si-base-units*
-         *nd-table-4-the-22-si-units-with-special-names-and-symbols*)))
+         *nd-table-4-the-22-si-units-with-special-names-and-symbols*
+         )))
 
 (defparameter *nd-list*
   (reverse
@@ -49,7 +51,9 @@
     *nd-table-4-the-22-si-units-with-special-names-and-symbols*
     *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units*
     *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
-    *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*)))
+    *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
+    *nd-table-9-others*
+    )))
 
 (defvar *m-coeff-en* (make-hash-table :test 'equal)
   "Хеш- таблица *m-coeff-en* содержит международные множителные приставки
@@ -157,16 +161,7 @@
 
 (defun load-nm-vl ()
   (unless *nm-vl-loaded*
-    (mapc #'add-multiplid-values
-	  (append
-           *nd-table-2-si-base-units*
-           *nd-table-4-the-22-si-units-with-special-names-and-symbols*))
-    (print-hash-table *nm-vl*)
-    (setf *nm-vl-loaded* t)))
-
-(defun load-nm-vl ()
-  (unless *nm-vl-loaded*
-    (loop :for nd :in *nd-list* :do ; ToDo здесь вероятное не *nd-named* *nd-list*
+    (loop :for nd :in *nd-list* :do 
       (loop :for i :in nd :do
         (add-multiplid-values i)))
     (print-hash-table *nm-vl*)
@@ -184,12 +179,7 @@
 
 (defun load-nm-vl-en->ru ()
   (unless *nm-vl-en->ru-loaded*
-    (loop
-      :for nd
-        :in (list
-             *nd-table-2-si-base-units*
-             *nd-table-4-the-22-si-units-with-special-names-and-symbols*)
-      :do
+    (loop :for nd :in *nd-named* :do
          (loop :for i :in nd :do
            (setf
             (gethash (<nd>-unit-symbol-en i) *nm-vl-en->ru*)
@@ -313,7 +303,7 @@
 #+nil (defun load-quantity-name-ru->dim ())
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun load-si-units ()
+(defun load-units ()
   (populate-m-coeff-ht)
   (load-nm-vl)
   (load-nm-vl-ru->en)
@@ -326,4 +316,45 @@
   (load-quantity-name-en->dim)
   )
 
-(load-si-units)
+(defun reload-units ()
+  (loop :for i :in '(*nm-vl-loaded*
+                     *nm-vl-ru->en-loaded* 
+                     *nm-vl-en->ru-loaded* 
+                     *dim->unit-symbol-en-loaded*
+                     *unit-symbol-en->dim-loaded* 
+                     *dim->unit-symbol-ru-loaded* 
+                     *unit-symbol-ru->dim-loaded* 
+                     *dim->quantity-name-en-loaded* 
+                     *quantity-name-en->dim-loaded*)
+        :do (set i nil))
+
+  (setf *nd-named*
+        (reverse
+         (list *nd-table-2-si-base-units*
+               *nd-table-4-the-22-si-units-with-special-names-and-symbols*)))
+  (setf *nd-list*
+        (reverse
+         (list *nd-table-2-si-base-units*
+               *nd-table-4-the-22-si-units-with-special-names-and-symbols*
+               *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units*
+               *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
+               *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
+               *nd-table-9-others*)))
+  (loop :for i :in (list *nm-vl*
+                         *nm-vl-ru->en*
+                         *nm-vl-en->ru*
+                         *dim->unit-symbol-en*
+                         *dim->unit-symbol-ru*
+                         *unit-symbol-en->dim*
+                         *unit-symbol-ru->dim*
+                         *dim->quantity-name-en*
+                         *quantity-name-en->dim*
+                         )
+        :do
+           (clrhash i))
+  (load-units))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-units)
+
+#+nil 
+(reload-units)

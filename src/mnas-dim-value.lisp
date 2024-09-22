@@ -12,6 +12,7 @@
         #:mnas-dim-value/generic
         #:mnas-dim-value/method
         #:mnas-dim-value/const
+        #:mnas-dim-value/macro
         )
   (:export <vd>
            <vd>-val
@@ -61,10 +62,6 @@
    ))
 
 (in-package :mnas-dim-value)
-
-(unexport '(DIMENSIONP *NM-VL-EN->RU* *NM-VL-RU->EN*
-           *NM-VL*
-           UNIT-NAME))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

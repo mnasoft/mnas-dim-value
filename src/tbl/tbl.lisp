@@ -10,6 +10,8 @@
            *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
            *table-7-si-prefixes*
            *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
+           )
+  (:export *nd-table-9-others*
            ))
 
 (in-package :mnas-dim-value/tbl)
@@ -367,7 +369,7 @@ units with special names and symbols"))
 ;;;;
    (nd "mass" "масса" nil "ton" "тонна" "t" "т"
        (vd 1000 :kg 1) '((0 24)))
-   (nd "mass" "масса" nil "dalton" "атомная единица массы" " Da" "а.е.м."
+   (nd "mass" "масса" nil "dalton" "атомная единица массы" "Da" "а.е.м."
        (vd 1.6605390666050d-27 :kg 1))
 ;;;;
    (nd "energy" "энергия" nil "electronvolt" "электрон-вольт" "eV" "эВ"
@@ -401,5 +403,52 @@ units with special names and symbols"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(block table-9-others
+  (nd-clear)
+;;; "mass" "масса"  
+  (nd "mass" "масса" nil "quintal" "центнер" "q" "ц"
+      (vd 100 :kg 1) nil)
+;;; "area" "площадь"
+  (nd "area" "площадь" nil "ar" "ар" "a" "а"
+      (vd 100 :m 2) '((0 0) (2 2)))
+;;; "angle of rotation" "угол поворота"
+  (nd "angle of rotation" "угол поворота" nil "turn" "оборот" "tr" "об"
+      (vd (* 2 pi) :rad 1) nil)  
+  
+;;; "length" "длина"  
+  (nd "length" "длина" nil "nautical mile" "морская миля" "nmi" "миля"
+      (vd 1852 :m 1)   nil)
+  (nd "length" "длина" nil "angstrom" "ангстрем" "Å" "Å"
+      (vd 1d-10 :m 1) nil)
+  (nd "length" "длина" nil "micron" "микрон" "μ" "мк"
+      (vd (/ 1 1000 1000) :m 1) nil)
+  
+;;; "force" "сила"
+  (nd "force" "сила" nil "gram-force" "грамм-сила" "gf" "гс"
+      (vd (* 1/1000 9.80665d0) :m 1 :s -2 :kg 1) '((-24 3)))
+  (nd "force" "сила" nil "ton-force" "тонна-сила" "tf" "тс"
+      (vd (* 1000 9.80665d0) :m 1 :s -2 :kg 1) '((0 24)))
+  (nd "force" "сила" nil "pound" "понд" "p" "п"
+      (vd (* 1/1000 9.80665d0) :m 1 :s -2 :kg 1) '((0 0) (3 9)))
+  
+;;; "pressure" "давление"
+  (nd "pressure" "давление" nil "meter of water column" "метр водяного столба" "m_H2O" "м_вод._ст."
+      (vd (* 1000 9.80665d0) :m -1 :kg 1 :s -2) '((-3 0)))
+  (nd "pressure" "давление" nil "meter of mercury" "метр ртутного столба" "m_Hg" "м_pт._ст."
+      (vd  133322d0 :m -1 :kg 1 :s -2) '((-3 0)))
+  (nd "pressure" "давление" nil "torr" "торр" "Torr" "Торр"
+      (vd 133.322d0 :m -1 :kg 1 :s -2) '((-6 9)))
+  (nd "pressure" "давление" nil "bar" "бар" "bar" "бар"
+      (vd (* 100 000) :m -1 :kg 1 :s -2) '((-3 -3) (3 9)))
+;;; "power" "мощность" 
+  (nd "power" "мощность" nil "horsepower" "лошадиная сила" "hp" "л.с."
+      (vd (* 75 9.80665d0) :kg 1 :m 2 :s -3 ) nil)
+;;; "rotational speed" "частота вращения"
+  (nd "rotational speed" "частота вращения" nil "cycle per minute" "оборот в секунду" "cps" "об/с"
+      (vd (* pi 2)  :rad 1  :s -1)   nil)
+  (nd "rotational speed" "частота вращения" nil "revolution per minute" "оборот в минуту" "rpm" "об/мин"
+      (vd (* pi 2 1/60) :rad 1 :s -1)   nil) 
 
-
+  (setf *nd-table-9-others* (nd-get))
+  (setf (documentation  '*nd-table-9-others* 'variable)
+        "Соотношение некоторых внесистемных единиц с единицами СИ"))
