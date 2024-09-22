@@ -1,6 +1,6 @@
 ;;;; mnas-dim-value.asd
 
-(defsystem "mnas-dim-value"
+(defsystem "mnas-dim-value/bak"
   :description "Describe mnas-dim-value here"
   :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
@@ -195,7 +195,9 @@
 (defsystem "mnas-dim-value/macro"
   :description "Система определяет методы"
   :serial nil
-  :depends-on ("mnas-dim-value/class"
+  :depends-on ("mnas-dim-value/convert"
+;;;               
+               "mnas-dim-value/class"
                "mnas-dim-value/func"
                "mnas-dim-value/tbl"
                "mnas-hash-table"
@@ -208,5 +210,60 @@
 		:serial nil
                 :components ((:file "macro")))))
 
+(defsystem "mnas-dim-value/convert"
+  :description "Система определяет функции конвертирования."
+  :serial nil
+  :components ((:module "src/convert" 
+		:serial nil
+                :components ((:file "convert")))))
+
+(defsystem "mnas-dim-value"
+  :author "Mykola Matvyeyev <mnasoft@gmail.com>"
+  :maintainer "Mykola Matvyeyev <mnasoft@gmail.com>"    
+  :name "Mnas Dim Value"
+  :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
+  :homepage "https://github.com/mnasoft/mnas-dim-value"
+  :version "0.0.2"  
+
+  :serial nil
+  :depends-on (
+               "mnas-dim-value/class"
+               "mnas-dim-value/func"
+               "mnas-dim-value/tbl"
+               "mnas-hash-table"
+               "mnas-dim-value/ht"
+               "mnas-dim-value/generic"
+               "mnas-dim-value/method"
+               "mnas-dim-value/const"
+               "mnas-dim-value/macro"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               
+               "str" "mnas-string"
+               ) ;;;; #:cl-ppcre
+
+  :components  ((:module "src"
+                 :serial nil
+                 :components
+                 ((:file "package")
+                  (:file "mnas-dim-value" :depends-on ("package")))))
+  :description "Describe mnas-dim-value here")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#+nil 
+(defsystem "mnas-dim-value/sample"
+  :author "John Q. Lisper <jql@example.com>"
+  :maintainer "John Q. Lisper <jql@example.com>"
+  :license "MIT"
+  :homepage "https://github.com/johnqlisp/my-project"
+  :version "0.1"
+  :depends-on (:local-time
+               :clack)
+  :components ((:module "src"
+                :serial t
+                :components
+                ((:file "my-project"))))
+  :description "A description of the project."
+  :long-description
+  #.(uiop:read-file-string
+     (uiop:subpathname *load-pathname* "README.md"))
+  :in-order-to ((test-op (test-op my-project-test))))

@@ -1,32 +1,70 @@
-;;;; mnas-dim-value.lisp
+;;;; /src/mnas-dim-value.lisp
+
+(defpackage :mnas-dim-value
+  (:nicknames "MDV")
+  (:use #:cl
+        #:mnas-dim-value/func
+        #:mnas-dim-value/class
+        #:mnas-dim-value/mk-class
+        #:mnas-dim-value/tbl
+        #:mnas-hash-table
+        #:mnas-dim-value/ht
+        #:mnas-dim-value/generic
+        #:mnas-dim-value/method
+        #:mnas-dim-value/const
+        )
+  (:export <vd>
+           <vd>-val
+           <vd>-dims)
+  (:export vd
+           )
+  (:export vd+ vd- vd* vd/
+           )
+  (:export vd-expt
+           vd-sqrt
+           )
+  (:export |m| |kg| |s| |A| |K| |cd| |mol|
+           |rad| |sr|
+           )
+  (:export |Hz| |N| |Pa| |J| |W|
+           |C| |V| |F| |Ω| |S| |Wb|
+           |Τ| |H| |lm| |lx| |Bq|
+           |Gy| |Sv| |kat|
+           )
+;;; From :mnas-dim-value/const
+  (:export |*g*| |*Gn*| |*C-0*| |*V-0*|
+           |*R-0*| |*Na*| |*No*|
+           |*k*| |*a-e-m*|
+           |*m-e*| |*e*|
+           |*F*| |*h*| |*c*| |*μ-0*| |*ε-0*|
+           )
+;;; From :mnas-dim-value/convert  
+  (:export C->K K->C 
+           M->K K->M 
+           KGS/CM2->PA
+           PA->KGS/CM2
+           )
+  (:export quantity
+           )
+
+  (:export 
+   HELP
+   
+   DIM-STRING-BY-DIM-NAME
+   DIM-NAME-LIST
+
+   UNUSE-MNAS-DIM-VALUE
+
+   USE-MNAS-DIM-VALUE
+
+   QUANTITY-NAME
+   ))
 
 (in-package :mnas-dim-value)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun K->C(K)
-"Перевод градусов значения, заданного в градусах Кельвина, в градусы Цельсия."
-  (- K 273.15))
-
-(defun C->K(C)
-"Перевод градусов значения, заданного в градусах Цельсия, в градусы Кельвина."
-  (+ C 273.15))
-
-(defun k->M (k)
-"Перевод значения с приставкой кило в число с приставкой мега"
-  (* 0.001 k))
-
-(defun M->k (M)
-"Перевод значения с приставкой мега в число с приставкой кило"
-  (* 1000.0 M))
-
-(defun kgs/cm2->Pa (kgs/cm2)
-"Переводит значение давления, заданное в kgs/cm2, в Pa."
-  (* 9.8065 10000.0 kgs/cm2))
-
-(defun Pa->kgs/cm2 (Pa)
-"Переводит значение давления, заданное в Pa, в kgs/cm2."
-  (/ Pa 9.8065 10000.0))
+(unexport '(DIMENSIONP *NM-VL-EN->RU* *NM-VL-RU->EN*
+           *NM-VL*
+           UNIT-NAME))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
