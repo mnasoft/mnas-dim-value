@@ -217,6 +217,14 @@
 		:serial nil
                 :components ((:file "convert")))))
 
+(defsystem "mnas-dim-value/user"
+  :description "Система определяет функции конвертирования."
+  :serial nil
+  :depends-on ("mnas-dim-value")
+  :components ((:module "src/user" 
+		:serial nil
+                :components ((:file "user")))))
+
 (defsystem "mnas-dim-value"
   :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :maintainer "Mykola Matvyeyev <mnasoft@gmail.com>"    
@@ -224,7 +232,6 @@
   :license "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 or later"
   :homepage "https://github.com/mnasoft/mnas-dim-value"
   :version "0.0.2"  
-
   :serial nil
   :depends-on (
                "mnas-dim-value/class"
@@ -242,10 +249,12 @@
 
   :components  ((:module "src"
                  :serial nil
-                 :components
-                 ((:file "package")
-                  (:file "mnas-dim-value" :depends-on ("package")))))
-  :description "Describe mnas-dim-value here")
+                 :components ((:file "mnas-dim-value"))))
+  :description "Describe mnas-dim-value here"
+  :long-description
+  #.(uiop:read-file-string
+     (uiop:subpathname *load-pathname* "org/README.org"))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
