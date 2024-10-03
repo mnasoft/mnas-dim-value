@@ -1,7 +1,18 @@
 ;;;; package.lisp
 
 (defpackage :mnas-dim-value/calc
-  (:use #:cl #:mnas-dim-value)
+  (:use #:cl
+                                        ;        #:mnas-dim-value/class
+                                        ;        #:mnas-dim-value/func
+                                        ;        #:mnas-dim-value/tbl
+                                        ;        #:mnas-hash-table
+                                        ;        #:mnas-dim-value/ht
+                                        ;        #:mnas-dim-value/generic
+                                        ;        #:mnas-dim-value/method
+                                        ;        #:mnas-dim-value/const
+                                        ;        #:mnas-dim-value/macro
+        #:mnas-dim-value
+        )
   (:export
    quantity-from-string-not-eval
    quantity-from-string

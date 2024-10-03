@@ -1,14 +1,38 @@
-;;;; methods.lisp
+;;;; ./src/method/method.lisp
 
-(in-package :mnas-dim-value)
+(defpackage :mnas-dim-value/method
+  (:use #:cl
+        #:mnas-dim-value/func
+        #:mnas-dim-value/class
+        #:mnas-dim-value/mk-class
+        #:mnas-dim-value/tbl
+        #:mnas-hash-table
+        #:mnas-dim-value/ht
+        #:mnas-dim-value/generic
+        )
+  (:export dim->unit-symbol
+           dimensionp
+           vd*
+           vd/
+           vd+
+           vd-
+           )
+  (:export print-object
+           vd-print
+           vd-expt
+           vd-sqrt
+           same-dimension
+           vd-convert
+           mult
+           div
+           sum
+           diff
+           unit-name
+           quantity-name
+           ))
 
-(defparameter *vd-language* :en
-  "Язык (member :en :ru)")
 
-(defun vd-names ()
-  (cond
-    ((eq *vd-language* :ru) +vd-names-ru+)
-    (t                      +vd-names-en+)))
+(in-package :mnas-dim-value/method)
 
 (defun dim->unit-symbol ()
     (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
@@ -36,21 +60,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;; ToDo Необходимо установить глобальную переменную для задания списка приоритетов при выводе "
-(defmethod print-object ((x <nd>) o-s)
-  (format o-s "~S~%"
-	  (list 'q-n-en (<nd>-quantity-name-en x)
-		'q-n-ru (<nd>-quantity-name-ru x)
-		'u-n-en (<nd>-unit-name-en     x)
-		'u-n-ru (<nd>-unit-name-ru     x)
-		'u-s-en (<nd>-unit-symbol-en   x)
-		'u-s-ru (<nd>-unit-symbol-ru   x)
-		'd-symb (<nd>-dimension-symbol x)
-		'value  (<nd>-value            x)
-		'coeff  (<nd>-coeff            x))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defun dimensionp (str)
 "@b(Описание:) функция dimensionp 
 @begin[lang=lisp](code)
@@ -62,18 +71,6 @@
 "
   (multiple-value-bind (val find) (gethash str *nm-vl*)
     (if find val nil)))
-
-(defun vd (x &key (m 0) (kg 0) (s 0) (A 0) (K 0) (cd 0) (mol 0) (rad 0) (sr 0))
-"@b(Описание:) функция vd создает число с размерностью (ЧсР)
-
- @b(Пример использования:)
-@begin[lang=lisp](code)
-
-@end(code)
-"
-  (make-instance '<vd>
-                 :val x
-                 :dims (list m kg s A K cd mol rad sr) ))
 
 (defmethod vd-print ((x <vd>) &optional (o-stream t) )
   (format o-stream "~S ~S" (<vd>-val x) (<vd>-dims x)))
@@ -187,7 +184,7 @@
 (defmethod unit-name ((x <vd>) o-s)
   (multiple-value-bind (dimens find)
       (gethash (<vd>-dims x) (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
-				 (t *dim->unit-symbol-en*)))
+				   (t *dim->unit-symbol-en*)))
     (if find
 	(format o-s "~A" dimens)
 	(progn (format o-s "[" )
@@ -197,15 +194,21 @@
 			   ((/= (nth no (<vd>-dims x)) 0) (format o-s (concatenate 'string str "^~A") (nth no (<vd>-dims x))))))
 		     '( 0    1   2   3   4    5     6     7    8)
 		     (cond
-		       ((eq *vd-language* :en) '("m" "kg" "s" "A" "K" "cd" "mol"  "rad" "sr"))
-		       ((eq *vd-language* :ru) '("м" "кг" "с" "А" "К" "кд" "моль" "рад" "ср"))))
+		       ((eq *vd-language* :en) +vd-names-en+)
+		       ((eq *vd-language* :ru) +vd-names-ru+)))
 	       (format o-s "]")))))
-
+ 
 (defmethod quantity-name ((value <vd>) &key (vd-language *vd-language*))
   "Возвращает наименование величины.
 Пример использования:
-;;;; (quantity-name (vd/ |kg| |m| |m| |m|) :vd-language :en) => (\"density\" \"mass density\")
-;;;; (quantity-name (vd/ (vd* |kg| |*g*|) (vd-expt (vd* 0.01 |m|) 2) 1000))
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+  (quantity-name (vd/ \"kg\" \"m\" \"m\" \"m\") :vd-language :en)
+  => (\"density\" \"mass density\")
+  (quantity-name (vd/ (vd* \"kg\" *g*) (vd-expt (vd* 0.01 \"m\") 2) 1000))
+@end(code)
+
 "
   (let ((rez nil)
 	(item nil)
@@ -221,5 +224,5 @@
 	   (cond
 	     ((stringp item) (push item rez))
 	     ((listp item) (setf rez (append item rez))))))
-     *nd-list*)
+     (apply #'append *nd-list*))
     (remove-duplicates rez :test #'equal)))
