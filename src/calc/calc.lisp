@@ -1,6 +1,7 @@
 ;;;; package.lisp
 
 (defpackage :mnas-dim-value/calc
+  (:nicknames "MDV/CALC")
   (:use #:cl
                                         ;        #:mnas-dim-value/class
                                         ;        #:mnas-dim-value/func
