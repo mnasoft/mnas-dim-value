@@ -11,8 +11,9 @@
            *table-7-si-prefixes*
            *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
            )
-  (:export *nd-table-9-others*
-           ))
+  (:export *nd-table-9-others*)
+  (:export *nd-tables*)
+  )
 
 (in-package :mnas-dim-value/tbl)
 
@@ -21,6 +22,9 @@
 (defparameter *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* nil)
 (defparameter *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* nil)
 (defparameter *nd-table-8-non-si-units-accepted-for-use-with-the-si-units* nil)
+(defparameter *nd-table-9-others* nil)
+(defparameter *nd-tables* nil)
+
 
 (defparameter *table-7-si-prefixes* ; *mult-prefix*
   '((30  "кветта" "quetta" "Кв" "Q")
@@ -452,3 +456,12 @@ units with special names and symbols"))
   (setf *nd-table-9-others* (nd-get))
   (setf (documentation  '*nd-table-9-others* 'variable)
         "Соотношение некоторых внесистемных единиц с единицами СИ"))
+
+(defparameter *nd-tables*
+  (append 
+   *nd-table-2-si-base-units*
+   *nd-table-4-the-22-si-units-with-special-names-and-symbols*
+   *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units*
+   *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols*
+   *nd-table-8-non-si-units-accepted-for-use-with-the-si-units*
+   *nd-table-9-others*))

@@ -71,52 +71,38 @@
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"specific entropy\")
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"capacitance\")
 ;;;;(mnas-dim-value:dim-string-by-dim-name \"mass density\")
-"
-  (let ((rez nil))
-    (mapc #'(lambda (f-data)
-	      (let ((func-dim-string (first f-data))
-		    (data-tbl        (second f-data)))
-		(mapc
-		 #'(lambda (el )
-		     (when (or
-			    (and (stringp (first el)) (string= d-type (first el)))
-			    (and (listp (first el)) (find  d-type (first el) :test #'equal)))
-		       (push (funcall func-dim-string el) rez)))
-		 data-tbl)))
-	  (list
-	   (list #'sixth  *si-main-units*)
-	   (list #'fourth *si-derived-units-tbl-02*)
-	   (list #'sixth  *si-derived-units-tbl-03*)
-	   (list #'fourth *si-derived-units-tbl-04*)
-	   (list #'fifth  *not-si-units-tbl-05*)))
-    rez))
+" 
+  (loop :for i :in mnas-dim-value/tbl:*nd-tables*
+        :when (string= (<nd>-quantity-name-en i) d-type)
+        :collect (<nd>-unit-symbol-en i)
+        ))
 
-(defun dim-name-list (&key  (en-ru #'first))
-"Возвращает список наименований величин
+
+(dim-string-by-dim-name "length")
+
+mnas-dim-value/class:*vd-language*
+
+
+(defun dim-name-list ()
+  "Возвращает список наименований величин
 Пример использования 
 ;;;;(dim-name-list) 
 ;;;;(dim-name-list :en-ru #'second)
 "
-  (let ((rez nil))
-    (mapc #'(lambda (f-data)
-	      (let ((func-dim-string (first f-data))
-		    (data-tbl        (second f-data)))
-		(mapc
-		 #'(lambda (el )
-		     (cond
-		       ((stringp (funcall func-dim-string el))
-			(push (funcall func-dim-string el) rez))
-		       ((listp (funcall func-dim-string el))
-			(dolist (i (funcall func-dim-string el))
-			  (push i rez)))))
-		 data-tbl)))
-	  (list
-	   (list en-ru *si-main-units*)
-	   (list en-ru *si-derived-units-tbl-02*)
-	   (list en-ru *si-derived-units-tbl-03*)
-	   (list en-ru *si-derived-units-tbl-04*)
-	   (list en-ru *not-si-units-tbl-05*)))
-    (delete-duplicates (sort rez #'string< ) :test #'equal )))
+  (let ((q-name
+          (if (eq mnas-dim-value/class:*vd-language* :ru) 
+              #'<nd>-quantity-name-ru
+              #'<nd>-quantity-name-en
+              )))
+    (loop :for i :in mnas-dim-value/tbl:*nd-tables*
+          :append
+          (loop :for part :in (cl-ppcre:split "," (funcall q-name i))
+                :collect (string-trim '(#\Space #\Tab) part))
+            :into rez
+          :finally (return (delete-duplicates (sort rez #'string<) :test #'equal)))))
+
+(setf mnas-dim-value/class:*vd-language* :ru)
+(dim-name-list)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
