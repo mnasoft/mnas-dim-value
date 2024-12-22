@@ -139,14 +139,6 @@
 		:serial nil
                 :components ((:file "convert")))))
 
-(defsystem "mnas-dim-value/user"
-  :description "Система определяет функции конвертирования."
-  :serial nil
-  :depends-on ("mnas-dim-value")
-  :components ((:module "src/user" 
-		:serial nil
-                :components ((:file "user")))))
-
 (defsystem "mnas-dim-value"
   :author "Mykola Matvyeyev <mnasoft@gmail.com>"
   :maintainer "Mykola Matvyeyev <mnasoft@gmail.com>"    
