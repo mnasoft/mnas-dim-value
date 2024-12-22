@@ -37,8 +37,11 @@
     (t                      +vd-names-en+)))
 
 (defclass <vd> ()
-  ((val      :accessor <vd>-val      :initarg :val  :initform 0.0                        :documentation "Численное значение величины")
-   (dims     :accessor <vd>-dims     :initarg :dims :initform (list 0 0 0  0 0 0  0 0 0) :documentation "Список степеней размерности"))
+  ((val      :accessor <vd>-val      :initarg :val  :initform 0.0
+             :documentation "Численное значение величины")
+   (dims     :accessor <vd>-dims     :initarg :dims :initform '(0 0 0  0 0 0  0 0 0)
+             :documentation "Список степеней размерности. Степени размерности
+ находятся в порядке, соответствующем порядку из переменной +vd-names-en+"))
   (:documentation "Число с размерностью (ЧсР)."))
 
 (defmethod print-object ((x <vd>) o-s)
@@ -90,7 +93,8 @@
    (dimension-symbol :accessor <nd>-dimension-symbol  :initarg :dimension-symbol :initform "" :documentation "Символ размерности. Например: L")
    (value            :accessor <nd>-value             :initarg :value            :initform 1  :documentation "Значение, выраженное в единицах СИ. Например: (vd 1 :m 1)")
    (coeff            :accessor <nd>-coeff             :initarg :coeff :initform '((-24 24))   :documentation "Список диапазонов разрешенных степеней множителей для данной величины системы СИ"))
-  (:documentation "Величина с размерностью."))
+  (:documentation "Величина с размерностью. Данный класс служит исключительно для
+удобства в определении чисел с размерностью."))
 
 (defmethod print-object ((obj <nd>) o-s)
   (print-unreadable-object (obj o-s :type t :identity nil)
