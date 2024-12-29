@@ -19,11 +19,43 @@
            <vd>-dims)
   (:export vd
            )
-  (:export vd+ vd- vd* vd/
+  (:export vd+ vd- vd* vd/              ; 
            )
   (:export vd-expt
            vd-sqrt
            )
+  (:export vd~+
+           vd~-
+           vd~*
+           vd~/
+           vd~pow
+           vd~root
+           vd~exp
+           vd~expt
+           vd~ln
+           vd~log
+           vd~sin
+           vd~cos
+           vd~tan
+           vd~asin
+           vd~acos
+           vd~atan
+           vd~sinh
+           vd~cosh
+           vd~tanh
+           vd~asinh
+           vd~acosh
+           vd~atanh
+           vd~abs
+           vd~equal
+           vd~equalp
+           )
+  (:export vd~=
+           vd~/=
+           vd~<
+           vd~<=
+           vd~>
+           vd~>=)  
   (:export |m| |kg| |s| |A| |K| |cd| |mol|
            |rad| |sr|
            )
@@ -60,6 +92,8 @@
 
    QUANTITY-NAME
    ))
+  
+
 
 (in-package :mnas-dim-value)
 
@@ -128,3 +162,4 @@ mnas-dim-value/class:*vd-language*
   (format t *help* ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
