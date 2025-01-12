@@ -19,17 +19,15 @@
            <vd>-dims)
   (:export vd
            )
-  (:export vd+ vd- vd* vd/              ; 
-           )
   (:export vd-expt
            vd-sqrt
            )
-  (:export vd~+
-           vd~-
-           vd~*
-           vd~/
+  (:export vd~+                         ; Сложение
+           vd~-                         ; Вычирание
+           vd~*                         ; Умножение
+           vd~/                         ; Деление
            vd~pow
-           vd~root
+           vd~root 
            vd~exp
            vd~expt
            vd~ln
@@ -84,7 +82,7 @@
    HELP
    
    DIM-STRING-BY-DIM-NAME
-   DIM-NAME-LIST
+   dim-name-list ;; Возвращает список наименований величин.
 
    UNUSE-MNAS-DIM-VALUE
 
@@ -100,44 +98,49 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun dim-string-by-dim-name ( d-type )
-  "Пример использования:
-;;;;(mnas-dim-value:dim-string-by-dim-name \"length\")
-;;;;(mnas-dim-value:dim-string-by-dim-name \"specific entropy\")
-;;;;(mnas-dim-value:dim-string-by-dim-name \"capacitance\")
-;;;;(mnas-dim-value:dim-string-by-dim-name \"mass density\")
+  "
+@b(Описание:) функция@b(dim-string-by-dim-name)
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+ (dim-string-by-dim-name \"length\")
+ (dim-string-by-dim-name \"specific entropy\")
+ (dim-string-by-dim-name \"capacitance\")
+ (dim-string-by-dim-name \"mass density\")
+@end(code)
 " 
-  (loop :for i :in mnas-dim-value/tbl:*nd-tables*
-        :when (string= (<nd>-quantity-name-en i) d-type)
-        :collect (<nd>-unit-symbol-en i)
+  (loop :for i :in mnas-dim-value/tbl-en:*nd-tables*
+        :when (string= (<nd>-quantity-name i) d-type)
+        :collect (<nd>-unit-symbol i)
         ))
 
 
-(dim-string-by-dim-name "length")
-
-mnas-dim-value/class:*vd-language*
-
-
 (defun dim-name-list ()
-  "Возвращает список наименований величин
-Пример использования 
-;;;;(dim-name-list) 
-;;;;(dim-name-list :en-ru #'second)
+  "@b(Описание:) функция @b(dim-name-list) возвращает список наименований
+величин.
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+ (progn 
+   (setf mnas-dim-value/class:*vd-language* :en)
+   (dim-name-list))
+  (progn 
+    (setf mnas-dim-value/class:*vd-language* :ru)
+    (dim-name-list)) 
+@end(code)
 "
   (let ((q-name
           (if (eq mnas-dim-value/class:*vd-language* :ru) 
-              #'<nd>-quantity-name-ru
-              #'<nd>-quantity-name-en
+              #'<nd>-quantity
+              #'<nd>-quantity ;; Что-то нужно сделать
               )))
-    (loop :for i :in mnas-dim-value/tbl:*nd-tables*
+    (loop :for i :in mnas-dim-value/tbl-en:*nd-tables*
           :append
           (loop :for part :in (cl-ppcre:split "," (funcall q-name i))
                 :collect (string-trim '(#\Space #\Tab) part))
             :into rez
           :finally (return (delete-duplicates (sort rez #'string<) :test #'equal)))))
-
-(setf mnas-dim-value/class:*vd-language* :ru)
-(dim-name-list)
-
+<nd>
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *help*
@@ -163,3 +166,4 @@ mnas-dim-value/class:*vd-language*
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(vd-convert "20°20'30.56\"")

@@ -25,20 +25,18 @@
                  :dims (list m kg s A K cd mol rad sr)))
 
 (let ((nd-list nil))
-  (defun nd (q-en q-ru dim u-en u-ru s-en s-ru val &optional (coeff '((-30 30))))
+  (defun nd (quantity dim unit-name unit-symbol val &optional (coeff '((-30 30))))
     (let ((item
             (make-instance '<nd>
-		   :quantity-name-en q-en
-		   :quantity-name-ru q-ru
-		   :dimension-symbol dim
-		   :unit-name-en     u-en
-		   :unit-name-ru     u-ru 
-		   :unit-symbol-en   s-en 
-		   :unit-symbol-ru   s-ru
-		   :value            val
-                   :coeff            coeff)))
+		   :quantity-name quantity
+		   :dimension     dim
+		   :unit-name     unit-name
+		   :unit-symbol   unit-symbol
+		   :value         val
+                   :coeff         coeff)))
     
     (setf nd-list (cons item nd-list))))
+  
 ;;;;
   (defun nd-clear ()
     (setf nd-list nil))

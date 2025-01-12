@@ -3,48 +3,29 @@
    #:cl )
   (:export vd-convert
            vd-print
-           vd-expt
-           vd-sqrt)
+           )
   (:export same-dimension
-              
-           mult
-           div
-           sum
-           diff
-
            unit-name
            quantity-name 
            ))
 
 (in-package :mnas-dim-value/generic)
 
-(defgeneric vd-convert (obj))
+(defgeneric vd-convert (obj)
+  (:documentation
+   "@b(Описание:) обобщенная_функция @b(vd-convert) перобразует объект obj
+в объект класса <vd> и возвращает преобразованный объект класса <vd>.
+"))
 
 (defgeneric vd-print (vd &optional stream)
   (:documentation
    "Метод печати внутреннего представления размерной величины"))
 
-(defgeneric same-dimension (x y))
-
-(defgeneric vd-convert (x)
-  )
-
-(defgeneric mult (x y))
-
-(defgeneric div (x y))
-
-(defgeneric sum (x y))
-
-(defgeneric diff (x y))
-
-(defgeneric vd-expt (x power)
+(defgeneric same-dimension (x y)
   (:documentation
-   "Возведение числа x в степень power.")
+   "@b(Описание:) обобщенная_функция @b(same-dimension) возвращает T, если
+x и y имеют одинаковую размерность, и NIL в проивном случае.")
   )
-
-(defgeneric vd-sqrt (x)
-  (:documentation
-   "Извлечение из числа с размерностью квадратного корня."))
 
 (defgeneric unit-name (x stream)
   (:documentation
@@ -54,5 +35,3 @@
   (:documentation
    "Возвращает список наименований величин, которым соответствует
 размерность числа x (\"acceleration\")."))
-
-
