@@ -46,7 +46,9 @@
            vd-convert
            unit-name
            quantity-name
-           ))
+           )
+  (:export angle-string)
+  )
 
 
 (in-package :mnas-dim-value/method)
@@ -534,100 +536,186 @@
 
 (vd~/ (vd~* "20d" "N" "m") "rad")
 
-(defun radians-to-dms (radians &key (seconds-format "~2f") (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (sign (if (and (not (radians degrees)) (or (minusp radians) force-sign)) "-" ""))
-         (abs-degrees (abs degrees))
-         (d (truncate abs-degrees))
-         (m (* 60 (- abs-degrees d)))
-         (min (truncate m))
-         (s (* 60 (- m min))))
-    (format nil "~a~d°~d'~a\"" sign d min (format nil seconds-format s))))
+(defconstant +d-s+  #\DEGREE_SIGN)
+(defconstant +pr+   #\PRIME)
+(defconstant +d-pr+ #\DOUBLE_PRIME)
+(defconstant +t-pr+ #\TRIPLE_PRIME)
+(defconstant +q-pr+ #\QUADRUPLE_PRIME)
 
-;; Пример использования
-(radians-to-dms 1.0 :seconds-format "~3F" :force-sign t)
+(defun angle-string (angle &key (output :dms) (force-sign nil) (round 8))
+  "@b(Описание:) функция|метод|обобщенная_функция| @b(angle-string)
+ возвращает строку, представляющую угловую меру угла.
 
-(defun radians-to-dms (radians &key (seconds-format "~2f") (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (abs-degrees (abs degrees))
-         (sign (if (or (and force-sign (plusp degrees)) (minusp degrees)) (if (minusp degrees) "-" "+") ""))
-         (d (truncate abs-degrees))
-         (m (* 60 (- abs-degrees d)))
-         (min (truncate m))
-         (s (* 60 (- m min))))
-    (format nil "~a~d°~d'~a\"" sign d min (format nil seconds-format s))))
+ @b(Переменые:)
+@begin(list)
+ @item(angle - угол, выраженный в радианах;)
+ @item(output - определяет формат вывода:)
+ @begin(list)
+  @item(:d выводить значение в градусах; )
+  @item(:dm - градусах и минутах; )
+  @item(:dms - градусах минутах и секундах;)
+  @item(:m - минутах;)
+  @item(:ms - минутах и секундах;)
+  @item(:s - секундах.)
+ @end(list)
+ @item(force-sign - при значении t указывает, что нужно принудительно
+  выводить знак +, если угол положительный; не нужно выводить + при
+  значении nil;)
+ @item(round - сообщает сколько значащих цифр выводить:)
+ @begin(list)
+  @item(0, 1 или 2 - округлять до градусов;)
+  @item(3 или 4 - округлять до минут или десятых и сотых долей градуса;)
+  @item(5 или 6 - округлять до секунд или ее десятых и сотых минуты
+   или тысячных и десятитысячных долей градуса;)
+  @item(7 и более- округлять до десятых секунды)
+ @end(list)
+@end(list)
 
-;; Пример использования
-(radians-to-dms 1.0 :seconds-format "~3f" :force-sign nil)  ;; Возвращает "+57°17'45.832\""
-(radians-to-dms -1.0 :seconds-format "~3f" :force-sign t)  ;; Возвращает "-57°17'45.832\""
-(radians-to-dms 1.0 :seconds-format "~3f" :force-sign t)  ;; Возвращает "-57°17'45.832\""
-
-(defun radians-to-dm (radians &key (minutes-format "~2f") (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (abs-degrees (abs degrees))
-         (sign (if (or (and force-sign (plusp degrees)) (minusp degrees)) (if (minusp degrees) "-" "+") ""))
-         (d (truncate abs-degrees))
-         (m (* 60 (- abs-degrees d)))
-         (min (format nil minutes-format m)))
-    (format nil "~a~d°~a'" sign d min)))
-
-(radians-to-dm 1.0 :minutes-format "~12F" :force-sign nil)  ;; Возвращает "-57°17'45.832\""
-
-(defun radians-to-degrees (radians &key (degrees-format "~2f") (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (sign (if (or (and force-sign (plusp degrees)) (minusp degrees)) (if (minusp degrees) "-" "+") ""))
-         (formatted-degrees (format nil degrees-format (abs degrees))))
-    (format nil "~a~a°" sign formatted-degrees)))
-
-;; Пример использования
-(radians-to-degrees 1.0 :degrees-format "~3f" :force-sign nil)  ;; Возвращает "57.296°"
-(radians-to-degrees -1.0 :degrees-format "~3f" :force-sign t)  ;; Возвращает "-57.296°"
-
-(defun radians-to-angle (radians &key (output :dms) (seconds-format "~2f") (minutes-format "~2f") (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (abs-degrees (abs degrees))
-         (sign (if (or (and force-sign (plusp degrees)) (minusp degrees)) (if (minusp degrees) "-" "+") ""))
-         (d (truncate abs-degrees))
-         (m (* 60 (- abs-degrees d)))
-         (min (truncate m))
-         (s (* 60 (- m min))))
+Целая часть младших разрядов выводятся в виде двух цифр например:
+@begin(list)
+ @item(41°09′02.56″;)
+ @item(9′02.56″;)
+ @item(2.56″.)
+@end(list)
+"
+  (let* ((sign (cond
+                 ((minusp angle) "-")
+                 ((and force-sign (plusp angle)) "+")
+                 (t "" )))
+         (degrees (abs (/ (* angle 180) pi)))
+         (minutes)
+         (seconds)
+         (pw)
+         (d) (m) (s) (dd) (mm) (ss)
+         (scale)
+         (d-scaled)
+         (m-scaled)
+         (s-scaled)
+         )
     (case output
-      (:dms
-       (format nil "~a~d°~d'~a\"" sign d min (format nil seconds-format s)))
+      (:d
+       (cond 
+         ((< round 3)                   ; округляем до градусов
+          (setf d (round degrees)
+                m 0
+                s 0)
+          (format nil "~a~a~c" sign d +d-s+))
+         ((> round 2)    ; округляем до определенного разряда градусов
+          (setf pw (- round 2)
+                scale (expt 10 pw)
+                d-scaled (round (* scale degrees))
+                d (truncate (/ d-scaled scale))
+                dd (- d-scaled (* scale d))
+                m 0
+                s 0)
+          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign d dd +d-s+))))
       (:dm
-       (format nil "~a~d°~a'" sign d (format nil minutes-format m)))
-      (:degrees
-       (format nil "~a~a°" sign (format nil "~2f" degrees)))
-      (t
-       (error "Invalid output format. Valid options are :degrees, :dm, or :dms.")))))
-
-;; Пример использования
-(radians-to-angle 1.0 :output :dms :seconds-format "~3f" :force-sign t)  ;; Возвращает "57°17'45.832\""
-(radians-to-angle -1.0 :output :dm :minutes-format "~3f" :force-sign nil)  ;; Возвращает "-57°17.453'"
-(radians-to-angle 1.0 :output :degrees :force-sign nil)  ;; Возвращает "57.30°"
-
-(defun radians-to-angle (radians &key (output :dms) (seconds-format "~2f") (minutes-format "~2f") (degrees-format "~2f") (suppress-zero nil) (force-sign nil))
-  (let* ((degrees (/ (* radians 180) pi))
-         (abs-degrees (abs degrees))
-         (sign (if (or (and force-sign (plusp degrees)) (minusp degrees)) (if (minusp degrees) "-" "+") ""))
-         (d (truncate abs-degrees))
-         (m (* 60 (- abs-degrees d)))
-         (min (truncate m))
-         (s (* 60 (- m min)))
-         (degrees-str (if (and suppress-zero (zerop d)) "" (format nil "~a~a°" sign (format nil degrees-format d))))
-         (minutes-str (if (and suppress-zero (zerop min)) "" (format nil "~a'" (format nil minutes-format min))))
-         (seconds-str (format nil seconds-format s)))
-    (case output
+       (cond 
+         ((< round 3)                   ; округляем до градусов
+          (setf d (round degrees)
+                m 0
+                s 0)
+          (format nil "~a~a~c" sign d +d-s+))
+         ((< round 5)                   ; округляем до минут
+          (setf minutes (round (* 60 degrees))
+                d (truncate minutes 60)
+                m (- minutes (* 60 d))
+                s 0)
+          (format nil "~a~a~c~2,'0d~c" sign d +d-s+ m +pr+))
+         ((> round 4)       ; округляем до определенного разряда минут
+          (setf pw (- round 4)
+                scale (expt 10 pw)
+                m-scaled (round (* 60 scale degrees))
+                d (truncate (/ m-scaled scale) 60)
+                m (truncate (- (/ m-scaled scale) (* 60 d)))
+                mm (- m-scaled (* 60 scale d) (* scale m))
+                s 0)
+          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d.~" pw ",'0d~c") sign d +d-s+ m mm +pr+))))
       (:dms
-       (format nil "~a~d'~a\"" degrees-str min seconds-str))
-      (:dm
-       (format nil "~a~a'" degrees-str minutes-str))
-      (:degrees
-       degrees-str)
-      (t
-       (error "Invalid output format. Valid options are :degrees, :dm, or :dms.")))))
-
-;; Пример использования
-(radians-to-angle -0.001 :output :dms :seconds-format "~3f" :suppress-zero t)  ;; Возвращает "57°17'45.832\""
-(radians-to-angle -1.0 :output :dm :minutes-format "~3f" :suppress-zero t :force-sign t)  ;; Возвращает "-57°17.453'"
-(radians-to-angle 1.0 :output :degrees :degrees-format "~D" :suppress-zero t)  ;; Возвращает "57°"
+       (cond 
+         ((< round 3)                   ; округляем до градусов
+          (setf d (round degrees)
+                m 0
+                s 0)
+          (format nil "~a~a~c" sign d +d-s+))
+         ((< round 5)                   ; округляем до минут
+          (setf minutes (round (* 60 degrees))
+                d (truncate minutes 60)
+                m (- minutes (* 60 d))
+                s 0)
+          (format nil "~a~a~c~2,'0d~c" sign d +d-s+ m +pr+))
+         ((< round 7)                   ; округляем до секунд
+          (setf seconds (round (* 3600 degrees))
+                d (truncate seconds 3600)
+                m (truncate (- seconds (* 3600 d)) 60)
+                s (- seconds (* 3600 d) (* m 60)))
+          (format nil "~a~a~c~2,'0d~c~2,'0d~c" sign d +d-s+ m +pr+ s +d-pr+))
+         ((> round 6)       ; округляем до определенного разада секунд
+          (setf pw (- round 6)
+                scale (expt 10 pw)
+                s-scaled (round (* 3600 scale degrees))
+                d (truncate (/ s-scaled scale) 3600)
+                m (truncate (- (/ s-scaled scale) (* 3600 d)) 60)
+                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
+                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
+          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d~c~2,'0d.~" pw ",'0d~c") sign d +d-s+ m +pr+ s ss +d-pr+))))
+      (:ms
+       (cond 
+         ((< round 5)                   ; округляем до минут
+          (setf minutes (round (* 60 degrees))
+                d 0
+                m (- minutes (* 60 d))
+                s 0)
+          (format nil "~a~a~c" sign m +pr+))
+         ((< round 7)                   ; округляем до секунд
+          (setf seconds (round (* 3600 degrees))
+                d 0
+                m (truncate (- seconds (* 3600 d)) 60)
+                s (- seconds (* 3600 d) (* m 60)))
+          (format nil "~a~a~c~2,'0D~c" sign m +pr+ s +d-pr+))
+         ((> round 6)        ; округляем до определенного знака секунд
+          (setf pw (- round 6)
+                scale (expt 10 pw)
+                s-scaled (round (* 3600 scale degrees))
+                d 0
+                m (truncate (- (/ s-scaled scale) (* 3600 d)) 60)
+                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
+                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale))
+                )
+          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d.~" pw ",'0d~c") sign m +pr+ s ss +d-pr+))))
+      (:m
+       (cond 
+         ((< round 5)                   ; округляем до минут
+          (setf minutes (round (* 60 degrees))
+                d 0
+                m (- minutes (* 60 d) )
+                s 0)
+          (format nil "~a~a~c" sign m +pr+))
+         ((> round 4)         ; округляем до определенного знака минут
+          (setf pw (- round 4)
+                scale (expt 10 pw)
+                m-scaled (round (* 60 scale degrees))
+                d 0
+                m (truncate (- (/ m-scaled scale) (* 60 d)))
+                mm (- m-scaled (* scale m))
+                s 0 )
+          #+nil (format nil (format nil "~a~a~a"  "~A~," (- round 4) "f~C") sign m +pr+)
+          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign m mm +pr+)
+          )))
+      (:s
+       (cond 
+         ((< round 7)                   ; округляем до секунд
+          (setf seconds (round (* 3600 degrees))
+                d 0
+                m 0
+                s (- seconds (* 3600 d) (* m 60)))
+          (format nil "~a~a~c" sign s +d-pr+))
+         ((> round 6)        ; округляем до определенного знака секунд
+          (setf pw (- round 6)
+                scale (expt 10 pw)
+                s-scaled (round (* 3600 scale degrees))
+                d 0
+                m 0
+                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
+                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
+          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign s ss +d-pr+)))))))
