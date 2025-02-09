@@ -151,8 +151,9 @@
                
                )
   :components ((:module "src/method" 
-		:serial nil
-                :components ((:file "method")))))
+		:serial t
+                :components ((:file "method")
+                             (:file "print-object")))))
 
 (defsystem "mnas-dim-value/const"
   :description "Система определяет методы"

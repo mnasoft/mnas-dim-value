@@ -57,26 +57,6 @@
     (cond ((eq *vd-language* :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
 	  (t                      mnas-dim-value/ht-en:*dim->unit-symbol*)))
 
-(defmethod print-object ((x <vd>) o-s)
-  (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
-    (if find
-	(format o-s "~S [~A]" (<vd>-val x) dimens)
-	(progn (format o-s "~S " (<vd>-val x))
-	       (let ((st+ nil)
-		     (st- nil))
-		 (map nil
-		      #'(lambda (v d)
-			  (cond
-			    ((< 1  v) (push (format nil "~A^~A" d v) st+))
-			    ((= 1  v) (push (format nil "~A"    d  ) st+))
-     			    ((= v -1) (push (format nil "~A"    d  ) st-))
-			    ((< v -1) (push (format nil "~A^~A" d v) st-))))
-		      (<vd>-dims x) (vd-names))
-		 (cond 
-		   ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
-		   ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
-		   ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun dimensionp (str)
@@ -140,43 +120,45 @@
                   x x (vd 1.0))
           (vd 1.0)))))
 
-
-
-(defun parse-float (str)
-  (if (string= str "") 0
-      (mnas-string/parse:read-number str)))
-
-(defun parse-d-m-s (str)
-  (cond
-    ((string= "°" str) 1)
-    ((string= "d" str) 1)
-    ((string= "'" str) 1/60)
-    ((string= "\"" str) 1/3600)
-    (t 0)))
-
 (defun degrees-minutes-seconds-to-radians (dms-string)
-  (let ((regex "^([-+])?([0-9]*\\.?[0-9]*)([°d'\"]?)([0-9]*\\.?[0-9]*)([°d'\"]?)([0-9]*\\.?[0-9]*)([°d'\"]?)$"))
-    (multiple-value-bind (match substrings)
-        (cl-ppcre:scan-to-strings regex dms-string)
-      (if match
-          (let* ((a-sign (aref substrings 0))
-                 (a-v1   (aref substrings 1))
-                 (a-v2   (aref substrings 3))
-                 (a-v3   (aref substrings 5))
-                 (a-s1   (aref substrings 2))
-                 (a-s2   (aref substrings 4))
-                 (a-s3   (aref substrings 6))
-                 (sign (cond
-                         ((null a-sign) 1)
-                         ((string= "+" a-sign)  1)
-                         ((string= "-" a-sign) -1)
-                         (t 1))))
-            (loop :for v :in (list a-v1 a-v2 a-v3)
-                  :as  s :in (list a-s1 a-s2 a-s3)
-                  :summing (* (parse-float v) (parse-d-m-s s))
-                    :into dms
-                  :finally (return (* sign dms (/ pi 180)))))
-          nil))))
+  (labels
+      ((parse-float (str)
+         (if (string= str "") 0
+             (mnas-string/parse:read-number str)))
+       (parse-d-m-s (str)
+         (cond
+           ((string= "°" str)  1)
+           ((string= "d" str)  1)
+           ((string= "'" str)  1/60)
+           ((string= "′" str)  1/60)
+           ((string= "\"" str) 1/3600)
+           ((string= "″" str)  1/3600)    
+           (t 0))))
+    (let ((regex
+            "^([-+])?([0-9]*\\.?[0-9]*)([°d]?)([0-9]*\\.?[0-9]*)(['′]?)([0-9]*\\.?[0-9]*)([\"″]?)$"
+            #+nil  "^([-+])?([0-9]*\\.?[0-9]*)([°d'′\"″]?)([0-9]*\\.?[0-9]*)([°d'′\"″]?)([0-9]*\\.?[0-9]*)([°d'′\"″]?)$"
+            #+nil  "^([-+])?([0-9]*\\.?[0-9]*)([°d'\"]?)([0-9]*\\.?[0-9]*)([°d'\"]?)([0-9]*\\.?[0-9]*)([°d'\"]?)$"))
+      (multiple-value-bind (match substrings)
+          (cl-ppcre:scan-to-strings regex dms-string)
+        (if match
+            (let* ((a-sign (aref substrings 0))
+                   (a-v1   (aref substrings 1))
+                   (a-v2   (aref substrings 3))
+                   (a-v3   (aref substrings 5))
+                   (a-s1   (aref substrings 2))
+                   (a-s2   (aref substrings 4))
+                   (a-s3   (aref substrings 6))
+                   (sign (cond
+                           ((null a-sign) 1)
+                           ((string= "+" a-sign)  1)
+                           ((string= "-" a-sign) -1)
+                           (t 1))))
+              (loop :for v :in (list a-v1 a-v2 a-v3)
+                    :as  s :in (list a-s1 a-s2 a-s3)
+                    :summing (* (parse-float v) (parse-d-m-s s))
+                      :into dms
+                    :finally (return (* sign dms (/ pi 180)))))
+            nil)))))
 
 (defmethod vd-convert ((x string))
   (let ((dms (degrees-minutes-seconds-to-radians x)))
@@ -483,44 +465,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-#+nil
-(defmethod print-object ((x <vd>) o-s)
-  (progn (format o-s "~S " (<vd>-val x))
-	       (let ((st+ nil)
-		     (st- nil))
-		 (map nil
-		      #'(lambda (v d)
-			  (cond
-			    ((< 1  v) (push (format nil "~A^~A" d v      ) st+))
-			    ((= 1  v) (push (format nil "~A"    d        ) st+))
-     			    ((= v -1) (push (format nil "~A"    d        ) st-))
-			    ((< v -1) (push (format nil "~A^~A" d (abs v)) st-))))
-		      (<vd>-dims x) (vd-names))
-		 (cond 
-		   ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
-		   ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
-		   ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))
-
-(defmethod print-object ((x <vd>) o-s)
-  (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (mnas-dim-value/method:dim->unit-symbol))
-    (if find
-	(format o-s "~S [~A]" (<vd>-val x) dimens)
-	(progn (format o-s "~S " (<vd>-val x))
-	       (let ((st+ nil)
-		     (st- nil))
-		 (map nil
-		      #'(lambda (v d)
-			  (cond
-			    ((< 1  v) (push (format nil "~A^~A" d v) st+))
-			    ((= 1  v) (push (format nil "~A"    d  ) st+))
-     			    ((= v -1) (push (format nil "~A"    d  ) st-))
-			    ((< v -1) (push (format nil "~A^~A" d v) st-))))
-		      (<vd>-dims x) (vd-names))
-		 (cond 
-		   ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
-		   ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
-		   ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))
-
 (defmethod print-object ((obj <nd>) o-s)
   (print-unreadable-object (obj o-s :type t :identity nil)
     (format o-s "~&~4t q-en:~A" (<nd>-quantity    obj))
@@ -532,190 +476,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(vd~/ (vd~* "20d" "N" "m") "rad")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (vd~/ (vd~* "20d" "N" "m") "rad")
+(vd~/ (vd~* "20d" "N" "m") "rad" "kg")
 
-(defconstant +d-s+  #\DEGREE_SIGN)
-(defconstant +pr+   #\PRIME)
-(defconstant +d-pr+ #\DOUBLE_PRIME)
-(defconstant +t-pr+ #\TRIPLE_PRIME)
-(defconstant +q-pr+ #\QUADRUPLE_PRIME)
+(vd-convert "45d0'0\"")
 
-(defun angle-string (angle &key (output :dms) (force-sign nil) (round 8))
-  "@b(Описание:) функция|метод|обобщенная_функция| @b(angle-string)
- возвращает строку, представляющую угловую меру угла.
-
- @b(Переменые:)
-@begin(list)
- @item(angle - угол, выраженный в радианах;)
- @item(output - определяет формат вывода:)
- @begin(list)
-  @item(:d выводить значение в градусах; )
-  @item(:dm - градусах и минутах; )
-  @item(:dms - градусах минутах и секундах;)
-  @item(:m - минутах;)
-  @item(:ms - минутах и секундах;)
-  @item(:s - секундах.)
- @end(list)
- @item(force-sign - при значении t указывает, что нужно принудительно
-  выводить знак +, если угол положительный; не нужно выводить + при
-  значении nil;)
- @item(round - сообщает сколько значащих цифр выводить:)
- @begin(list)
-  @item(0, 1 или 2 - округлять до градусов;)
-  @item(3 или 4 - округлять до минут или десятых и сотых долей градуса;)
-  @item(5 или 6 - округлять до секунд или ее десятых и сотых минуты
-   или тысячных и десятитысячных долей градуса;)
-  @item(7 и более- округлять до десятых секунды)
- @end(list)
-@end(list)
-
-Целая часть младших разрядов выводятся в виде двух цифр например:
-@begin(list)
- @item(41°09′02.56″;)
- @item(9′02.56″;)
- @item(2.56″.)
-@end(list)
-"
-  (let* ((sign (cond
-                 ((minusp angle) "-")
-                 ((and force-sign (plusp angle)) "+")
-                 (t "" )))
-         (degrees (abs (/ (* angle 180) pi)))
-         (minutes)
-         (seconds)
-         (pw)
-         (d) (m) (s) (dd) (mm) (ss)
-         (scale)
-         (d-scaled)
-         (m-scaled)
-         (s-scaled)
-         )
-    (case output
-      (:d
-       (cond 
-         ((< round 3)                   ; округляем до градусов
-          (setf d (round degrees)
-                m 0
-                s 0)
-          (format nil "~a~a~c" sign d +d-s+))
-         ((> round 2)    ; округляем до определенного разряда градусов
-          (setf pw (- round 2)
-                scale (expt 10 pw)
-                d-scaled (round (* scale degrees))
-                d (truncate (/ d-scaled scale))
-                dd (- d-scaled (* scale d))
-                m 0
-                s 0)
-          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign d dd +d-s+))))
-      (:dm
-       (cond 
-         ((< round 3)                   ; округляем до градусов
-          (setf d (round degrees)
-                m 0
-                s 0)
-          (format nil "~a~a~c" sign d +d-s+))
-         ((< round 5)                   ; округляем до минут
-          (setf minutes (round (* 60 degrees))
-                d (truncate minutes 60)
-                m (- minutes (* 60 d))
-                s 0)
-          (format nil "~a~a~c~2,'0d~c" sign d +d-s+ m +pr+))
-         ((> round 4)       ; округляем до определенного разряда минут
-          (setf pw (- round 4)
-                scale (expt 10 pw)
-                m-scaled (round (* 60 scale degrees))
-                d (truncate (/ m-scaled scale) 60)
-                m (truncate (- (/ m-scaled scale) (* 60 d)))
-                mm (- m-scaled (* 60 scale d) (* scale m))
-                s 0)
-          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d.~" pw ",'0d~c") sign d +d-s+ m mm +pr+))))
-      (:dms
-       (cond 
-         ((< round 3)                   ; округляем до градусов
-          (setf d (round degrees)
-                m 0
-                s 0)
-          (format nil "~a~a~c" sign d +d-s+))
-         ((< round 5)                   ; округляем до минут
-          (setf minutes (round (* 60 degrees))
-                d (truncate minutes 60)
-                m (- minutes (* 60 d))
-                s 0)
-          (format nil "~a~a~c~2,'0d~c" sign d +d-s+ m +pr+))
-         ((< round 7)                   ; округляем до секунд
-          (setf seconds (round (* 3600 degrees))
-                d (truncate seconds 3600)
-                m (truncate (- seconds (* 3600 d)) 60)
-                s (- seconds (* 3600 d) (* m 60)))
-          (format nil "~a~a~c~2,'0d~c~2,'0d~c" sign d +d-s+ m +pr+ s +d-pr+))
-         ((> round 6)       ; округляем до определенного разада секунд
-          (setf pw (- round 6)
-                scale (expt 10 pw)
-                s-scaled (round (* 3600 scale degrees))
-                d (truncate (/ s-scaled scale) 3600)
-                m (truncate (- (/ s-scaled scale) (* 3600 d)) 60)
-                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
-                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
-          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d~c~2,'0d.~" pw ",'0d~c") sign d +d-s+ m +pr+ s ss +d-pr+))))
-      (:ms
-       (cond 
-         ((< round 5)                   ; округляем до минут
-          (setf minutes (round (* 60 degrees))
-                d 0
-                m (- minutes (* 60 d))
-                s 0)
-          (format nil "~a~a~c" sign m +pr+))
-         ((< round 7)                   ; округляем до секунд
-          (setf seconds (round (* 3600 degrees))
-                d 0
-                m (truncate (- seconds (* 3600 d)) 60)
-                s (- seconds (* 3600 d) (* m 60)))
-          (format nil "~a~a~c~2,'0D~c" sign m +pr+ s +d-pr+))
-         ((> round 6)        ; округляем до определенного знака секунд
-          (setf pw (- round 6)
-                scale (expt 10 pw)
-                s-scaled (round (* 3600 scale degrees))
-                d 0
-                m (truncate (- (/ s-scaled scale) (* 3600 d)) 60)
-                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
-                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale))
-                )
-          (format nil (format nil "~a~a~a"  "~a~a~c~2,'0d.~" pw ",'0d~c") sign m +pr+ s ss +d-pr+))))
-      (:m
-       (cond 
-         ((< round 5)                   ; округляем до минут
-          (setf minutes (round (* 60 degrees))
-                d 0
-                m (- minutes (* 60 d) )
-                s 0)
-          (format nil "~a~a~c" sign m +pr+))
-         ((> round 4)         ; округляем до определенного знака минут
-          (setf pw (- round 4)
-                scale (expt 10 pw)
-                m-scaled (round (* 60 scale degrees))
-                d 0
-                m (truncate (- (/ m-scaled scale) (* 60 d)))
-                mm (- m-scaled (* scale m))
-                s 0 )
-          #+nil (format nil (format nil "~a~a~a"  "~A~," (- round 4) "f~C") sign m +pr+)
-          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign m mm +pr+)
-          )))
-      (:s
-       (cond 
-         ((< round 7)                   ; округляем до секунд
-          (setf seconds (round (* 3600 degrees))
-                d 0
-                m 0
-                s (- seconds (* 3600 d) (* m 60)))
-          (format nil "~a~a~c" sign s +d-pr+))
-         ((> round 6)        ; округляем до определенного знака секунд
-          (setf pw (- round 6)
-                scale (expt 10 pw)
-                s-scaled (round (* 3600 scale degrees))
-                d 0
-                m 0
-                s (truncate (- (/ s-scaled scale) (* 3600 d) (* m 60)))
-                ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
-          (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign s ss +d-pr+)))))))
+(setf *angle* :rot)
+(setf *a-units* 4)
