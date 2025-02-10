@@ -23,10 +23,10 @@
            vd-sqrt
            )
   (:export vd~+                         ; Сложение
-           vd~-                         ; Вычирание
+           vd~-                         ; Вычитание
            vd~*                         ; Умножение
            vd~/                         ; Деление
-           vd~pow
+           vd~pow                       ; Возведение в целу степень
            vd~root 
            vd~exp
            vd~expt

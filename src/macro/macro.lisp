@@ -100,10 +100,10 @@
 "
   (let ((rez (add-asterix data)))
     (setf rez (m-op-exclude :^ rez 'vd-expt))
-    (setf rez (m-op-exclude :/ rez 'vd/))
-    (setf rez (m-op-exclude :* rez 'vd*))
-    (setf rez (m-op-exclude :- rez 'vd-))
-    (setf rez (m-op-exclude :+ rez 'vd+))
+    (setf rez (m-op-exclude :/ rez 'vd~/))
+    (setf rez (m-op-exclude :* rez 'vd~*))
+    (setf rez (m-op-exclude :- rez 'vd~-))
+    (setf rez (m-op-exclude :+ rez 'vd~+))
     (first rez)))
 
 (defun rec-quantity (data)

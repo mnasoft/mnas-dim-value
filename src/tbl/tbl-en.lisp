@@ -241,6 +241,7 @@ include SI coherent derived units with special names and symbols")
   (nd-clear)
 ;;; "mass" "масса"  
   (nd "mass" nil "quintal" "q" (vd 100 :kg 1) nil)
+  (nd "mass" nil "carat" "carat" (vd 2/10000 :kg 1) nil)   
 ;;; "angle of rotation" "угол поворота"
   (nd "angle of rotation" nil "turn" "tr" (vd (* 2 pi) :rad 1) nil)  
 ;;; "length" "длина"  
@@ -260,7 +261,11 @@ include SI coherent derived units with special names and symbols")
   (nd "power"  nil "horsepower" "hp"                  (vd (* 75 9.80665d0) :kg 1 :m 2 :s -3 ) nil)
 ;;; "rotational speed" "частота вращения"
   (nd "rotational speed" nil "cycle per second"  "cps" (vd (* pi 2)  :rad 1  :s -1)   nil)
-  (nd "rotational speed" nil "revolution per minute" "rpm" (vd (* pi 2 1/60) :rad 1 :s -1)   nil) 
+  (nd "rotational speed" nil "revolution per minute" "rpm" (vd (* pi 2 1/60) :rad 1 :s -1)   nil)
+;;; "quantity of heat" "количество теплоты"
+  (nd "quantity of heat" nil "calorie" "cal" (vd 4.1868 :kg 1 :m 2  :s -2) '((-30 30)))
+  (nd "quantity of heat" nil "calorie termochemical" "cal_{th}" (vd 4.1840 :kg 1 :m 2  :s -2) '((-30 30)))
+  (nd "heat of chemical reaction" nil "calorie 15-degrees" "cal_{15}" (vd 4.1855 :kg 1 :m 2  :s -2) '((-30 30)))
 ;;;
   (setf *table-9* (nd-get))
   (setf (documentation  '*table-9* 'variable)
