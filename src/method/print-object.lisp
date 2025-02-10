@@ -25,15 +25,15 @@
   "Количество значащих цифр в представлении величин за исключением
 угловых.")
 
-(defparameter *time*
+(defparameter *time* :dhms
   "Формат для печати интервалов времени
-(member :year :mon :day :hour :m :s)
- - :year - год = 365.25 суток;
- - :mon  - месяц = (/ 365.25 12) суток;
+(member :year :mon :d :h :m :s :dhms :hms :ms)
+ - :year - годы = 365.25 суток;
+ - :mon  - месяцы = (/ 365.25 12) суток;
  - :d    - сутки;
- - :h    - час;
- - :m    - минута;
- - :s    - секунда.
+ - :h    - часы;
+ - :m    - минуты;
+ - :s    - секунды.
  - :dhms - сутки, часы, минуты секунды;
  - :hms  - часы, минуты, секунды;
  - :ms   - минуты, секунды.")
@@ -228,11 +228,50 @@
                 ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
           (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign s ss +d-pr+)))))))
 
+;;;;;;;;;;
+
+(defparameter +days-per-year+ 36525/100)
+(defparameter +seconds-per-year+
+  (* +days-per-year+ local-time:+seconds-per-day+))
+(defparameter +seconds-per-month+
+  (* local-time:+seconds-per-day+
+   (/ +days-per-year+ local-time:+months-per-year+)))
+
+(defun time-string (time-in-seconds &key (output *time* ) (units *units*))
+  (let ((time (abs time-in-seconds)))
+    (case output
+      (:year (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [year]") (/ time +seconds-per-year+)))
+      (:mon  (format nil (format nil "~a~a~a"  "~," (max 0 (- units 1)) "f [month]") (/ time +seconds-per-month+)))
+      (:d    (format nil (format nil "~a~a~a"  "~," (max 0 (- units 2)) "f [day]") (/ time local-time:+seconds-per-day+)))
+      (:h    (format nil (format nil "~a~a~a"  "~," (max 0 (- units 3)) "f [hour]") (/ time local-time:+seconds-per-hour+)))
+      (:m    (format nil (format nil "~a~a~a"  "~," (max 0 (- units 4)) "f [minutes]") (/ time local-time:+seconds-per-minute+)))
+      (:s    (format nil (format nil "~a~a~a"  "~," (max 0 (- units 5)) "f [seconds]") time))
+      (:dhms
+       (let* ((d-s (multiple-value-list (truncate time local-time:+seconds-per-day+)))
+              (h-s (multiple-value-list (truncate (second d-s) local-time:+seconds-per-hour+)))
+              (m-s (multiple-value-list (truncate (second h-s) local-time:+seconds-per-minute+))))
+         (format nil
+                 (format nil "~a~a~a"  "~D [day] ~D [hour] ~D [minutes] ~," (max 0 (- units 5)) "f [seconds]")
+                 (first d-s) (first h-s) (first m-s) (second m-s))))
+      (:hms
+       (let* ((h-s (multiple-value-list (truncate time local-time:+seconds-per-hour+)))
+              (m-s (multiple-value-list (truncate (second h-s) local-time:+seconds-per-minute+))))
+         (format nil
+                 (format nil "~a~a~a"  "~D [hour] ~D [minutes] ~," (max 0 (- units 5)) "f [seconds]")
+                 (first h-s) (first m-s) (second m-s))))
+      (:ms (let* ((m-s (multiple-value-list (truncate time local-time:+seconds-per-minute+))))
+         (format nil
+                 (format nil "~a~a~a" "~D [minutes] ~," (max 0 (- units 5)) "f [seconds]")
+                  (first m-s) (second m-s)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defmethod print-object ((x <vd>) o-s)
   (cond
     ((same-dimension (vd-convert "rad") x)
-     (format o-s "~A" (angle-string (<vd>-val x) :output *angle* :a-units *a-units*))
-     )
+     (format o-s "~A" (angle-string (<vd>-val x) :output *angle* :a-units *a-units*)))
+    ((same-dimension (vd-convert "s") x)
+     (format o-s "~A" (time-string (<vd>-val x) :output *time* :units *units*)))
     (t
      (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
        (if find
@@ -252,3 +291,37 @@
 		      ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
 		      ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
 		      ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;
+
+(time-string (* 60 60 24 (* 1.253111111d0 365.25)))
+
+(vd-convert "s")
+
+(setf *units* 8)
+(setf *time* :ms)
+(setf *time* :hms)
+(setf *time* :dhms)
+(setf *time* :s)
+(setf *time* :m)
+(setf *time* :h)
+(setf *time* :mon)
+(setf *time* :year)
+
+
+(defclass <variable> ()
+  ((name     :accessor <variable>-name :initarg :name  :initform "NAME"
+             :documentation "Имя переменной")
+   (value    :accessor <variable>-value :initarg :name  :initform nil
+             :documentation "Значение переменной")
+   (descr    :accessor <variable>-descr :initarg :name  :initform nil
+             :documentation "Описание переменной")
+   (validator :accessor <variable>-descr :initarg :name  :initform '#(lambda (el) (declare (ignore el)) t)
+             :documentation "Функция-валидатор с одним параметром"))
+  (:documentation "Класс предназначен для хранения системных переменных."))
+
+
+
+(make-instance '<variable> )

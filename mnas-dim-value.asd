@@ -148,11 +148,12 @@
                "mnas-dim-value/func"
                "mnas-dim-value/ht-en"
                "mnas-dim-value/ht-ru"
-               
+               "local-time"
                )
   :components ((:module "src/method" 
 		:serial t
                 :components ((:file "method")
+                             (:file "vd-convert")
                              (:file "print-object")))))
 
 (defsystem "mnas-dim-value/const"
