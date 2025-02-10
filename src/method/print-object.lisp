@@ -311,17 +311,23 @@
 (setf *time* :year)
 
 
+(defmethod print-object ((x <variable>) s)
+  (print-unreadable-object (x s :type t)
+    (format s "~A ~A ~A"
+            (<variable>-name x)
+            (<variable>-value x)
+            (<variable>-descr x)
+            (<variable>-validator x))))
+
 (defclass <variable> ()
   ((name     :accessor <variable>-name :initarg :name  :initform "NAME"
              :documentation "Имя переменной")
-   (value    :accessor <variable>-value :initarg :name  :initform nil
+   (value    :accessor <variable>-value :initarg :value  :initform nil
              :documentation "Значение переменной")
-   (descr    :accessor <variable>-descr :initarg :name  :initform nil
+   (descr    :accessor <variable>-descr :initarg :descr  :initform nil
              :documentation "Описание переменной")
-   (validator :accessor <variable>-descr :initarg :name  :initform '#(lambda (el) (declare (ignore el)) t)
+   (validator :accessor <variable>-validator :initarg :name  :initform '#(lambda (el) (declare (ignore el)) t)
              :documentation "Функция-валидатор с одним параметром"))
   (:documentation "Класс предназначен для хранения системных переменных."))
-
-
 
 (make-instance '<variable> )
