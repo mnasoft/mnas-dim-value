@@ -13,6 +13,16 @@
            <nd>-value
            <nd>-coeff
            )
+  (:export <variable>
+           <variable>-name
+           <variable>-value
+           <variable>-descr
+           <variable>-validator
+           )
+  (:export <variable-set>
+           <variable-set>-name
+           <variable-set>-vars
+           )
   (:export *vd-language*
            vd-names
            +vd-names-en+
@@ -60,5 +70,26 @@
   (:documentation "Величина с размерностью. Данный класс служит исключительно для
 удобства в определении чисел с размерностью."))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defclass <variable> ()
+  ((name     :accessor <variable>-name :initarg :name   :initform "variable"
+             :documentation "Имя переменной")
+   (value    :accessor <variable>-value :initarg :value :initform nil
+             :documentation "Значение переменной")
+   (descr    :accessor <variable>-descr :initarg :descr :initform nil
+             :documentation "Описание переменной")
+   (validator :accessor <variable>-validator :initarg   :validator
+              :initform '#(lambda (el) (declare (ignore el)) t)
+             :documentation "Функция-валидатор с одним параметром"))
+  (:documentation "Класс предназначен для хранения системной переменной."))
 
+;;;;
+
+(defclass <variable-set> ()
+  ((name     :accessor <variable-set>-name :initarg :name  :initform "variable-set"
+             :documentation "Имя для множества переменных")
+   (vars     :accessor <variable-set>-vars :initarg :vars
+             :initform (make-hash-table :test #'equal) 
+             :documentation "Имя для множества переменных"))
+  (:documentation "Класс предназначен для хранения множества системных переменных."))

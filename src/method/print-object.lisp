@@ -2,11 +2,22 @@
 
 (in-package :mnas-dim-value/method)
 
-(defparameter *language* :en
-  "Язык вывода (member :en :ru :uk)")
+(defparameter *variable-set* (make-instance '<variable-set>))
 
-(defparameter *angle* :dms
-  "Формат для печати углов
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(insert (make-instance '<variable>
+                 :name "LANGUAGE"
+                 :value :en
+                 :descr "Определяет язык вывода"
+                 :validator #'(lambda (el)
+                                (member el '(:en :ru :uk))))
+        *variable-set*)
+
+(insert (make-instance '<variable>
+                 :name "ANGLE"
+                 :value :dms
+                 :descr "Формат для печати углов
 (member :rad :grad :rot :dms :dm :d :ms :m :s)
  - :rad  - вывод в радианах (круг=2π);
  - :grad - вывод в градах (круг=400 град);
@@ -16,17 +27,30 @@
  - :d    - например: 9.118489°;
  - :ms   - например: 547′06.56″;
  - :m    - например: 547.1093′;
- - :s    - например: 32826.56″.")
+ - :s    - например: 32826.56″."
+                 :validator #'(lambda (el)
+                                (member el '(:rad :grad :rot :dms :dm :d :ms :m :s))))
+        *variable-set*)
 
-(defparameter *a-units* 8
-  "Примерное количество значащих цифр в представлении угловых величин.")
+(insert (make-instance '<variable>
+                 :name "AUNITS"
+                 :value 8
+                 :descr "Примерное количество значащих цифр в представлении угловых величин."
+                 :validator #'(lambda (el)
+                                (and (integerp el) (>= el 0))))
+        *variable-set*)
+(insert (make-instance '<variable>
+                 :name "UNITS"
+                 :value 6
+                 :descr "Примерное количество значащих цифр в представлении угловых величин."
+                 :validator #'(lambda (el)
+                                (and (integerp el) (>= el 0))))
+        *variable-set*)
 
-(defparameter *units* 6
-  "Количество значащих цифр в представлении величин за исключением
-угловых.")
-
-(defparameter *time* :dhms
-  "Формат для печати интервалов времени
+(insert (make-instance '<variable>
+                       :name "TIME"
+                       :value :dhms
+                       :descr "Формат для печати интервалов времени
 (member :year :mon :d :h :m :s :dhms :hms :ms)
  - :year - годы = 365.25 суток;
  - :mon  - месяцы = (/ 365.25 12) суток;
@@ -36,7 +60,24 @@
  - :s    - секунды.
  - :dhms - сутки, часы, минуты секунды;
  - :hms  - часы, минуты, секунды;
- - :ms   - минуты, секунды.")
+ - :ms   - минуты, секунды."
+                       :validator #'(lambda (el)
+                                      (member el '(:year :mon :d :h :m :s :dhms :hms :ms))))
+        *variable-set*)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; <nd>
+(defmethod print-object ((obj <nd>) o-s)
+  (print-unreadable-object (obj o-s :type t :identity nil)
+    (format o-s "~&~4t q-en:~A" (<nd>-quantity    obj))
+    (format o-s "~&~4t u-en:~A" (<nd>-unit-name   obj))
+    (format o-s "~&~4t s-en:~A" (<nd>-unit-symbol obj))
+    (format o-s "~&~4t dim:~A"  (<nd>-dimension   obj))
+    (format o-s "~&~4t val:~A"  (<nd>-value       obj))
+    (format o-s "~&~4t c:~A"    (<nd>-coeff       obj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; <vd>
 
 (defconstant +d-s+  #\DEGREE_SIGN)
 (defconstant +pr+   #\PRIME)
@@ -44,7 +85,8 @@
 (defconstant +t-pr+ #\TRIPLE_PRIME)
 (defconstant +q-pr+ #\QUADRUPLE_PRIME)
 
-(defun angle-string (angle &key (output *angle*) (force-sign nil) (a-units *a-units*)) ;;
+
+(defun angle-string (angle &key (output (get-env "ANGLE" *variable-set*)) (force-sign nil) (a-units (get-env "AUNITS" *variable-set*)))
   "@b(Описание:) функция|метод|обобщенная_функция| @b(angle-string)
  возвращает строку, представляющую угловую меру угла.
 
@@ -228,7 +270,7 @@
                 ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
           (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign s ss +d-pr+)))))))
 
-;;;;;;;;;;
+;;;;
 
 (defparameter +days-per-year+ 36525/100)
 (defparameter +seconds-per-year+
@@ -237,7 +279,7 @@
   (* local-time:+seconds-per-day+
    (/ +days-per-year+ local-time:+months-per-year+)))
 
-(defun time-string (time-in-seconds &key (output *time* ) (units *units*))
+(defun time-string (time-in-seconds &key (output (get-env "TIME" *variable-set*)) (get-env "UNITS" *variable-set*)) 
   (let ((time (abs time-in-seconds)))
     (case output
       (:year (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [year]") (/ time +seconds-per-year+)))
@@ -264,14 +306,14 @@
                  (format nil "~a~a~a" "~D [minutes] ~," (max 0 (- units 5)) "f [seconds]")
                   (first m-s) (second m-s)))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
 
 (defmethod print-object ((x <vd>) o-s)
   (cond
     ((same-dimension (vd-convert "rad") x)
-     (format o-s "~A" (angle-string (<vd>-val x) :output *angle* :a-units *a-units*)))
+     (format o-s "~A" (angle-string (<vd>-val x) :output (get-env "ANGLE" *variable-set*) :a-units (get-env "AUNITS" *variable-set*))))
     ((same-dimension (vd-convert "s") x)
-     (format o-s "~A" (time-string (<vd>-val x) :output *time* :units *units*)))
+     (format o-s "~A" (time-string (<vd>-val x) :output (get-env "TIME" *variable-set*) :units (get-env "UNITS" *variable-set*))))
     (t
      (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
        (if find
@@ -293,41 +335,69 @@
 		      ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;
-
-(time-string (* 60 60 24 (* 1.253111111d0 365.25)))
-
-(vd-convert "s")
-
-(setf *units* 8)
-(setf *time* :ms)
-(setf *time* :hms)
-(setf *time* :dhms)
-(setf *time* :s)
-(setf *time* :m)
-(setf *time* :h)
-(setf *time* :mon)
-(setf *time* :year)
-
+;;;; <variable>
 
 (defmethod print-object ((x <variable>) s)
   (print-unreadable-object (x s :type t)
-    (format s "~A ~A ~A"
+    (format s "Name: ~A Value: ~S Descr: ~A~%Validator:~S"
             (<variable>-name x)
             (<variable>-value x)
             (<variable>-descr x)
             (<variable>-validator x))))
 
-(defclass <variable> ()
-  ((name     :accessor <variable>-name :initarg :name  :initform "NAME"
-             :documentation "Имя переменной")
-   (value    :accessor <variable>-value :initarg :value  :initform nil
-             :documentation "Значение переменной")
-   (descr    :accessor <variable>-descr :initarg :descr  :initform nil
-             :documentation "Описание переменной")
-   (validator :accessor <variable>-validator :initarg :name  :initform '#(lambda (el) (declare (ignore el)) t)
-             :documentation "Функция-валидатор с одним параметром"))
-  (:documentation "Класс предназначен для хранения системных переменных."))
+(defmethod print-object ((x <variable-set>) s)
+  (print-unreadable-object (x s :type t)
+    (format s "Name: ~S~%"
+            (<variable-set>-name x))
+    (loop :for k :in (alexandria:hash-table-keys (<variable-set>-vars *variable-set*))
+          :for v :in (alexandria:hash-table-values (<variable-set>-vars *variable-set*))
+          :do (format s "~S = ~S~%" k (<variable>-value v)))))
 
-(make-instance '<variable> )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmethod insert ((variable <variable>) (variable-set <variable-set>))
+  (setf
+   (gethash
+    (<variable>-name variable)
+    (<variable-set>-vars variable-set))
+   variable))
+
+(defmethod insert ((variable <variable>) (variable-set <variable-set>))
+  (setf
+   (gethash
+    (<variable>-name variable)
+    (<variable-set>-vars variable-set))
+   variable))
+
+(defmethod set-variable (value (variable <variable>))
+  (when (funcall (<variable>-validator variable) value)
+    (setf (<variable>-value variable) value)))
+
+(defmethod get-variable ((variable <variable>))
+  (<variable>-value variable))
+
+(defmethod get-env ((name string) (variable-set <variable-set>))
+  (<variable>-value (gethash name (<variable-set>-vars *variable-set*))))
+
+(defmethod set-env (value (name string) (variable-set <variable-set>))
+  (set-variable value (gethash name (<variable-set>-vars variable-set))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+(set-variable :uk *variable*)
+(get-variable *variable*)
+
+(get-env "LANGUAGE" *variable-set*)
+(get-env "ANGLE"    *variable-set*)
+
+(set-env :dm "ANGLE" *variable-set*)
+
+(vd-convert "30°20′22.5″")
+
+(set-env :dm "ANGLE" *variable-set*)
+
+(set-env 8 "UNITS" *variable-set*)
+

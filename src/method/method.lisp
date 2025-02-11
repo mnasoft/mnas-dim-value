@@ -409,26 +409,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmethod print-object ((obj <nd>) o-s)
-  (print-unreadable-object (obj o-s :type t :identity nil)
-    (format o-s "~&~4t q-en:~A" (<nd>-quantity    obj))
-    (format o-s "~&~4t u-en:~A" (<nd>-unit-name   obj))
-    (format o-s "~&~4t s-en:~A" (<nd>-unit-symbol obj))
-    (format o-s "~&~4t dim:~A"  (<nd>-dimension   obj))
-    (format o-s "~&~4t val:~A"  (<nd>-value       obj))
-    (format o-s "~&~4t c:~A"    (<nd>-coeff       obj))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(vd~/ (vd~* "20d" "N" "m") "rad")
-(vd~/ (vd~* "20d" "N" "m") "rad" "kg")
-
-(vd-convert "45d0'0\"")
-
-(setf *angle* :rot)
-(setf *a-units* 4)
