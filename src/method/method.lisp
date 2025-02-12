@@ -157,8 +157,8 @@
 	(item nil)
 	(quantity-name-language
 	 (cond
-	   ((eq vd-language :en) #'<nd>-quantity-name-en)
-	   ((eq vd-language :ru) #'<nd>-quantity-name-ru))))
+	   ((eq vd-language :en) #'<nd>-quantity)
+	   ((eq vd-language :ru) #'<nd>-quantity))))
     (mapc
      #'(lambda (el)
 	 (when (equal (<vd>-dims (<nd>-value el))
@@ -167,7 +167,7 @@
 	   (cond
 	     ((stringp item) (push item rez))
 	     ((listp item) (setf rez (append item rez))))))
-     (apply #'append *nd-list*))
+     (apply #'append mnas-dim-value/ht-en:*nd-list*))
     (remove-duplicates rez :test #'equal)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -409,6 +409,32 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defmethod insert ((variable <variable>) (variable-set <variable-set>))
+  (setf
+   (gethash
+    (<variable>-name variable)
+    (<variable-set>-vars variable-set))
+   variable))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defmethod insert ((variable <variable>) (variable-set <variable-set>))
+  (setf
+   (gethash
+    (<variable>-name variable)
+    (<variable-set>-vars variable-set))
+   variable))
 
+(defmethod set-variable (value (variable <variable>))
+  (when (funcall (<variable>-validator variable) value)
+    (setf (<variable>-value variable) value)))
+
+(defmethod get-variable ((variable <variable>))
+  (<variable>-value variable))
+
+(defmethod get-env ((name string) (variable-set <variable-set>))
+  (<variable>-value (gethash name (<variable-set>-vars *variable-set*))))
+
+(defmethod descr-env ((name string) (variable-set <variable-set>))
+  (<variable>-descr (gethash name (<variable-set>-vars *variable-set*))))
+
+(defmethod set-env (value (name string) (variable-set <variable-set>))
+  (set-variable value (gethash name (<variable-set>-vars variable-set))))

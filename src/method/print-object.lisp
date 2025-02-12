@@ -15,6 +15,17 @@
         *variable-set*)
 
 (insert (make-instance '<variable>
+                 :name "SI"
+                 :value :adaptive
+                 :descr "Формат для печати единиц измерения в виде перемножения единиц SI.
+(member :force :adaptive)
+ - :force    - вывод в виде перемножения единиц SI;
+ - :adaptive - выполнять адаптацию."
+                 :validator #'(lambda (el)
+                                (member el '(:force :adaptive))))
+        *variable-set*)
+
+(insert (make-instance '<variable>
                  :name "ANGLE"
                  :value :dms
                  :descr "Формат для печати углов
@@ -279,7 +290,10 @@
   (* local-time:+seconds-per-day+
    (/ +days-per-year+ local-time:+months-per-year+)))
 
-(defun time-string (time-in-seconds &key (output (get-env "TIME" *variable-set*)) (get-env "UNITS" *variable-set*)) 
+(defun time-string (time-in-seconds
+                    &key
+                      (output (get-env "TIME" *variable-set*))
+                      (units (get-env "UNITS" *variable-set*)))
   (let ((time (abs time-in-seconds)))
     (case output
       (:year (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [year]") (/ time +seconds-per-year+)))
@@ -309,30 +323,38 @@
 ;;;;
 
 (defmethod print-object ((x <vd>) o-s)
-  (cond
-    ((same-dimension (vd-convert "rad") x)
-     (format o-s "~A" (angle-string (<vd>-val x) :output (get-env "ANGLE" *variable-set*) :a-units (get-env "AUNITS" *variable-set*))))
-    ((same-dimension (vd-convert "s") x)
-     (format o-s "~A" (time-string (<vd>-val x) :output (get-env "TIME" *variable-set*) :units (get-env "UNITS" *variable-set*))))
-    (t
-     (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
-       (if find
-	   (format o-s "~S [~A]" (<vd>-val x) dimens)
-	   (progn (format o-s "~S " (<vd>-val x))
-	          (let ((st+ nil)
-		        (st- nil))
-		    (map nil
-		         #'(lambda (v d)
-			     (cond
-			       ((< 1  v) (push (format nil "~A^~A" d v) st+))
-			       ((= 1  v) (push (format nil "~A"    d  ) st+))
-     			       ((= v -1) (push (format nil "~A"    d  ) st-))
-			       ((< v -1) (push (format nil "~A^~A" d v) st-))))
-		         (<vd>-dims x) (vd-names))
-		    (cond 
-		      ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
-		      ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
-		      ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))))))
+  (labels ((foo (x)
+             (format o-s "~S " (<vd>-val x))
+	     (let ((st+ nil)
+		   (st- nil))
+	       (map nil
+		    #'(lambda (v d)
+			(cond
+			  ((< 1  v) (push (format nil "~A^~A" d v) st+))
+			  ((= 1  v) (push (format nil "~A"    d  ) st+))
+     			  ((= v -1) (push (format nil "~A"    d  ) st-))
+			  ((< v -1) (push (format nil "~A^~A" d v) st-))))
+		    (<vd>-dims x) (vd-names))
+	       (cond 
+		 ((and st+ (null st-)) (format o-s "[~{~A~^*~}]"           (nreverse st+) ))
+		 ((and st+ st-)        (format o-s "[~{~A~^*~}/~{~A~^*~}]" (nreverse st+) (nreverse st-)))
+		 ((and (null st+) st-) (format o-s "[1/~{~A~^*~}]"         (nreverse st-)))))))
+    (cond
+      ((eq :force (get-env "SI" *variable-set*))
+       (foo x))
+      ((and (eq :adaptive (get-env "SI" *variable-set*))
+            (same-dimension (vd-convert "rad") x))
+       (format o-s "~A" (angle-string (<vd>-val x) :output (get-env "ANGLE" *variable-set*) :a-units (get-env "AUNITS" *variable-set*))))
+      ((and (eq :adaptive (get-env "SI" *variable-set*))
+            (same-dimension (vd-convert "s") x))
+       (format o-s "~A" (time-string (<vd>-val x) :output (get-env "TIME" *variable-set*) :units (get-env "UNITS" *variable-set*))))
+      (and (eq :adaptive (get-env "SI" *variable-set*))
+           (same-dimension (vd~/ "J" "kg") x))
+      (t
+       (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
+         (if find
+	     (format o-s "~S [~A]" (<vd>-val x) dimens)
+	     (foo x)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; <variable>
@@ -345,6 +367,9 @@
             (<variable>-descr x)
             (<variable>-validator x))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; <variable-set>
+
 (defmethod print-object ((x <variable-set>) s)
   (print-unreadable-object (x s :type t)
     (format s "Name: ~S~%"
@@ -355,49 +380,24 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defmethod insert ((variable <variable>) (variable-set <variable-set>))
-  (setf
-   (gethash
-    (<variable>-name variable)
-    (<variable-set>-vars variable-set))
-   variable))
-
-(defmethod insert ((variable <variable>) (variable-set <variable-set>))
-  (setf
-   (gethash
-    (<variable>-name variable)
-    (<variable-set>-vars variable-set))
-   variable))
-
-(defmethod set-variable (value (variable <variable>))
-  (when (funcall (<variable>-validator variable) value)
-    (setf (<variable>-value variable) value)))
-
-(defmethod get-variable ((variable <variable>))
-  (<variable>-value variable))
-
-(defmethod get-env ((name string) (variable-set <variable-set>))
-  (<variable>-value (gethash name (<variable-set>-vars *variable-set*))))
-
-(defmethod set-env (value (name string) (variable-set <variable-set>))
-  (set-variable value (gethash name (<variable-set>-vars variable-set))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-
-(set-variable :uk *variable*)
-(get-variable *variable*)
 
 (get-env "LANGUAGE" *variable-set*)
 (get-env "ANGLE"    *variable-set*)
 
+(set-env :force "SI" *variable-set*)
+(set-env :adaptive "SI" *variable-set*)
+(descr-env "SI"    *variable-set*)
 (set-env :dm "ANGLE" *variable-set*)
-
 (vd-convert "30°20′22.5″")
 
 (set-env :dm "ANGLE" *variable-set*)
-
 (set-env 8 "UNITS" *variable-set*)
+
+(vd~/ "J" "kg") (vd~* "Sv")
+
+
+(quantity-name (vd~/ "J" "kg"))
+
+(unit-name (vd~/ "J" "kg"))
+
 
