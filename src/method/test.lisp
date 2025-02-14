@@ -1,7 +1,11 @@
 (in-package :mnas-dim-value/method)
 
-(vd~/ (vd~* "20d" "N" "m") "rad")
-(vd~/ (vd~* "20d" "N" "m") "rad" "kg")
+(set-env :force "SI" *variable-set*)
+(set-env :adaptive "SI" *variable-set*)
+(vd-convert "m")
+
+(vd~/ (vd~* "20d0′0″" "N" :m) :rad)
+(vd~/ (vd~* "20d" "N" "m") :rad :kg)
 
 (vd-convert "45d0'0\"")
 
@@ -24,3 +28,21 @@
              
 (setf *units* 8)
 
+(get-env "LANGUAGE" *variable-set*)
+(get-env "ANGLE"    *variable-set*)
+
+
+(descr-env "SI"    *variable-set*)
+(set-env :dm "ANGLE" *variable-set*)
+(vd-convert "30°20′22.5″")
+
+(set-env :dm "ANGLE" *variable-set*)
+(set-env 8 "UNITS" *variable-set*)
+
+(vd~/ "J" "kg") (vd~* "Sv")
+
+(vd~sin "18°")
+
+(quantity-name (vd~/ "N" "m" "m"))
+
+;; (unit-name (vd~/ "J" "kg"))

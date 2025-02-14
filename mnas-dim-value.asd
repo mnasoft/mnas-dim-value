@@ -37,7 +37,7 @@
   :description "Система определяет классы"
   
   :serial nil
-  ;;;; :depends-on ()
+  :depends-on ("mnas-dim-value/vars")
   :components ((:module "src/class"
 		:serial nil
                 :components ((:file "class")))))
@@ -139,10 +139,18 @@
 		:serial nil
                 :components ((:file "ht-ru")))))
 
+(defsystem "mnas-dim-value/vars"
+  :description "Система определяет методы"
+  :serial nil
+  :components ((:module "src/vars" 
+		:serial t
+                :components ((:file "vars")))))
+
 (defsystem "mnas-dim-value/method"
   :description "Система определяет методы"
   :serial nil
   :depends-on ("mnas-hash-table"
+               "mnas-dim-value/vars"
                "mnas-dim-value/generic" 
                "mnas-dim-value/class"
                "mnas-dim-value/func"
@@ -153,7 +161,11 @@
   :components ((:module "src/method" 
 		:serial t
                 :components ((:file "method")
-                             (:file "vd-convert")
+                             (:file "vd-convert")                             
+                             (:file "dimensionp")
+                             (:file "quantity-name")
+                             (:file "same-dimension")
+                             (:file "unit-name")
                              (:file "print-object")))))
 
 (defsystem "mnas-dim-value/const"

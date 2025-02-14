@@ -2,6 +2,7 @@
 
 (defpackage :mnas-dim-value/method
   (:use #:cl
+        #:mnas-dim-value/vars
         #:mnas-dim-value/func
         #:mnas-dim-value/class
         #:mnas-dim-value/mk-class
@@ -12,6 +13,12 @@
         )
   (:export dim->unit-symbol
            dimensionp
+           same-dimension
+           vd-convert
+           unit-name
+           quantity-name
+           )
+  (:export vd~simplify               ; Удаление радианов и стерадианов
            )
   (:export vd~+                 ; Сложение
            vd~-                 ; Вычирание
@@ -42,34 +49,19 @@
            )
   (:export print-object
            vd-print
-           same-dimension
-           vd-convert
-           unit-name
-           quantity-name
            )
-  (:export angle-string)
+  (:intern angle-string)
   )
-
 
 (in-package :mnas-dim-value/method)
 
 (defun dim->unit-symbol ()
-    (cond ((eq *vd-language* :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
-	  (t                      mnas-dim-value/ht-en:*dim->unit-symbol*)))
+  (cond ((eq (get-env "LANGUAGE" *variable-set*) :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
+	(t mnas-dim-value/ht-en:*dim->unit-symbol*)))
+
+;;(alexandria:hash-table-values mnas-dim-value/ht-en:*dim->unit-symbol*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun dimensionp (str)
-"@b(Описание:) функция dimensionp 
-@begin[lang=lisp](code)
-   (dimensionp \"m\")                 => 1 m
-   (dimensionp (string-upcase \"t\")) => 1 T
-   (dimensionp \"Pa\")                => 1 Pa
- ;;(dimensionp \"knot\")
-@end(code)
-"
-  (multiple-value-bind (val find) (gethash str mnas-dim-value/ht-en:*nm->value*)
-    (if find val nil)))
 
 (let ((+format+ :f-01)
       (+unit-symbol+ '("m" "kg" "s" "A" "K" "cd" "mol" "rad" "sr"))
@@ -99,77 +91,6 @@
 (defmethod vd-print ((s string) &optional (o-stream t) &aux (x (vd-convert s)))
   (vd-print x o-stream))
 
-(defmethod same-dimension ((x <vd>) (y <vd>))
-  "Проверяет два числа с размерностью на совпадение"
-  (equal (<vd>-dims x) (<vd>-dims y)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defmethod vd-convert ((x <vd>))
-  x)
-
-(defmethod vd-convert ((x number))
-  (vd x))
-
-(defmethod vd-convert ((x string))
-  (multiple-value-bind (val find) (gethash x mnas-dim-value/ht-en:*nm->value*)
-    (if find
-        val
-        (progn
-          (format t "~&Размерность ~S неизвестна: заменяю ~S -> ~S~%"
-                  x x (vd 1.0))
-          (vd 1.0)))))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defmethod unit-name ((x <vd>) o-s)
-  (multiple-value-bind (dimens find)
-      (gethash (<vd>-dims x) (cond ((eq *vd-language* :ru) *dim->unit-symbol-ru*)
-				   (t *dim->unit-symbol-en*)))
-    (if find
-	(format o-s "~A" dimens)
-	(progn (format o-s "[" )
-	       (mapc #'(lambda (no str)
-			 (cond
-			   ((= (nth no (<vd>-dims x)) 1) (format o-s (concatenate 'string str "")))
-			   ((/= (nth no (<vd>-dims x)) 0) (format o-s (concatenate 'string str "^~A") (nth no (<vd>-dims x))))))
-		     '( 0    1   2   3   4    5     6     7    8)
-		     (cond
-		       ((eq *vd-language* :en) +vd-names-en+)
-		       ((eq *vd-language* :ru) +vd-names-ru+)))
-	       (format o-s "]")))))
- 
-(defmethod quantity-name ((value <vd>) &key (vd-language *vd-language*))
-  "Возвращает наименование величины.
-Пример использования:
-
- @b(Пример использования:)
-@begin[lang=lisp](code)
-  (quantity-name (vd/ \"kg\" \"m\" \"m\" \"m\") :vd-language :en)
-  => (\"density\" \"mass density\")
-  (quantity-name (vd/ (vd* \"kg\" *g*) (vd-expt (vd* 0.01 \"m\") 2) 1000))
-@end(code)
-
-"
-  (let ((rez nil)
-	(item nil)
-	(quantity-name-language
-	 (cond
-	   ((eq vd-language :en) #'<nd>-quantity)
-	   ((eq vd-language :ru) #'<nd>-quantity))))
-    (mapc
-     #'(lambda (el)
-	 (when (equal (<vd>-dims (<nd>-value el))
-		      (<vd>-dims value))
-	   (setf item (funcall quantity-name-language el))
-	   (cond
-	     ((stringp item) (push item rez))
-	     ((listp item) (setf rez (append item rez))))))
-     (apply #'append mnas-dim-value/ht-en:*nd-list*))
-    (remove-duplicates rez :test #'equal)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun vd~+ (&rest args)
@@ -188,12 +109,6 @@
     (make-instance '<vd>
                    :dims (copy-list (<vd>-dims (first lst)))
                    :val val)))
-
-(defmethod mult ((x <vd>) (y <vd>) )
-  (let ((rez (vd 0)))
-    (setf (<vd>-val rez) (* (<vd>-val x) (<vd>-val y))
-	  (<vd>-dims rez) (mapcar #'+ (<vd>-dims x) (<vd>-dims y)))
-    rez))
 
 (defun vd~* (&rest args)
 "Перемножение чисел с размерностью."
@@ -280,7 +195,7 @@
 
 (defun vd~sin (x)
   "Синус."
-  (let* ((vd (vd-convert x))
+  (let* ((vd  (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
     (make-instance '<vd>
@@ -288,7 +203,7 @@
                    :val  (sin val))))
 (defun vd~cos (x)
   "Косинус."
-  (let* ((vd (vd-convert x))
+  (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
     (make-instance '<vd>
@@ -297,7 +212,7 @@
 
 (defun vd~tan (x)
   "Тангенс."
-  (let* ((vd (vd-convert x))
+  (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
     (make-instance '<vd>
@@ -306,30 +221,33 @@
 
 (defun vd~asin (x)
   "Арксинус."
-  (let* ((vd (vd-convert x))
+  (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (make-instance '<vd>
-                   :dims (copy-list dim)
-                   :val  (asin val))))
+    (vd~* "rad"
+          (make-instance '<vd>
+                         :dims (copy-list dim)
+                         :val  (asin val)))))
 
 (defun vd~acos (x)
   "Арккосинус."
-  (let* ((vd (vd-convert x))
+  (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (make-instance '<vd>
-                   :dims (copy-list dim)
-                   :val  (acos val))))
+    (vd~* "rad"
+          (make-instance '<vd>
+                         :dims (copy-list dim)
+                         :val  (acos val)))))
 
 (defun vd~atan (y &optional (x (vd 1)))
   "Арктангенс."
-  (let* ((vd  (vd~/ y x))
+  (let* ((vd  (vd~simplify (vd~/ y x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (make-instance '<vd>
-                   :dims (copy-list dim)
-                   :val  (atan val))))
+    (vd~* "rad"
+          (make-instance '<vd>
+                         :dims (copy-list dim)
+                         :val  (atan val)))))
 
 (defun vd~sinh (x)
   "Синус гиперболический."
@@ -407,34 +325,3 @@
     (and (equalp (<vd>-val  x-vd) (<vd>-val  y-vd))
          (equalp (<vd>-dims  x-vd) (<vd>-dims  y-vd)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defmethod insert ((variable <variable>) (variable-set <variable-set>))
-  (setf
-   (gethash
-    (<variable>-name variable)
-    (<variable-set>-vars variable-set))
-   variable))
-
-(defmethod insert ((variable <variable>) (variable-set <variable-set>))
-  (setf
-   (gethash
-    (<variable>-name variable)
-    (<variable-set>-vars variable-set))
-   variable))
-
-(defmethod set-variable (value (variable <variable>))
-  (when (funcall (<variable>-validator variable) value)
-    (setf (<variable>-value variable) value)))
-
-(defmethod get-variable ((variable <variable>))
-  (<variable>-value variable))
-
-(defmethod get-env ((name string) (variable-set <variable-set>))
-  (<variable>-value (gethash name (<variable-set>-vars *variable-set*))))
-
-(defmethod descr-env ((name string) (variable-set <variable-set>))
-  (<variable>-descr (gethash name (<variable-set>-vars *variable-set*))))
-
-(defmethod set-env (value (name string) (variable-set <variable-set>))
-  (set-variable value (gethash name (<variable-set>-vars variable-set))))

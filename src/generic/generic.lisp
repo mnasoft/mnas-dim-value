@@ -27,7 +27,7 @@
 x и y имеют одинаковую размерность, и NIL в проивном случае.")
   )
 
-(defgeneric unit-name (x stream)
+(defgeneric unit-name (x)
   (:documentation
    "Возвращает наименование размерности."))
 

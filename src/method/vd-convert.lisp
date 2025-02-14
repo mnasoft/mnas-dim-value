@@ -42,6 +42,24 @@
                     :finally (return (* sign dms (/ pi 180)))))
             nil)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; vd-convert
+
+(defmethod vd-convert ((x <vd>))
+  x)
+
+(defmethod vd-convert ((x number))
+  (vd x))
+
+(defmethod vd-convert ((x string))
+  (multiple-value-bind (val find) (gethash x mnas-dim-value/ht-en:*nm->value*)
+    (if find
+        val
+        (progn
+          (format t "~&Размерность ~S неизвестна: заменяю ~S -> ~S~%"
+                  x x (vd 1.0))
+          (vd 1.0)))))
+
 (defmethod vd-convert ((x string))
   (let ((dms (degrees-minutes-seconds-to-radians x)))
     (when dms (return-from vd-convert (vd~* dms "rad"))))
@@ -59,3 +77,16 @@
     (format t "~&Размерность ~S неизвестна: заменяю ~S -> ~S~%"
             x x (vd 0.0))
     (vd 0.0)))
+
+(defmethod vd-convert ((x symbol))
+  (case x
+    (:m   (vd 1  :m   1 ))
+    (:kg  (vd 1  :kg  1 ))
+    (:s   (vd 1  :s   1 ))
+    (:A   (vd 1  :A   1 ))
+    (:K   (vd 1  :K   1 ))
+    (:cd  (vd 1  :cd  1 ))
+    (:mol (vd 1 :mol  1 ))
+    (:rad (vd 1 :rad  1 ))
+    (:sr  (vd 1 :sr   1 ))
+    (otherwise (vd 1))))

@@ -2,80 +2,6 @@
 
 (in-package :mnas-dim-value/method)
 
-(defparameter *variable-set* (make-instance '<variable-set>))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(insert (make-instance '<variable>
-                 :name "LANGUAGE"
-                 :value :en
-                 :descr "Определяет язык вывода"
-                 :validator #'(lambda (el)
-                                (member el '(:en :ru :uk))))
-        *variable-set*)
-
-(insert (make-instance '<variable>
-                 :name "SI"
-                 :value :adaptive
-                 :descr "Формат для печати единиц измерения в виде перемножения единиц SI.
-(member :force :adaptive)
- - :force    - вывод в виде перемножения единиц SI;
- - :adaptive - выполнять адаптацию."
-                 :validator #'(lambda (el)
-                                (member el '(:force :adaptive))))
-        *variable-set*)
-
-(insert (make-instance '<variable>
-                 :name "ANGLE"
-                 :value :dms
-                 :descr "Формат для печати углов
-(member :rad :grad :rot :dms :dm :d :ms :m :s)
- - :rad  - вывод в радианах (круг=2π);
- - :grad - вывод в градах (круг=400 град);
- - :rot  - вывод в оборотах;
- - :dms  - например: 9°07′06.56″;
- - :dm   - например: 9°07.1093′;
- - :d    - например: 9.118489°;
- - :ms   - например: 547′06.56″;
- - :m    - например: 547.1093′;
- - :s    - например: 32826.56″."
-                 :validator #'(lambda (el)
-                                (member el '(:rad :grad :rot :dms :dm :d :ms :m :s))))
-        *variable-set*)
-
-(insert (make-instance '<variable>
-                 :name "AUNITS"
-                 :value 8
-                 :descr "Примерное количество значащих цифр в представлении угловых величин."
-                 :validator #'(lambda (el)
-                                (and (integerp el) (>= el 0))))
-        *variable-set*)
-(insert (make-instance '<variable>
-                 :name "UNITS"
-                 :value 6
-                 :descr "Примерное количество значащих цифр в представлении угловых величин."
-                 :validator #'(lambda (el)
-                                (and (integerp el) (>= el 0))))
-        *variable-set*)
-
-(insert (make-instance '<variable>
-                       :name "TIME"
-                       :value :dhms
-                       :descr "Формат для печати интервалов времени
-(member :year :mon :d :h :m :s :dhms :hms :ms)
- - :year - годы = 365.25 суток;
- - :mon  - месяцы = (/ 365.25 12) суток;
- - :d    - сутки;
- - :h    - часы;
- - :m    - минуты;
- - :s    - секунды.
- - :dhms - сутки, часы, минуты секунды;
- - :hms  - часы, минуты, секунды;
- - :ms   - минуты, секунды."
-                       :validator #'(lambda (el)
-                                      (member el '(:year :mon :d :h :m :s :dhms :hms :ms))))
-        *variable-set*)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; <nd>
 (defmethod print-object ((obj <nd>) o-s)
@@ -95,7 +21,6 @@
 (defconstant +d-pr+ #\DOUBLE_PRIME)
 (defconstant +t-pr+ #\TRIPLE_PRIME)
 (defconstant +q-pr+ #\QUADRUPLE_PRIME)
-
 
 (defun angle-string (angle &key (output (get-env "ANGLE" *variable-set*)) (force-sign nil) (a-units (get-env "AUNITS" *variable-set*)))
   "@b(Описание:) функция|метод|обобщенная_функция| @b(angle-string)
@@ -320,6 +245,15 @@
                  (format nil "~a~a~a" "~D [minutes] ~," (max 0 (- units 5)) "f [seconds]")
                   (first m-s) (second m-s)))))))
 
+
+(defun specific-energy-string (value
+                               &key
+                                 (output (get-env "SPECIFIC-ENERGY" *variable-set*))
+                                 (units (get-env "UNITS" *variable-set*)))
+  (case output
+    (:Sv   (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [Sv]")   value))
+    (:J/kg (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [J/kg]") value))
+    (:Gy   (format nil (format nil "~a~a~a"  "~," (max 0 units) "f [Gy]")   value))))
 ;;;;
 
 (defmethod print-object ((x <vd>) o-s)
@@ -344,12 +278,21 @@
        (foo x))
       ((and (eq :adaptive (get-env "SI" *variable-set*))
             (same-dimension (vd-convert "rad") x))
-       (format o-s "~A" (angle-string (<vd>-val x) :output (get-env "ANGLE" *variable-set*) :a-units (get-env "AUNITS" *variable-set*))))
+       (format o-s "~A"
+               (angle-string (<vd>-val x)
+                             :output (get-env "ANGLE" *variable-set*)
+                             :a-units (get-env "AUNITS" *variable-set*))))
       ((and (eq :adaptive (get-env "SI" *variable-set*))
             (same-dimension (vd-convert "s") x))
-       (format o-s "~A" (time-string (<vd>-val x) :output (get-env "TIME" *variable-set*) :units (get-env "UNITS" *variable-set*))))
-      (and (eq :adaptive (get-env "SI" *variable-set*))
-           (same-dimension (vd~/ "J" "kg") x))
+       (format o-s "~A" (time-string (<vd>-val x)
+                                     :output (get-env "TIME" *variable-set*)
+                                     :units (get-env "UNITS" *variable-set*))))
+      ((and (eq :adaptive (get-env "SI" *variable-set*))
+            (same-dimension (vd~/ "J" "kg") x))
+       (format o-s "~A" (specific-energy-string (<vd>-val x)
+                         :output (get-env "SPECIFIC-ENERGY" *variable-set*)
+                         :units (get-env "UNITS" *variable-set*))))
+
       (t
        (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
          (if find
@@ -357,47 +300,9 @@
 	     (foo x)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; <variable>
 
-(defmethod print-object ((x <variable>) s)
-  (print-unreadable-object (x s :type t)
-    (format s "Name: ~A Value: ~S Descr: ~A~%Validator:~S"
-            (<variable>-name x)
-            (<variable>-value x)
-            (<variable>-descr x)
-            (<variable>-validator x))))
+(quantity-name (vd-convert "Sv")) ; => ("dose equivalent" "absorbed dose, kerma" "specific energy")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; <variable-set>
-
-(defmethod print-object ((x <variable-set>) s)
-  (print-unreadable-object (x s :type t)
-    (format s "Name: ~S~%"
-            (<variable-set>-name x))
-    (loop :for k :in (alexandria:hash-table-keys (<variable-set>-vars *variable-set*))
-          :for v :in (alexandria:hash-table-values (<variable-set>-vars *variable-set*))
-          :do (format s "~S = ~S~%" k (<variable>-value v)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(unit-name (vd-convert "Sv")) 
 
 (get-env "LANGUAGE" *variable-set*)
-(get-env "ANGLE"    *variable-set*)
-
-(set-env :force "SI" *variable-set*)
-(set-env :adaptive "SI" *variable-set*)
-(descr-env "SI"    *variable-set*)
-(set-env :dm "ANGLE" *variable-set*)
-(vd-convert "30°20′22.5″")
-
-(set-env :dm "ANGLE" *variable-set*)
-(set-env 8 "UNITS" *variable-set*)
-
-(vd~/ "J" "kg") (vd~* "Sv")
-
-
-(quantity-name (vd~/ "J" "kg"))
-
-(unit-name (vd~/ "J" "kg"))
-
-

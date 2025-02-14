@@ -130,7 +130,7 @@
 @end(code)
 "
   (let ((q-name
-          (if (eq mnas-dim-value/class:*vd-language* :ru) 
+          (if (eq (get-env "LANGUAGE" *variable-set*) :ru)
               #'<nd>-quantity
               #'<nd>-quantity ;; Что-то нужно сделать
               )))
@@ -140,7 +140,7 @@
                 :collect (string-trim '(#\Space #\Tab) part))
             :into rez
           :finally (return (delete-duplicates (sort rez #'string<) :test #'equal)))))
-<nd>
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *help*

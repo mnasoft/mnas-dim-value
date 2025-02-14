@@ -1,7 +1,9 @@
 ;;;; mnas-dim-value.lisp
 
 (defpackage :mnas-dim-value/class
-  (:use       #:cl )
+  (:use       #:cl
+              #:mnas-dim-value/vars
+              )
   (:export <vd>
            <vd>-val
            <vd>-dims)
@@ -13,17 +15,7 @@
            <nd>-value
            <nd>-coeff
            )
-  (:export <variable>
-           <variable>-name
-           <variable>-value
-           <variable>-descr
-           <variable>-validator
-           )
-  (:export <variable-set>
-           <variable-set>-name
-           <variable-set>-vars
-           )
-  (:export *vd-language*
+  (:export 
            vd-names
            +vd-names-en+
            +vd-names-ru+
@@ -31,16 +23,15 @@
 
 (in-package :mnas-dim-value/class)
 
-(defparameter *vd-language* :en
-  "Язык (member :en :ru)")
-
 (defvar +vd-names-en+ '("m" "kg" "s" "A" "K" "cd" "mol"  "rad" "sr"))
 
 (defvar +vd-names-ru+ '("м" "кг" "с" "А" "К" "кд" "моль" "рад" "ср"))
 
+mnas-dim-value/vars:*variable-set*
+
 (defun vd-names ()
   (cond
-    ((eq *vd-language* :ru) +vd-names-ru+)
+    ((eq (get-env "LANGUAGE" *variable-set*) :ru) +vd-names-ru+)
     (t                      +vd-names-en+)))
 
 (defclass <vd> ()
@@ -72,24 +63,4 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defclass <variable> ()
-  ((name     :accessor <variable>-name :initarg :name   :initform "variable"
-             :documentation "Имя переменной")
-   (value    :accessor <variable>-value :initarg :value :initform nil
-             :documentation "Значение переменной")
-   (descr    :accessor <variable>-descr :initarg :descr :initform nil
-             :documentation "Описание переменной")
-   (validator :accessor <variable>-validator :initarg   :validator
-              :initform '#(lambda (el) (declare (ignore el)) t)
-             :documentation "Функция-валидатор с одним параметром"))
-  (:documentation "Класс предназначен для хранения системной переменной."))
 
-;;;;
-
-(defclass <variable-set> ()
-  ((name     :accessor <variable-set>-name :initarg :name  :initform "variable-set"
-             :documentation "Имя для множества переменных")
-   (vars     :accessor <variable-set>-vars :initarg :vars
-             :initform (make-hash-table :test #'equal) 
-             :documentation "Имя для множества переменных"))
-  (:documentation "Класс предназначен для хранения множества системных переменных."))
