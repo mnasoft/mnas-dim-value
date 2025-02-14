@@ -26,24 +26,27 @@
        системы SI;
      - для преобразования основной единицы системы SI;
 
-* [25/25] DoNe
-1. [X] Вывести переменные и классы печати в отдельный
+* [26/26] DoNe
+1. [X] Добавить преобразование из символов vd-convert для основных
+   единий SI.
+2. [X] Вывести переменные и классы печати в отдельный
    пакет. (mnas-dim-value/method::get-env "LANGUAGE"
    mnas-dim-value/method::*variable-set*) выглядит громоздко.
-2. [X] Переменную - удалить mnas-dim-value/class:*vd-language*.
-   Взамен нее использовать системную переменную (get-env "LANGUAGE" *variable-set*).
-3. [X] Исключить для (defgeneric unit-name (x stream) ...) - праметр
+3. [X] Переменную - удалить mnas-dim-value/class:*vd-language*.
+   Взамен нее использовать системную переменную (get-env "LANGUAGE"
+   *variable-set*).
+4. [X] Исключить для (defgeneric unit-name (x stream) ...) - праметр
    stream. Функция должна врзвращать строку.
-4. [X] Печать времени в виде суммы величин для величины типа:
+5. [X] Печать времени в виде суммы величин для величины типа:
    - время c -> (+ д ч мин с) => 15 д 9 ч 25 мин 50.25 с;
-5. [X]  Ввести преречень переменных для системы печати.
-6. [X] Изменить поведение vd-convert для обеспечения считывания
+6. [X]  Ввести преречень переменных для системы печати.
+7. [X] Изменить поведение vd-convert для обеспечения считывания
    градусной меры:
    - [X] :dms - например: 9°07′06.56″;
    - [X] :dm  - например: 9°07.1093′;
    - [X] :s   - например: 9.118489°;
 
-7. [X] Печать класса <vd>
+8. [X] Печать класса <vd>
    - [X] Ввести переключатели:
      - [X] *language* - язык вывода
        - [X] en
@@ -76,7 +79,7 @@
      - [X] Написать функцию angle-string для преобразования радиан в
        строку в виде градусов минут секунд;
 
-8. [X] Определить функции:
+9. [X] Определить функции:
    - [X] vd~pow
    - [X] vd~root
    - [X] vd~exp
@@ -99,15 +102,15 @@
    - [X] vd~equal
    - [X] vd~equalp
 
-9. [X] Переименовать таблицы:
-   - [X] *table-1-the-seven-defining-constants-of-the-si-and-the-seven-corresponding-units-they-define* -> *table-1-en*
-   - [X] *nd-table-2-si-base-units* -> *table-2-en*
-   - [X] *nd-table-4-the-22-si-units-with-special-names-and-symbols* -> *table-4-en*
-   - [X] *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* -> *table-5-en*
-   - [X] *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* -> *table-6-en*
-   - [X] *table-7-si-prefixes* -> *table-7-en*
-   - [X] *nd-table-8-non-si-units-accepted-for-use-with-the-si-units* -> *table-8-en*
-10. [X]  Для класса <nd> исключить суффиксы связанные с яыком, оставив
+10. [X] Переименовать таблицы:
+    - [X] *table-1-the-seven-defining-constants-of-the-si-and-the-seven-corresponding-units-they-define* -> *table-1-en*
+    - [X] *nd-table-2-si-base-units* -> *table-2-en*
+    - [X] *nd-table-4-the-22-si-units-with-special-names-and-symbols* -> *table-4-en*
+    - [X] *nd-table-5-examples-of-coherent-derived-units-in-the-si-expressed-in-terms-of-base-units* -> *table-5-en*
+    - [X] *nd-table-6-examples-of-si-coherent-derived-units-whose-names-and-symbols-include-si-coherent-derived-units-with-special-names-and-symbols* -> *table-6-en*
+    - [X] *table-7-si-prefixes* -> *table-7-en*
+    - [X] *nd-table-8-non-si-units-accepted-for-use-with-the-si-units* -> *table-8-en*
+11. [X]  Для класса <nd> исключить суффиксы связанные с яыком, оставив
     только международное обозначение. Добавить символ языка для,
     которого действует это определение.
    
@@ -131,28 +134,28 @@
 
     #+end_src
 
-11. [X] Вынести файлы с таблицами в отдельную систему. В определении
+12. [X] Вынести файлы с таблицами в отдельную систему. В определении
     таблиц исключить размерности типа |m|, |s| и т.д.
-12. [X] Создать новую ветку git - dev.
-13. [X] Разобраться с безразмерными величинами. На настоящий момент
+13. [X] Создать новую ветку git - dev.
+14. [X] Разобраться с безразмерными величинами. На настоящий момент
     образуются безразмерные величины с множительными
     приставками. Например Gul, Mul, kul=1000 ul. Лучше, чтобы
     образовывалась только одна безразмерная единица без множительной
     приставки.
-14. [X] Переименовать класс vd -> <vd>.
-15. [X] Переименовать класс nd -> <nd>.
-16. [X] Переименовать аксессор vd-val -> <vd>-val. 
-17. [X] Переименовать аксессор <vd>-dims -> <vd>-dims.
-18. [X] Добавить имена типов размерностей для данных, содержащихся в переменных
-19. [X] Импортировать функции vd*, vd/, vd+, vd- в пакет :cl-user.
-20. [X] Импортировать в пакет :cl-user значения размерностей, имеющих наименования.
-21. [X] Исправить предупреждение в методе print-object ((x vd) o-s)
-22. [X] Заменить defparameter на defvar в определении хеш таблиц
-23. [X] Разбор выражения, заданного в виде строки
-24. [X] Выбор множителей
+15. [X] Переименовать класс vd -> <vd>.
+16. [X] Переименовать класс nd -> <nd>.
+17. [X] Переименовать аксессор vd-val -> <vd>-val. 
+18. [X] Переименовать аксессор <vd>-dims -> <vd>-dims.
+19. [X] Добавить имена типов размерностей для данных, содержащихся в переменных
+20. [X] Импортировать функции vd*, vd/, vd+, vd- в пакет :cl-user.
+21. [X] Импортировать в пакет :cl-user значения размерностей, имеющих наименования.
+22. [X] Исправить предупреждение в методе print-object ((x vd) o-s)
+23. [X] Заменить defparameter на defvar в определении хеш таблиц
+24. [X] Разбор выражения, заданного в виде строки
+25. [X] Выбор множителей
     - [X] для таблицы 5;
     - [X] для таблицы 7.
-25. [2/2] Добавить документацию
+26. [2/2] Добавить документацию
     - [X] подключить CODEX; 
     - [X] к классам;
-26. [X] Печать класса vd с разделителями;
+27. [X] Печать класса vd с разделителями;

@@ -224,7 +224,7 @@
   (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (vd~* "rad"
+    (vd~* :rad
           (make-instance '<vd>
                          :dims (copy-list dim)
                          :val  (asin val)))))
@@ -234,7 +234,7 @@
   (let* ((vd (vd~simplify (vd-convert x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (vd~* "rad"
+    (vd~* :rad
           (make-instance '<vd>
                          :dims (copy-list dim)
                          :val  (acos val)))))
@@ -244,7 +244,7 @@
   (let* ((vd  (vd~simplify (vd~/ y x)))
          (val (<vd>-val  vd))
          (dim (<vd>-dims vd)))
-    (vd~* "rad"
+    (vd~* :rad
           (make-instance '<vd>
                          :dims (copy-list dim)
                          :val  (atan val)))))

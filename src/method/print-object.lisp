@@ -277,7 +277,7 @@
       ((eq :force (get-env "SI" *variable-set*))
        (foo x))
       ((and (eq :adaptive (get-env "SI" *variable-set*))
-            (same-dimension (vd-convert "rad") x))
+            (same-dimension (vd-convert :rad) x))
        (format o-s "~A"
                (angle-string (<vd>-val x)
                              :output (get-env "ANGLE" *variable-set*)

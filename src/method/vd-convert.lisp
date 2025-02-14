@@ -62,7 +62,7 @@
 
 (defmethod vd-convert ((x string))
   (let ((dms (degrees-minutes-seconds-to-radians x)))
-    (when dms (return-from vd-convert (vd~* dms "rad"))))
+    (when dms (return-from vd-convert (vd~* dms :rad))))
   (multiple-value-bind (val find) (gethash x mnas-dim-value/ht-en:*nm->value*)
     (if find
         val
