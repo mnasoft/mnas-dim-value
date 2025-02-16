@@ -206,6 +206,28 @@
                 ss (- s-scaled (* 3600 scale d) (* scale m 60) (* s scale)))
           (format nil (format nil "~a~a~a"  "~a~a.~" pw ",'0d~c") sign s ss +d-pr+)))))))
 
+(defun solid-angle-string (angle &key (output (get-env "SOLID-ANGLE" *variable-set*)) (force-sign nil) (a-units (get-env "AUNITS" *variable-set*)))
+  "@b(Описание:) функция @b(solid-angle-string)
+ возвращает строку, представляющую телесный угол.
+
+"
+  (let* ((sign (cond
+                 ((minusp angle) "-")
+                 ((and force-sign (plusp angle)) "+")
+                 (t "" ))))
+    (case output
+      (:sr (format nil (format nil "~a~a~a~a" sign "~," a-units "f [sr]") angle))
+      (:sp (format nil (format nil "~a~a~a~a" sign "~," a-units "f [sp]") (/ angle 4 pi)))
+      (:d  (format nil (format nil "~a~a~a~a" sign "~," a-units "f □°") (abs (* angle (expt (/ 180 pi) 2)))))
+      (:m  (format nil (format nil "~a~a~a~a" sign "~," a-units "f □′") (abs (* angle (expt (/ 180 1/60 pi) 2)))))
+      (:s  (format nil (format nil "~a~a~a~a" sign "~," a-units "f □″") (abs (* angle (expt (/ 180 1/3600 pi) 2))))
+       ))))
+
+(solid-angle-string 1)
+
+;; (set-env :s "SOLID-ANGLE" *variable-set*)
+;; (vd~* 1 :sr)
+
 ;;;;
 
 (defparameter +days-per-year+ 36525/100)
@@ -290,8 +312,14 @@
       ((and (eq :adaptive (get-env "SI" *variable-set*))
             (same-dimension (vd~/ "J" "kg") x))
        (format o-s "~A" (specific-energy-string (<vd>-val x)
-                         :output (get-env "SPECIFIC-ENERGY" *variable-set*)
-                         :units (get-env "UNITS" *variable-set*))))
+                                                :output (get-env "SPECIFIC-ENERGY" *variable-set*)
+                                                :units (get-env "UNITS" *variable-set*))))
+      
+      ((and (eq :adaptive (get-env "SI" *variable-set*))
+            (same-dimension (vd-convert :sr) x))
+       (format o-s "~A" (solid-angle-string (<vd>-val x)
+                                            :output (get-env "SOLID-ANGLE" *variable-set*)
+                                            :a-units (get-env "AUNITS" *variable-set*))))
 
       (t
        (multiple-value-bind (dimens find) (gethash (<vd>-dims x) (dim->unit-symbol))
@@ -301,8 +329,3 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(quantity-name (vd-convert "Sv")) ; => ("dose equivalent" "absorbed dose, kerma" "specific energy")
-
-(unit-name (vd-convert "Sv")) 
-
-(get-env "LANGUAGE" *variable-set*)

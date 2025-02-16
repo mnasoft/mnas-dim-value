@@ -131,6 +131,21 @@
         *variable-set*)
 
 (insert (make-instance '<variable>
+                 :name "SOLID-ANGLE"
+                 :value :sr
+                 :descr "Формат для печати телесных углов
+(member :sr :sp :d :m :s :dms)
+       - sp - спаты;
+       - sr - стерадианы;
+       - d - квадратные градусы;
+       - m - квадратные минуты;
+       - s - квадратные секунды.
+"
+                 :validator #'(lambda (el)
+                                (member el '(:sr :sp :d :m :s))))
+        *variable-set*)
+
+(insert (make-instance '<variable>
                  :name "AUNITS"
                  :value 8
                  :descr "Примерное количество значащих цифр в представлении угловых величин."

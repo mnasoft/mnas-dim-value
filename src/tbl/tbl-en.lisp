@@ -248,6 +248,11 @@ include SI coherent derived units with special names and symbols")
   (nd "length" nil "nautical mile" "nmi" (vd 1852 :m 1)   nil)
   (nd "length" nil "angstrom" "Å" (vd 1d-10 :m 1) nil)
   (nd "length"  nil "micron" "μ" (vd (/ 1 1000 1000) :m 1) nil)
+;;;  "solid angle" "телесный угол"
+  (nd "solid angle"  nil "square degree" "□°" (vd (expt (/ pi 180) 2) :sr 1) nil)
+  (nd "solid angle"  nil "square minute" "□′" (vd (expt (/ pi 180 60) 2) :sr 1) nil)
+  (nd "solid angle"  nil "square second" "□″" (vd (expt (/ pi 180 60 60) 2) :sr 1) nil)
+  (nd "solid angle"  nil "spat" "sp" (vd (* 4 pi) :sr 1) nil) 
 ;;; "force" "сила"
   (nd "force" nil "gram-force" "gf"     (vd (* 1/1000 9.80665d0) :m 1 :s -2 :kg 1) '((-24 3)))
   (nd "force" nil "ton-force" "tf"      (vd (* 1000 9.80665d0) :m 1 :s -2 :kg 1) '((0 24)))

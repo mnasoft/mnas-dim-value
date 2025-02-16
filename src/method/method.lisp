@@ -20,13 +20,13 @@
            )
   (:export vd~simplify               ; Удаление радианов и стерадианов
            )
-  (:export vd~+                 ; Сложение
-           vd~-                 ; Вычирание
-           vd~*                 ; Умножение
-           vd~/                 ; Деление
-           vd~pow               ; Возведение в целочисленную степень
-           vd~root              ; Извлечение корня степени
-           vd~sqrt              ; Извлечение квадратного
+  (:export vd~+                   ; Сложение
+           vd~-                   ; Вычирание
+           vd~*                   ; Умножение
+           vd~/                   ; Деление
+           vd~pow                 ; Возведение в целочисленную степень
+           vd~root                ; Извлечение корня степени
+           vd~sqrt                ; Извлечение квадратного
            vd~exp
            vd~expt
            vd~ln
@@ -47,10 +47,17 @@
            vd~equal
            vd~equalp
            )
+  (:export vd~=                         ; Группа пока не определена
+           vd~/=
+           vd~<
+           vd~<=
+           vd~>
+           vd~>=)
   (:export print-object
            vd-print
            )
-  (:intern angle-string)
+  (:intern angle-string
+           solid-angle-string)
   )
 
 (in-package :mnas-dim-value/method)

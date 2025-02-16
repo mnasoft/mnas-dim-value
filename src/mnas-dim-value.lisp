@@ -1,97 +1,72 @@
 ;;;; /src/mnas-dim-value.lisp
 
-(defpackage :mnas-dim-value
-  (:nicknames "MDV")
-  (:use #:cl
-        #:mnas-dim-value/func
-        #:mnas-dim-value/class
-        #:mnas-dim-value/mk-class
-        #:mnas-dim-value/tbl
-        #:mnas-hash-table
-        #:mnas-dim-value/ht
-        #:mnas-dim-value/generic
-        #:mnas-dim-value/method
-        #:mnas-dim-value/const
-        #:mnas-dim-value/macro
-        )
-  (:export <vd>
-           <vd>-val
-           <vd>-dims)
-  (:export vd
-           )
-  (:export vd-expt
-           vd-sqrt
-           )
-  (:export vd~+                         ; Сложение
-           vd~-                         ; Вычитание
-           vd~*                         ; Умножение
-           vd~/                         ; Деление
-           vd~pow                       ; Возведение в целу степень
-           vd~root 
-           vd~exp
-           vd~expt
-           vd~ln
-           vd~log
-           vd~sin
-           vd~cos
-           vd~tan
-           vd~asin
-           vd~acos
-           vd~atan
-           vd~sinh
-           vd~cosh
-           vd~tanh
-           vd~asinh
-           vd~acosh
-           vd~atanh
-           vd~abs
-           vd~equal
-           vd~equalp
-           )
-  (:export vd~=
-           vd~/=
-           vd~<
-           vd~<=
-           vd~>
-           vd~>=)  
-  (:export |m| |kg| |s| |A| |K| |cd| |mol|
-           |rad| |sr|
-           )
-  (:export |Hz| |N| |Pa| |J| |W|
-           |C| |V| |F| |Ω| |S| |Wb|
-           |Τ| |H| |lm| |lx| |Bq|
-           |Gy| |Sv| |kat|
-           )
-;;; From :mnas-dim-value/const
-  (:export |*g*| |*Gn*| |*C-0*| |*V-0*|
-           |*R-0*| |*Na*| |*No*|
-           |*k*| |*a-e-m*|
-           |*m-e*| |*e*|
-           |*F*| |*h*| |*c*| |*μ-0*| |*ε-0*|
-           )
+(defmacro mnas-defpackage (name &rest options)
+  "Расширение defpackage с поддержкой :use-and-export, сортировкой символов и печатью в нижнем регистре."
+  (let ((import-all-exported-packages '())
+        (defpackage-options '()))
+    ;; Разбираем опции и обрабатываем :use-and-export
+    (dolist (option options)
+      (cond
+        ((and (listp option)
+              (eq (first option) :use-and-export))
+         (setq import-all-exported-packages
+               (append import-all-exported-packages (rest option))))
+        (t
+         (push option defpackage-options))))
+    ;; Генерируем :import-from для каждого пакета из :import-all-exported
+    (dolist (pkg import-all-exported-packages)
+      (let* ((package (find-package pkg))
+             (symbols (when package
+                        (sort
+                         (loop for sym being the external-symbols of package
+                               collect sym)
+                         #'string< :key #'symbol-name))))
+        (when symbols
+          (push `(:use ,pkg) defpackage-options)
+          #+ nil (push `(:import-from ,pkg) defpackage-options)
+          (push `(:export ,@symbols) defpackage-options))))
+    ;; Создаём окончательное выражение defpackage
+    (let ((defpackage-form `(defpackage ,name ,@(nreverse defpackage-options))))
+      ;; Устанавливаем *print-case* в :downcase на время pprint
+      (let ((*print-case* :downcase))
+        ;; Выводим сгенерированный код на печать
+        (pprint defpackage-form)
+        (format t "~2%"))
+      ;; Возвращаем nil, чтобы предотвратить оценивание
+      defpackage-form)))
+
+(mnas-defpackage
+ :mnas-dim-value
+ (:nicknames "MDV")
+ (:use #:cl)
+ (:use-and-export #:mnas-dim-value/func
+                  #:mnas-dim-value/vars
+                  #:mnas-dim-value/class
+                  #:mnas-dim-value/mk-class
+                  #:mnas-dim-value/method
+                  #:mnas-dim-value/const)
+ (:use #:mnas-dim-value/tbl
+       #:mnas-hash-table
+       #:mnas-dim-value/ht
+       #:mnas-dim-value/generic
+       #:mnas-dim-value/method
+       #:mnas-dim-value/macro)
+ 
 ;;; From :mnas-dim-value/convert  
-  (:export C->K K->C 
-           M->K K->M 
-           KGS/CM2->PA
-           PA->KGS/CM2
-           )
-  (:export quantity
-           )
-
-  (:export 
-   HELP
-   
-   DIM-STRING-BY-DIM-NAME
-   dim-name-list ;; Возвращает список наименований величин.
-
-   UNUSE-MNAS-DIM-VALUE
-
-   USE-MNAS-DIM-VALUE
-
-   QUANTITY-NAME
-   ))
-  
-
+ (:export C->K K->C 
+          M->K K->M 
+          KGS/CM2->PA
+          PA->KGS/CM2
+          )
+ (:export quantity
+          )
+ (:export 
+  HELP
+  DIM-STRING-BY-DIM-NAME
+  dim-name-list ;; Возвращает список наименований величин.
+  UNUSE-MNAS-DIM-VALUE
+  USE-MNAS-DIM-VALUE
+  QUANTITY-NAME))
 
 (in-package :mnas-dim-value)
 
