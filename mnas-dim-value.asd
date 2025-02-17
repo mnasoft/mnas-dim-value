@@ -146,6 +146,14 @@
 		:serial t
                 :components ((:file "vars")))))
 
+(defsystem "mnas-dim-value/condition"
+  :description "Система определяет методы"
+  :serial nil
+  :depends-on ()
+  :components ((:module "src/condition" 
+		:serial t
+                :components ((:file "condition")))))
+
 (defsystem "mnas-dim-value/method"
   :description "Система определяет методы"
   :serial nil

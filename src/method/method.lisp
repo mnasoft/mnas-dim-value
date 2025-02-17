@@ -2,6 +2,7 @@
 
 (defpackage :mnas-dim-value/method
   (:use #:cl
+        #:mnas-dim-value/condition
         #:mnas-dim-value/vars
         #:mnas-dim-value/func
         #:mnas-dim-value/class
@@ -332,17 +333,22 @@
     (and (equalp (<vd>-val  x-vd) (<vd>-val  y-vd))
          (equalp (<vd>-dims  x-vd) (<vd>-dims  y-vd)))))
 
+#+nil
 (defun vd~= (x &rest rest)
   "Операция проерки на равенство для физических величин."
   (let* ((xx (vd-convert x))
          (lst  (mapcar #'vd-convert rest))
          (dim t))
+    
+    (unless (units-convertible (unit x) (unit y))
+      (f-error invalid-unit-conversion-error () "The units ~a and ~a are incompatible under operation Q=." (str-unit (unit x)) (str-unit (unit y))))
     (loop :for i :in lst :do
       (setf dim (and dim (same-dimension xx i)
                      (= (<vd>-val xx) (<vd>-val i))
                      ))
           :finally (return dim))))
 
+#+nil
 (defun vd~/= (x &rest rest)
   "Операция проерки на равенство для физических величин."
   (apply (complement #'vd~=) x rest))
