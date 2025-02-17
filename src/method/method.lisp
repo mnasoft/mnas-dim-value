@@ -332,3 +332,20 @@
     (and (equalp (<vd>-val  x-vd) (<vd>-val  y-vd))
          (equalp (<vd>-dims  x-vd) (<vd>-dims  y-vd)))))
 
+(defun vd~= (x &rest rest)
+  "Операция проерки на равенство для физических величин."
+  (let* ((xx (vd-convert x))
+         (lst  (mapcar #'vd-convert rest))
+         (dim t))
+    (loop :for i :in lst :do
+      (setf dim (and dim (same-dimension xx i)
+                     (= (<vd>-val xx) (<vd>-val i))
+                     ))
+          :finally (return dim))))
+
+(defun vd~/= (x &rest rest)
+  "Операция проерки на равенство для физических величин."
+  (apply (complement #'vd~=) x rest))
+
+
+

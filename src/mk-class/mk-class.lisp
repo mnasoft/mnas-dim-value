@@ -3,7 +3,6 @@
         #:mnas-dim-value/class)
   (:export vd)
   (:export make-nd-items
-           make-nd-form-list-el
            )
   (:export nd
            nd-get

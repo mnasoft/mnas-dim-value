@@ -39,83 +39,89 @@
  :mnas-dim-value
  (:nicknames "MDV")
  (:use #:cl)
- (:use-and-export #:mnas-dim-value/func
+ (:use-and-export #:mnas-dim-value/convert
+                  #:mnas-dim-value/func
                   #:mnas-dim-value/vars
                   #:mnas-dim-value/class
                   #:mnas-dim-value/mk-class
                   #:mnas-dim-value/method
-                  #:mnas-dim-value/const)
+                  #:mnas-dim-value/const
+                  #:mnas-dim-value/macro
+                  )
  (:use #:mnas-dim-value/tbl
        #:mnas-hash-table
        #:mnas-dim-value/ht
        #:mnas-dim-value/generic
        #:mnas-dim-value/method
        #:mnas-dim-value/macro)
- 
-;;; From :mnas-dim-value/convert  
- (:export C->K K->C 
-          M->K K->M 
-          KGS/CM2->PA
-          PA->KGS/CM2
-          )
- (:export quantity
-          )
  (:export 
-  HELP
-  DIM-STRING-BY-DIM-NAME
-  dim-name-list ;; Возвращает список наименований величин.
-  UNUSE-MNAS-DIM-VALUE
-  USE-MNAS-DIM-VALUE
-  QUANTITY-NAME))
+  help
+  unit-symbol-by-quantity-name
+  quantity-names             ; Возвращает список наименований величин.
+  find-quantity
+  nd-tables
+  ))
 
 (in-package :mnas-dim-value)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun dim-string-by-dim-name ( d-type )
+(defun nd-tables ()
+  (if (eq (get-env "LANGUAGE" *variable-set*) :ru)
+      mnas-dim-value/tbl-ru:*nd-tables*
+      mnas-dim-value/tbl-en:*nd-tables*
+      ))
+
+(defun unit-symbol-by-quantity-name ( d-type )
   "
-@b(Описание:) функция@b(dim-string-by-dim-name)
+@b(Описание:) функция@b(unit-symbol-by-quantity-name)
 
  @b(Пример использования:)
 @begin[lang=lisp](code)
- (dim-string-by-dim-name \"length\")
- (dim-string-by-dim-name \"specific entropy\")
- (dim-string-by-dim-name \"capacitance\")
- (dim-string-by-dim-name \"mass density\")
-@end(code)
-" 
-  (loop :for i :in mnas-dim-value/tbl-en:*nd-tables*
-        :when (string= (<nd>-quantity-name i) d-type)
-        :collect (<nd>-unit-symbol i)
-        ))
-
-
-(defun dim-name-list ()
-  "@b(Описание:) функция @b(dim-name-list) возвращает список наименований
-величин.
-
- @b(Пример использования:)
-@begin[lang=lisp](code)
- (progn 
-   (setf mnas-dim-value/class:*vd-language* :en)
-   (dim-name-list))
-  (progn 
-    (setf mnas-dim-value/class:*vd-language* :ru)
-    (dim-name-list)) 
+ (unit-symbol-by-quantity-name \"length\")
+ (unit-symbol-by-quantity-name \"temperature\")
+ (unit-symbol-by-quantity-name \"mass\")
+ (unit-symbol-by-quantity-name \"specific entropy\")
+ (unit-symbol-by-quantity-name \"capacitance\")
+ (unit-symbol-by-quantity-name \"mass density\")
 @end(code)
 "
-  (let ((q-name
-          (if (eq (get-env "LANGUAGE" *variable-set*) :ru)
-              #'<nd>-quantity
-              #'<nd>-quantity ;; Что-то нужно сделать
-              )))
-    (loop :for i :in mnas-dim-value/tbl-en:*nd-tables*
+  (let ((regexp (ppcre:create-scanner (concatenate 'string ".*" d-type ".*"))))
+    (loop :for i :in (nd-tables)
+          :when (ppcre:scan regexp (<nd>-quantity i))
+            :collect (<nd>-unit-symbol i)
+          )))
+
+(defun quantity-names ()
+  "@b(Описание:) функция @b(quantity-names) возвращает список наименований
+величин для текущего языка.
+
+ @b(Пример использования:)
+@begin[lang=lisp](code)
+ (progn
+   (set-env :en \"LANGUAGE\" *variable-set*)
+   (quantity-names))
+ (progn 
+   (set-env :ru \"LANGUAGE\" *variable-set*)
+   (quantity-names))
+@end(code)
+"
+  (loop :for i :in (nd-tables)
           :append
-          (loop :for part :in (cl-ppcre:split "," (funcall q-name i))
+          (loop :for part :in (cl-ppcre:split "," (<nd>-quantity i))
                 :collect (string-trim '(#\Space #\Tab) part))
             :into rez
-          :finally (return (delete-duplicates (sort rez #'string<) :test #'equal)))))
+        :finally (return (delete-duplicates (sort rez #'string<) :test #'equal))))
 
+(defun find-quantity (regexp)
+  "@b(Описание:) функция @b(find-quantity) возвраащает список
+наименований величин, имена которых соответствуют регулярному
+выражению."
+  (let ((regexp (ppcre:create-scanner regexp)))
+    (loop :for i :in (quantity-names)
+          :when (ppcre:scan regexp i)
+            :collect i)))
+    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *help*
