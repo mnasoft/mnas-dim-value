@@ -52,7 +52,7 @@
   (vd x))
 
 (defmethod vd-convert ((x string))
-  (multiple-value-bind (val find) (gethash x mnas-dim-value/ht-en:*nm->value*)
+  (multiple-value-bind (val find) (gethash x (mnas-dim-value/ht:nm->value))
     (if find
         val
         (progn
@@ -63,7 +63,7 @@
 (defmethod vd-convert ((x string))
   (let ((dms (degrees-minutes-seconds-to-radians x)))
     (when dms (return-from vd-convert (vd~* dms :rad))))
-  (multiple-value-bind (val find) (gethash x mnas-dim-value/ht-en:*nm->value*)
+  (multiple-value-bind (val find) (gethash x (mnas-dim-value/ht:nm->value))
     (if find
         val
         (progn

@@ -1,11 +1,11 @@
 ;;;; ./mnas-dim-value/src/ht/ht-ru.lisp
 
-(defpackage :mnas-dim-value/ht-ru
+(defpackage :mnas-dim-value/ht-uk
   (:use #:cl
         #:mnas-hash-table
         #:mnas-dim-value/func
         #:mnas-dim-value/class
-        #:mnas-dim-value/tbl-ru ;;;; Главное отличие
+        #:mnas-dim-value/tbl-uk ;;;; Главное отличие
         #:mnas-dim-value/ht/core
         )
   (:export *nd-named*
@@ -30,7 +30,7 @@
            repopulate
            ))
 
-(in-package :mnas-dim-value/ht-ru)
+(in-package :mnas-dim-value/ht-uk)
 
 (defparameter *nd-named* nil
   "Определяет величины, имеющие собственные названия.")

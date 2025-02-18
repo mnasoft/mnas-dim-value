@@ -15,7 +15,7 @@
                   )
  (:use #:mnas-dim-value/tbl
        #:mnas-hash-table
-       #:mnas-dim-value/ht
+       #:mnas-dim-value/ht/core
        #:mnas-dim-value/generic
        #:mnas-dim-value/method
        #:mnas-dim-value/macro)
@@ -36,6 +36,8 @@
       mnas-dim-value/tbl-ru:*nd-tables*
       mnas-dim-value/tbl-en:*nd-tables*
       ))
+
+
 
 (defun unit-symbol-by-quantity-name ( d-type )
   "

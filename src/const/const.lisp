@@ -8,7 +8,7 @@
         #:mnas-dim-value/mk-class
         #:mnas-dim-value/tbl
         #:mnas-hash-table
-        #:mnas-dim-value/ht
+        #:mnas-dim-value/ht/core
         #:mnas-dim-value/generic
         #:mnas-dim-value/method
         )

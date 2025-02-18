@@ -9,5 +9,11 @@
  ;;(dimensionp \"knot\")
 @end(code)
 "
-  (multiple-value-bind (val find) (gethash str mnas-dim-value/ht-en:*nm->value*)
+  (multiple-value-bind (val find) (gethash str (mnas-dim-value/ht:nm->value))
     (if find val nil)))
+
+
+
+
+
+

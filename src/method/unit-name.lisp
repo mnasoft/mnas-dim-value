@@ -3,8 +3,7 @@
 (defmethod unit-name ((x <vd>))
   (let ((s (make-string-output-stream)))
     (multiple-value-bind (dimens find)
-        (gethash (<vd>-dims x) (cond ((eq (get-env "LANGUAGE" *variable-set*) :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
-				     (t mnas-dim-value/ht-en:*dim->unit-symbol*)))
+        (gethash (<vd>-dims x) (mnas-dim-value/ht:dim->unit-symbol))
       (if find
 	  (format s "~A" dimens)
 	  (progn (format s "[" )

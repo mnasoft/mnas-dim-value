@@ -6,7 +6,7 @@
         #:mnas-dim-value/func
         #:mnas-dim-value/class
         #:mnas-dim-value/tbl-en ;;;; Main difference
-        #:mnas-dim-value/ht
+        #:mnas-dim-value/ht/core
         )
   (:export *nd-named*
            *nd-list*

@@ -100,9 +100,23 @@
 		:serial nil
                 :components ((:file "tbl-ru")))))
 
+(defsystem "mnas-dim-value/tbl-uk"
+  :description "@b(Описание:) система @b(mnas-dim-value/tbl-ru)
+опеделяет таблицы системы SI для языка uk.
+"
+  :serial nil
+  :depends-on (
+               "mnas-dim-value/class"
+               "mnas-dim-value/mk-class"
+               "mnas-dim-value/tbl"
+               )
+  :components ((:module "src/tbl"
+		:serial nil
+                :components ((:file "tbl-uk")))))
+
 (defsystem "mnas-dim-value/ht"
-  :description "@b(Описание:) система @b(mnas-dim-value/ht) определяет
- хеш-таблицы для языка en."
+  :description "@b(Описание:) система @b(mnas-dim-value/ht) определяет функции
+доступа к таблицам для определенног языка (того или иного)."
   :serial nil
   :depends-on ("mnas-hash-table"
                "mnas-dim-value/class"
@@ -110,7 +124,19 @@
                )
   :components ((:module "src/ht"
 		:serial nil
-                :components ((:file "ht")))))
+                :components ((:file "ht-core")))))
+
+(defsystem "mnas-dim-value/ht/core"
+  :description "@b(Описание:) система @b(mnas-dim-value/ht/core) определяет базовые
+функции для всех языков."
+  :serial nil
+  :depends-on ("mnas-hash-table"
+               "mnas-dim-value/class"
+               "mnas-dim-value/func"
+               )
+  :components ((:module "src/ht"
+		:serial nil
+                :components ((:file "ht-core")))))
 
 (defsystem "mnas-dim-value/ht-en"
   :description "@b(Описание:) система @b(mnas-dim-value/ht-en) определяет
@@ -119,7 +145,7 @@
   :depends-on ("mnas-dim-value/class"
                "mnas-dim-value/func"
                "mnas-dim-value/tbl-en"
-               "mnas-dim-value/ht"
+               "mnas-dim-value/ht/core"
                )
   :components ((:module "src/ht"
 		:serial nil
@@ -132,12 +158,25 @@
   :depends-on ("mnas-dim-value/class"
                "mnas-dim-value/func"
                "mnas-dim-value/tbl-ru"
-               "mnas-dim-value/ht"
+               "mnas-dim-value/ht/core"
                
                )
   :components ((:module "src/ht"
 		:serial nil
                 :components ((:file "ht-ru")))))
+
+(defsystem "mnas-dim-value/ht-uk"
+  :description "@b(Описание:) система @b(mnas-dim-value/ht-ru) определяет
+ хеш-таблицы  для языка ru."
+  :serial nil
+  :depends-on ("mnas-dim-value/class"
+               "mnas-dim-value/func"
+               "mnas-dim-value/tbl-uk"
+               "mnas-dim-value/ht/core"
+               )
+  :components ((:module "src/ht"
+		:serial nil
+                :components ((:file "ht-uk")))))
 
 (defsystem "mnas-dim-value/vars"
   :description "Система определяет методы"
