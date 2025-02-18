@@ -11,9 +11,3 @@
 "
   (multiple-value-bind (val find) (gethash str (mnas-dim-value/ht:nm->value))
     (if find val nil)))
-
-
-
-
-
-
