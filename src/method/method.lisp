@@ -61,6 +61,11 @@
 
 (in-package :mnas-dim-value/method)
 
+(defmethod vd~simplify ((vd <vd>))
+  (setf (nth 7 (<vd>-dims vd)) 0)
+  (setf (nth 8 (<vd>-dims vd)) 0)
+  vd)
+
 (defun dim->unit-symbol ()
   (cond ((eq (get-env "LANGUAGE" *variable-set*) :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
 	(t mnas-dim-value/ht-en:*dim->unit-symbol*)))
@@ -356,3 +361,5 @@
              "The units ~s and ~s are incompatible under operation vd~~>=."
              xx yy))
     (>= (<vd>-val xx) (<vd>-val yy))))
+
+
