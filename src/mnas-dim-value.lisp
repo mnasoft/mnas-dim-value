@@ -1,41 +1,6 @@
 ;;;; /src/mnas-dim-value.lisp
 
-(defmacro mnas-defpackage (name &rest options)
-  "Расширение defpackage с поддержкой :use-and-export, сортировкой символов и печатью в нижнем регистре."
-  (let ((import-all-exported-packages '())
-        (defpackage-options '()))
-    ;; Разбираем опции и обрабатываем :use-and-export
-    (dolist (option options)
-      (cond
-        ((and (listp option)
-              (eq (first option) :use-and-export))
-         (setq import-all-exported-packages
-               (append import-all-exported-packages (rest option))))
-        (t
-         (push option defpackage-options))))
-    ;; Генерируем :import-from для каждого пакета из :import-all-exported
-    (dolist (pkg import-all-exported-packages)
-      (let* ((package (find-package pkg))
-             (symbols (when package
-                        (sort
-                         (loop for sym being the external-symbols of package
-                               collect sym)
-                         #'string< :key #'symbol-name))))
-        (when symbols
-          (push `(:use ,pkg) defpackage-options)
-          #+ nil (push `(:import-from ,pkg) defpackage-options)
-          (push `(:export ,@symbols) defpackage-options))))
-    ;; Создаём окончательное выражение defpackage
-    (let ((defpackage-form `(defpackage ,name ,@(nreverse defpackage-options))))
-      ;; Устанавливаем *print-case* в :downcase на время pprint
-      (let ((*print-case* :downcase))
-        ;; Выводим сгенерированный код на печать
-        (pprint defpackage-form)
-        (format t "~2%"))
-      ;; Возвращаем nil, чтобы предотвратить оценивание
-      defpackage-form)))
-
-(mnas-defpackage
+(mnas-macro:mnas-defpackage
  :mnas-dim-value
  (:nicknames "MDV")
  (:use #:cl)

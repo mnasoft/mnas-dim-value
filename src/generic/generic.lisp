@@ -2,7 +2,6 @@
   (:use
    #:cl )
   (:export vd-convert
-           vd-print
            )
   (:export same-dimension
            unit-name
@@ -16,10 +15,6 @@
    "@b(Описание:) обобщенная_функция @b(vd-convert) перобразует объект obj
 в объект класса <vd> и возвращает преобразованный объект класса <vd>.
 "))
-
-(defgeneric vd-print (vd &optional stream)
-  (:documentation
-   "Метод печати внутреннего представления размерной величины"))
 
 (defgeneric same-dimension (x y)
   (:documentation

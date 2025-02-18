@@ -1,105 +1,69 @@
 ;;;; ./src/method/method.lisp
 
-(defpackage :mnas-dim-value/method
-  (:use #:cl
-        #:mnas-dim-value/condition
-        #:mnas-dim-value/vars
-        #:mnas-dim-value/func
-        #:mnas-dim-value/class
-        #:mnas-dim-value/mk-class
-        #:mnas-dim-value/tbl
-        #:mnas-hash-table
-        #:mnas-dim-value/ht
-        #:mnas-dim-value/generic
-        )
-  (:export dim->unit-symbol
-           dimensionp
-           same-dimension
-           vd-convert
-           unit-name
-           quantity-name
-           )
-  (:export vd~simplify               ; Удаление радианов и стерадианов
-           )
-  (:export vd~+                   ; Сложение
-           vd~-                   ; Вычирание
-           vd~*                   ; Умножение
-           vd~/                   ; Деление
-           vd~pow                 ; Возведение в целочисленную степень
-           vd~root                ; Извлечение корня степени
-           vd~sqrt                ; Извлечение квадратного
-           vd~exp
-           vd~expt
-           vd~ln
-           vd~log
-           vd~sin
-           vd~cos
-           vd~tan
-           vd~asin
-           vd~acos
-           vd~atan
-           vd~sinh
-           vd~cosh
-           vd~tanh
-           vd~asinh
-           vd~acosh
-           vd~atanh
-           vd~abs
-           vd~equal
-           vd~equalp
-           )
-  (:export vd~=                         ; Группа пока не определена
-           vd~/=
-           vd~<
-           vd~<=
-           vd~>
-           vd~>=)
-  (:export print-object
-           vd-print
-           )
-  (:intern angle-string
-           solid-angle-string)
-  )
+(mnas-macro:mnas-defpackage
+ :mnas-dim-value/method
+ (:use #:cl
+       #:mnas-dim-value/condition
+       #:mnas-dim-value/vars
+       #:mnas-dim-value/func
+       #:mnas-dim-value/class
+       #:mnas-dim-value/mk-class
+       #:mnas-dim-value/tbl
+       #:mnas-hash-table
+       #:mnas-dim-value/ht
+       )
+ (:use-and-export #:mnas-dim-value/generic)
+ (:export dim->unit-symbol
+          dimensionp
+          )
+ (:export vd~simplify                ; Удаление радианов и стерадианов
+          )
+ (:export vd~+                    ; Сложение
+          vd~-                    ; Вычирание
+          vd~*                    ; Умножение
+          vd~/                    ; Деление
+          vd~pow                  ; Возведение в целочисленную степень
+          vd~root                 ; Извлечение корня степени
+          vd~sqrt                 ; Извлечение квадратного
+          vd~exp
+          vd~expt
+          vd~ln
+          vd~log
+          vd~sin
+          vd~cos
+          vd~tan
+          vd~asin
+          vd~acos
+          vd~atan
+          vd~sinh
+          vd~cosh
+          vd~tanh
+          vd~asinh
+          vd~acosh
+          vd~atanh
+          vd~abs
+          vd~equal
+          vd~equalp
+          )
+ (:export vd~=                        
+          vd~/=
+          vd~<
+          vd~<=
+          vd~>
+          vd~>=)
+ (:export print-object
+          )
+ (:intern angle-string
+          solid-angle-string
+          time-string
+          )
+ )
 
 (in-package :mnas-dim-value/method)
 
 (defun dim->unit-symbol ()
   (cond ((eq (get-env "LANGUAGE" *variable-set*) :ru) mnas-dim-value/ht-ru:*dim->unit-symbol*)
 	(t mnas-dim-value/ht-en:*dim->unit-symbol*)))
-
-;;(alexandria:hash-table-values mnas-dim-value/ht-en:*dim->unit-symbol*)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(let ((+format+ :f-01)
-      (+unit-symbol+ '("m" "kg" "s" "A" "K" "cd" "mol" "rad" "sr"))
-      )
-  (defun vd-print-format (fmt)
-    (setf +format+ fmt))
-
-  (defmethod vd-print ((x <vd>) &optional (o-stream t) )
-  (cond
-    ((eq +format+ :f-01)
-     (format o-stream "(vd ~S " (<vd>-val x))
-     (loop :for u-s :in +unit-symbol+
-           :for u-v :in (<vd>-dims x)
-           :when (/= u-v 0)
-             :do (format o-stream ":~A ~A " u-s u-v))
-     (format o-stream ")")
-     )
-    
-    (t
-     (format o-stream "~S ~S" (<vd>-val x) (<vd>-dims x)))))
-  )
-
-;;;(vd-print-format :f-02)
-;;;(vd-print (vd~* 101.325 1000.0 "Pa"))
-;;;"m" "kg" "s" "A" "K" "cd" "mol" "rad" "sr"
-
-(defmethod vd-print ((s string) &optional (o-stream t) &aux (x (vd-convert s)))
-  (vd-print x o-stream))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun vd~+ (&rest args)
   "Операция сложения для физических величин."
@@ -127,7 +91,7 @@
                    :dims (apply #'mapcar #'+ dim)
                    :val val)))
 
-(defun vd~/ (&rest args)
+(defun vd~/ (&rest args) 
 "Перемножение чисел с размерностью."
   (let* ((lst (mapcar #'vd-convert args))
          (val (apply #'/ (mapcar #'<vd>-val lst)))
@@ -333,25 +297,62 @@
     (and (equalp (<vd>-val  x-vd) (<vd>-val  y-vd))
          (equalp (<vd>-dims  x-vd) (<vd>-dims  y-vd)))))
 
-#+nil
-(defun vd~= (x &rest rest)
+(defun vd~= (x y)
   "Операция проерки на равенство для физических величин."
-  (let* ((xx (vd-convert x))
-         (lst  (mapcar #'vd-convert rest))
-         (dim t))
-    
-    (unless (units-convertible (unit x) (unit y))
-      (f-error invalid-unit-conversion-error () "The units ~a and ~a are incompatible under operation Q=." (str-unit (unit x)) (str-unit (unit y))))
-    (loop :for i :in lst :do
-      (setf dim (and dim (same-dimension xx i)
-                     (= (<vd>-val xx) (<vd>-val i))
-                     ))
-          :finally (return dim))))
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~~=."
+             xx yy))
+    (= (<vd>-val xx) (<vd>-val yy))))
 
-#+nil
-(defun vd~/= (x &rest rest)
+(defun vd~/= (x y)
   "Операция проерки на равенство для физических величин."
-  (apply (complement #'vd~=) x rest))
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~~/=."
+             xx yy))
+    (/= (<vd>-val xx) (<vd>-val yy))))
 
+(defun vd~< (x y)
+  "Операция проерки на равенство для физических величин."
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~~<."
+             xx yy))
+    (< (<vd>-val xx) (<vd>-val yy))))
 
+(defun vd~<= (x y)
+  "Операция проерки на равенство для физических величин."
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~~<=."
+             xx yy))
+    (<= (<vd>-val xx) (<vd>-val yy))))
 
+(defun vd~> (x y)
+  "Операция проерки на равенство для физических величин."
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~>."
+             xx yy))
+    (> (<vd>-val xx) (<vd>-val yy))))
+
+(defun vd~>= (x y)
+  "Операция проерки на равенство для физических величин."
+  (let ((xx (vd-convert x))
+        (yy (vd-convert y)))
+  (unless (same-dimension xx yy)
+    (f-error invalid-unit-conversion-error ()
+             "The units ~s and ~s are incompatible under operation vd~~>=."
+             xx yy))
+    (>= (<vd>-val xx) (<vd>-val yy))))

@@ -1,4 +1,4 @@
-;;;; mnas-dim-value.asd
+;;;; mnas-dim-value.asd 
 
 (defsystem "mnas-dim-value/docs"
   :description "Зависимости для сборки документации"
@@ -157,7 +157,8 @@
 (defsystem "mnas-dim-value/method"
   :description "Система определяет методы"
   :serial nil
-  :depends-on ("mnas-hash-table"
+  :depends-on ("mnas-dim-value/condition"
+               "mnas-hash-table"
                "mnas-dim-value/vars"
                "mnas-dim-value/generic" 
                "mnas-dim-value/class"
@@ -223,7 +224,7 @@
   :homepage "https://github.com/mnasoft/mnas-dim-value"
   :version "0.0.3" 
   :serial nil
-  :depends-on (
+  :depends-on ("mnas-macro"
                "mnas-hash-table"
                "str"
                "mnas-string"
