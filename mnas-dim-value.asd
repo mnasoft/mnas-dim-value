@@ -121,6 +121,9 @@
   :depends-on ("mnas-hash-table"
                "mnas-dim-value/class"
                "mnas-dim-value/func"
+               "mnas-dim-value/ht-en"
+               "mnas-dim-value/ht-ru"
+               "mnas-dim-value/ht-uk"
                )
   :components ((:module "src/ht"
 		:serial nil
