@@ -65,7 +65,7 @@
 "
   :serial nil
   :depends-on (
-               "mnas-dim-value/class"
+               ; "mnas-dim-value/class"
                "mnas-dim-value/mk-class"
                )
   :components ((:module "src/tbl"
@@ -77,11 +77,7 @@
 опеделяет таблицы системы SI  для языка en (международные).
 "
   :serial nil
-  :depends-on (
-               "mnas-dim-value/class"
-               "mnas-dim-value/mk-class"
-               "mnas-dim-value/tbl"
-               )
+  :depends-on ("mnas-dim-value/tbl")
   :components ((:module "src/tbl"
 		:serial nil
                 :components ((:file "tbl-en")))))
@@ -91,11 +87,7 @@
 опеделяет таблицы системы SI для языка ru.
 "
   :serial nil
-  :depends-on (
-               "mnas-dim-value/class"
-               "mnas-dim-value/mk-class"
-               "mnas-dim-value/tbl"
-               )
+  :depends-on ("mnas-dim-value/tbl")
   :components ((:module "src/tbl"
 		:serial nil
                 :components ((:file "tbl-ru")))))
@@ -105,11 +97,7 @@
 опеделяет таблицы системы SI для языка uk.
 "
   :serial nil
-  :depends-on (
-               "mnas-dim-value/class"
-               "mnas-dim-value/mk-class"
-               "mnas-dim-value/tbl"
-               )
+  :depends-on ("mnas-dim-value/tbl")
   :components ((:module "src/tbl"
 		:serial nil
                 :components ((:file "tbl-uk")))))
@@ -118,16 +106,17 @@
   :description "@b(Описание:) система @b(mnas-dim-value/ht) определяет функции
 доступа к таблицам для определенног языка (того или иного)."
   :serial nil
-  :depends-on ("mnas-hash-table"
-               "mnas-dim-value/class"
-               "mnas-dim-value/func"
+  :depends-on (; "mnas-hash-table"
+               ; "mnas-dim-value/vars"
+               ; "mnas-dim-value/class"
+               ; "mnas-dim-value/func"
                "mnas-dim-value/ht-en"
                "mnas-dim-value/ht-ru"
                "mnas-dim-value/ht-uk"
                )
   :components ((:module "src/ht"
 		:serial nil
-                :components ((:file "ht-core")))))
+                :components ((:file "ht")))))
 
 (defsystem "mnas-dim-value/ht/core"
   :description "@b(Описание:) система @b(mnas-dim-value/ht/core) определяет базовые
@@ -145,8 +134,7 @@
   :description "@b(Описание:) система @b(mnas-dim-value/ht-en) определяет
  хеш-таблицы для языка en."
   :serial nil
-  :depends-on ("mnas-dim-value/class"
-               "mnas-dim-value/func"
+  :depends-on (
                "mnas-dim-value/tbl-en"
                "mnas-dim-value/ht/core"
                )
@@ -158,8 +146,7 @@
   :description "@b(Описание:) система @b(mnas-dim-value/ht-ru) определяет
  хеш-таблицы  для языка ru."
   :serial nil
-  :depends-on ("mnas-dim-value/class"
-               "mnas-dim-value/func"
+  :depends-on (
                "mnas-dim-value/tbl-ru"
                "mnas-dim-value/ht/core"
                
@@ -172,8 +159,7 @@
   :description "@b(Описание:) система @b(mnas-dim-value/ht-ru) определяет
  хеш-таблицы  для языка ru."
   :serial nil
-  :depends-on ("mnas-dim-value/class"
-               "mnas-dim-value/func"
+  :depends-on (
                "mnas-dim-value/tbl-uk"
                "mnas-dim-value/ht/core"
                )
@@ -201,12 +187,9 @@
   :serial nil
   :depends-on ("mnas-dim-value/condition"
                "mnas-hash-table"
-               "mnas-dim-value/vars"
+               ; "mnas-dim-value/vars"
                "mnas-dim-value/generic" 
-               "mnas-dim-value/class"
-               "mnas-dim-value/func"
-               "mnas-dim-value/ht-en"
-               "mnas-dim-value/ht-ru"
+               "mnas-dim-value/ht"
                "local-time"
                )
   :components ((:module "src/method" 
@@ -222,11 +205,11 @@
 (defsystem "mnas-dim-value/const"
   :description "Система определяет методы"
   :serial nil
-  :depends-on ("mnas-hash-table"
-               "mnas-dim-value/generic"
-               "mnas-dim-value/class"
-               "mnas-dim-value/func"
-               "mnas-dim-value/ht-en"
+  :depends-on ( ;"mnas-hash-table"
+               ; "mnas-dim-value/generic"
+               ; "mnas-dim-value/class"
+               ; "mnas-dim-value/func"
+               ;"mnas-dim-value/ht-en"
                "mnas-dim-value/method"               
                )
   :components ((:module "src/const" 
@@ -239,11 +222,11 @@
   :depends-on ("mnas-hash-table"
                "mnas-dim-value/convert"
 ;;;               
-               "mnas-dim-value/class"
-               "mnas-dim-value/func"
-               "mnas-dim-value/tbl-en"
-               "mnas-dim-value/ht-en"
-               "mnas-dim-value/generic"
+               ; "mnas-dim-value/class"
+               ; "mnas-dim-value/func"
+               ; "mnas-dim-value/tbl-en"
+               ; "mnas-dim-value/ht-en"
+               ; "mnas-dim-value/generic"
                "mnas-dim-value/method"
                "mnas-dim-value/const" 
                )
@@ -267,15 +250,10 @@
   :version "0.0.3" 
   :serial nil
   :depends-on ("mnas-macro"
-               "mnas-hash-table"
                "str"
                "mnas-string"
 ;;;;               
-               "mnas-dim-value/class"
-               "mnas-dim-value/func"
-               "mnas-dim-value/tbl-en"
-               "mnas-dim-value/ht-en"
-               "mnas-dim-value/generic"
+               ; "mnas-dim-value/ht"
                "mnas-dim-value/method"
                "mnas-dim-value/const"
                "mnas-dim-value/macro"

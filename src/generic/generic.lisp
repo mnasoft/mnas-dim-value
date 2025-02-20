@@ -5,8 +5,9 @@
            )
   (:export same-dimension
            unit-name
-           quantity-name 
-           ))
+           quantity-name)
+  (:export vd~simplify
+   ))
 
 (in-package :mnas-dim-value/generic)
 
@@ -34,3 +35,4 @@ x и y имеют одинаковую размерность, и NIL в про�
 (defgeneric vd~simplify (x)
   (:documentation
    "Удаляет из представления ЧсР радианы и стерадианы."))
+

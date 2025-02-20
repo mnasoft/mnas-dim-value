@@ -22,12 +22,12 @@
            
 (in-package :mnas-dim-value/ht)
 
-(defun nm->value ()
-  (case (get-env "LANGUAGE" *variable-set*)
-    (:en mnas-dim-value/ht-en:*nm->value*)
-    (:ru mnas-dim-value/ht-ru:*nm->value*)
-    (:uk mnas-dim-value/ht-uk:*nm->value*)
-    (otherwise mnas-dim-value/ht-en:*nm->value*)))
+(defun nd-named ()
+    (case (get-env "LANGUAGE" *variable-set*)
+    (:en mnas-dim-value/ht-en:*nd-named*)
+    (:ru mnas-dim-value/ht-ru:*nd-named*)
+    (:uk mnas-dim-value/ht-uk:*nd-named*)    
+    (otherwise mnas-dim-value/ht-en:*nd-named*)))
 
 (defun nd-list ()
     (case (get-env "LANGUAGE" *variable-set*)
@@ -36,19 +36,19 @@
     (:uk mnas-dim-value/ht-uk:*nd-list*)    
     (otherwise mnas-dim-value/ht-en:*nd-list*)))
 
+(defun nm->value ()
+  (case (get-env "LANGUAGE" *variable-set*)
+    (:en mnas-dim-value/ht-en:*nm->value*)
+    (:ru mnas-dim-value/ht-ru:*nm->value*)
+    (:uk mnas-dim-value/ht-uk:*nm->value*)
+    (otherwise mnas-dim-value/ht-en:*nm->value*)))
+
 (defun m-coeff ()
     (case (get-env "LANGUAGE" *variable-set*)
     (:en mnas-dim-value/ht-en:*m-coeff*)
     (:ru mnas-dim-value/ht-ru:*m-coeff*)
     (:uk mnas-dim-value/ht-uk:*m-coeff*)    
     (otherwise mnas-dim-value/ht-en:*m-coeff*)))
-
-(defun nm->value ()
-    (case (get-env "LANGUAGE" *variable-set*)
-    (:en mnas-dim-value/ht-en:*nm->value*)
-    (:ru mnas-dim-value/ht-ru:*nm->value*)
-    (:uk mnas-dim-value/ht-uk:*nm->value*)    
-    (otherwise mnas-dim-value/ht-en:*nm->value*)))
 
 (defun dim->unit-symbol ()
     (case (get-env "LANGUAGE" *variable-set*)

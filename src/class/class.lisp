@@ -19,7 +19,17 @@
            vd-names
            +vd-names-en+
            +vd-names-ru+
-  ))
+           )
+  (:export vd-m
+           vd-kg
+           vd-s
+           vd-A
+           vd-K
+           vd-cd
+           vd-mol
+           vd-rad
+           vd-sr
+   ))
 
 (in-package :mnas-dim-value/class)
 
@@ -41,6 +51,33 @@ mnas-dim-value/vars:*variable-set*
              :documentation "Список степеней размерности. Степени размерности
  находятся в порядке, соответствующем порядку из переменной +vd-names-en+"))
   (:documentation "Число с размерностью (ЧсР)."))
+
+(defmethod vd-m   ((vd <vd>)) (nth 0 (<vd>-dims vd)))
+(defmethod (setf vd-m) (m (vd <vd>)) (setf (nth 0 (<vd>-dims vd)) m) vd)
+  
+(defmethod vd-kg  ((vd <vd>)) (nth 1 (<vd>-dims vd)))
+(defmethod (setf vd-kg) (kg (vd <vd>)) (setf (nth 1 (<vd>-dims vd)) kg) vd)
+
+(defmethod vd-s   ((vd <vd>)) (nth 2 (<vd>-dims vd)))
+(defmethod (setf vd-s) (s (vd <vd>)) (setf (nth 2 (<vd>-dims vd)) s) vd)
+  
+(defmethod vd-A   ((vd <vd>)) (nth 3 (<vd>-dims vd)))
+(defmethod (setf vd-A) (A (vd <vd>)) (setf (nth 3 (<vd>-dims vd)) A) vd)
+
+(defmethod vd-K   ((vd <vd>)) (nth 4 (<vd>-dims vd)))
+(defmethod (setf vd-K) (K (vd <vd>)) (setf (nth 4 (<vd>-dims vd)) K) vd)
+
+(defmethod vd-cd  ((vd <vd>)) (nth 5 (<vd>-dims vd)))
+(defmethod (setf vd-cd) (cd (vd <vd>)) (setf (nth 5 (<vd>-dims vd)) cd) vd)
+
+(defmethod vd-mol ((vd <vd>)) (nth 6 (<vd>-dims vd)))
+(defmethod (setf vd-mol) (mol (vd <vd>)) (setf (nth 6 (<vd>-dims vd)) mol) vd)
+
+(defmethod vd-rad ((vd <vd>)) (nth 7 (<vd>-dims vd)))
+(defmethod (setf vd-rad) (rad (vd <vd>)) (setf (nth 7 (<vd>-dims vd)) rad) vd)
+
+(defmethod vd-sr  ((vd <vd>)) (nth 8 (<vd>-dims vd)))
+(defmethod (setf vd-sr) (sr (vd <vd>)) (setf (nth 8 (<vd>-dims vd)) sr) vd)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
