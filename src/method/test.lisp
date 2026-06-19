@@ -46,3 +46,5 @@
 (quantity-name (vd~/ "N" "m" "m"))
 
 ;; (unit-name (vd~/ "J" "kg"))
+
+(quantity-name (vd~expt "mm" 2))

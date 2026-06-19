@@ -99,7 +99,7 @@
 @end(code)
 "
   (let ((rez (add-asterix data)))
-    (setf rez (m-op-exclude :^ rez 'vd-expt))
+    (setf rez (m-op-exclude :^ rez 'vd~expt))
     (setf rez (m-op-exclude :/ rez 'vd~/))
     (setf rez (m-op-exclude :* rez 'vd~*))
     (setf rez (m-op-exclude :- rez 'vd~-))
