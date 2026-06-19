@@ -6,7 +6,7 @@
 
  @b(Пример использования:)
 @begin[lang=lisp](code)
-  (quantity-name (vd/ \"kg\" \"m\" \"m\" \"m\") :vd-language :en)
+  (quantity-name (vd~/ \"kg\" \"m\" \"m\" \"m\") :vd-language :en)
   => (\"density\" \"mass density\")
   (quantity-name (vd/ (vd* \"kg\" *g*) (vd-expt (vd* 0.01 \"m\") 2) 1000))
 @end(code)
